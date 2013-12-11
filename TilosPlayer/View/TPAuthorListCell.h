@@ -1,5 +1,5 @@
 //
-//  TPFirstViewController.h
+//  TPAuthorListCell.h
 //  TilosPlayer
 //
 //  Created by Daniel Langh on 11/12/13.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TPFirstViewController : UIViewController
+@interface TPAuthorListCell : UITableViewCell
 
 @end

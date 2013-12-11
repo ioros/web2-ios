@@ -13,12 +13,22 @@
 		A5FEBFBE1858AF390084B4C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBD1858AF390084B4C5 /* UIKit.framework */; };
 		A5FEBFC41858AF390084B4C5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FEBFC21858AF390084B4C5 /* InfoPlist.strings */; };
 		A5FEBFC61858AF390084B4C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEBFC51858AF390084B4C5 /* main.m */; };
-		A5FEBFCA1858AF390084B4C5 /* TPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEBFC91858AF390084B4C5 /* TPAppDelegate.m */; };
 		A5FEBFCD1858AF390084B4C5 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5FEBFCB1858AF390084B4C5 /* Main_iPhone.storyboard */; };
 		A5FEBFD01858AF390084B4C5 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5FEBFCE1858AF390084B4C5 /* Main_iPad.storyboard */; };
-		A5FEBFD31858AF390084B4C5 /* TPFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEBFD21858AF390084B4C5 /* TPFirstViewController.m */; };
-		A5FEBFD61858AF390084B4C5 /* TPSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEBFD51858AF390084B4C5 /* TPSecondViewController.m */; };
 		A5FEBFD81858AF390084B4C5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5FEBFD71858AF390084B4C5 /* Images.xcassets */; };
+		A5FEBFFB1858B2940084B4C5 /* TPAuthorListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEBFF61858B2940084B4C5 /* TPAuthorListViewController.m */; };
+		A5FEBFFC1858B2940084B4C5 /* TPShowListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEBFF81858B2940084B4C5 /* TPShowListViewController.m */; };
+		A5FEC0001858B2AB0084B4C5 /* TPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEBFFF1858B2AB0084B4C5 /* TPAppDelegate.m */; };
+		A5FEC0031858B2C40084B4C5 /* TPListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0021858B2C40084B4C5 /* TPListModel.m */; };
+		A5FEC0061858B4540084B4C5 /* TPTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0051858B4540084B4C5 /* TPTableViewController.m */; };
+		A5FEC0091858B6350084B4C5 /* TPAuthorListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0081858B6350084B4C5 /* TPAuthorListModel.m */; };
+		A5FEC0101858BA340084B4C5 /* NSDictionary+TPAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC00F1858BA340084B4C5 /* NSDictionary+TPAdditions.m */; };
+		A5FEC0131858BE170084B4C5 /* TPAuthorListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0121858BE170084B4C5 /* TPAuthorListCell.m */; };
+		A5FEC0161858BEEB0084B4C5 /* TPShowListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0151858BEEB0084B4C5 /* TPShowListModel.m */; };
+		A5FEC01C1858C1440084B4C5 /* TPAuthorInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC01B1858C1440084B4C5 /* TPAuthorInfoViewController.m */; };
+		A5FEC01F1858C1520084B4C5 /* TPShowInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC01E1858C1520084B4C5 /* TPShowInfoViewController.m */; };
+		A5FEC0241858C3A30084B4C5 /* TPEpisodeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0231858C3A30084B4C5 /* TPEpisodeListViewController.m */; };
+		A5FEC0271858C3BC0084B4C5 /* TPEpisodeListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0261858C3BC0084B4C5 /* TPEpisodeListModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,16 +42,36 @@
 		A5FEBFC31858AF390084B4C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A5FEBFC51858AF390084B4C5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A5FEBFC71858AF390084B4C5 /* TilosPlayer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TilosPlayer-Prefix.pch"; sourceTree = "<group>"; };
-		A5FEBFC81858AF390084B4C5 /* TPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPAppDelegate.h; sourceTree = "<group>"; };
-		A5FEBFC91858AF390084B4C5 /* TPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPAppDelegate.m; sourceTree = "<group>"; };
 		A5FEBFCC1858AF390084B4C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		A5FEBFCF1858AF390084B4C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		A5FEBFD11858AF390084B4C5 /* TPFirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPFirstViewController.h; sourceTree = "<group>"; };
-		A5FEBFD21858AF390084B4C5 /* TPFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPFirstViewController.m; sourceTree = "<group>"; };
-		A5FEBFD41858AF390084B4C5 /* TPSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPSecondViewController.h; sourceTree = "<group>"; };
-		A5FEBFD51858AF390084B4C5 /* TPSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPSecondViewController.m; sourceTree = "<group>"; };
 		A5FEBFD71858AF390084B4C5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A5FEBFDE1858AF390084B4C5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		A5FEBFF51858B2940084B4C5 /* TPAuthorListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAuthorListViewController.h; sourceTree = "<group>"; };
+		A5FEBFF61858B2940084B4C5 /* TPAuthorListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAuthorListViewController.m; sourceTree = "<group>"; };
+		A5FEBFF71858B2940084B4C5 /* TPShowListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPShowListViewController.h; sourceTree = "<group>"; };
+		A5FEBFF81858B2940084B4C5 /* TPShowListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPShowListViewController.m; sourceTree = "<group>"; };
+		A5FEBFFE1858B2AB0084B4C5 /* TPAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAppDelegate.h; sourceTree = "<group>"; };
+		A5FEBFFF1858B2AB0084B4C5 /* TPAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAppDelegate.m; sourceTree = "<group>"; };
+		A5FEC0011858B2C40084B4C5 /* TPListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPListModel.h; sourceTree = "<group>"; };
+		A5FEC0021858B2C40084B4C5 /* TPListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPListModel.m; sourceTree = "<group>"; };
+		A5FEC0041858B4540084B4C5 /* TPTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTableViewController.h; sourceTree = "<group>"; };
+		A5FEC0051858B4540084B4C5 /* TPTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTableViewController.m; sourceTree = "<group>"; };
+		A5FEC0071858B6350084B4C5 /* TPAuthorListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAuthorListModel.h; sourceTree = "<group>"; };
+		A5FEC0081858B6350084B4C5 /* TPAuthorListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAuthorListModel.m; sourceTree = "<group>"; };
+		A5FEC00E1858BA340084B4C5 /* NSDictionary+TPAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+TPAdditions.h"; sourceTree = "<group>"; };
+		A5FEC00F1858BA340084B4C5 /* NSDictionary+TPAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TPAdditions.m"; sourceTree = "<group>"; };
+		A5FEC0111858BE170084B4C5 /* TPAuthorListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAuthorListCell.h; sourceTree = "<group>"; };
+		A5FEC0121858BE170084B4C5 /* TPAuthorListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAuthorListCell.m; sourceTree = "<group>"; };
+		A5FEC0141858BEEB0084B4C5 /* TPShowListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPShowListModel.h; sourceTree = "<group>"; };
+		A5FEC0151858BEEB0084B4C5 /* TPShowListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPShowListModel.m; sourceTree = "<group>"; };
+		A5FEC01A1858C1440084B4C5 /* TPAuthorInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAuthorInfoViewController.h; sourceTree = "<group>"; };
+		A5FEC01B1858C1440084B4C5 /* TPAuthorInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAuthorInfoViewController.m; sourceTree = "<group>"; };
+		A5FEC01D1858C1520084B4C5 /* TPShowInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPShowInfoViewController.h; sourceTree = "<group>"; };
+		A5FEC01E1858C1520084B4C5 /* TPShowInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPShowInfoViewController.m; sourceTree = "<group>"; };
+		A5FEC0221858C3A30084B4C5 /* TPEpisodeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPEpisodeListViewController.h; sourceTree = "<group>"; };
+		A5FEC0231858C3A30084B4C5 /* TPEpisodeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPEpisodeListViewController.m; sourceTree = "<group>"; };
+		A5FEC0251858C3BC0084B4C5 /* TPEpisodeListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPEpisodeListModel.h; sourceTree = "<group>"; };
+		A5FEC0261858C3BC0084B4C5 /* TPEpisodeListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPEpisodeListModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,14 +122,13 @@
 		A5FEBFBF1858AF390084B4C5 /* TilosPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				A5FEBFC81858AF390084B4C5 /* TPAppDelegate.h */,
-				A5FEBFC91858AF390084B4C5 /* TPAppDelegate.m */,
+				A5FEBFFD1858B2AB0084B4C5 /* Application */,
+				A5FEBFF41858B2940084B4C5 /* Controller */,
+				A5FEBFF91858B2940084B4C5 /* Model */,
+				A5FEBFFA1858B2940084B4C5 /* View */,
+				A5FEC00A1858BA0B0084B4C5 /* Utils */,
 				A5FEBFCB1858AF390084B4C5 /* Main_iPhone.storyboard */,
 				A5FEBFCE1858AF390084B4C5 /* Main_iPad.storyboard */,
-				A5FEBFD11858AF390084B4C5 /* TPFirstViewController.h */,
-				A5FEBFD21858AF390084B4C5 /* TPFirstViewController.m */,
-				A5FEBFD41858AF390084B4C5 /* TPSecondViewController.h */,
-				A5FEBFD51858AF390084B4C5 /* TPSecondViewController.m */,
 				A5FEBFD71858AF390084B4C5 /* Images.xcassets */,
 				A5FEBFC01858AF390084B4C5 /* Supporting Files */,
 			);
@@ -115,6 +144,107 @@
 				A5FEBFC71858AF390084B4C5 /* TilosPlayer-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A5FEBFF41858B2940084B4C5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5FEC0211858C3870084B4C5 /* ShowInfo */,
+				A5FEC0201858C37A0084B4C5 /* AuthorInfo */,
+				A5FEC0191858C12E0084B4C5 /* TableViewControlelr */,
+				A5FEC0181858C1260084B4C5 /* ShowList */,
+				A5FEC0171858C11C0084B4C5 /* AuthorList */,
+				A5FEC0221858C3A30084B4C5 /* TPEpisodeListViewController.h */,
+				A5FEC0231858C3A30084B4C5 /* TPEpisodeListViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5FEBFF91858B2940084B4C5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A5FEC0011858B2C40084B4C5 /* TPListModel.h */,
+				A5FEC0021858B2C40084B4C5 /* TPListModel.m */,
+				A5FEC0071858B6350084B4C5 /* TPAuthorListModel.h */,
+				A5FEC0081858B6350084B4C5 /* TPAuthorListModel.m */,
+				A5FEC0141858BEEB0084B4C5 /* TPShowListModel.h */,
+				A5FEC0151858BEEB0084B4C5 /* TPShowListModel.m */,
+				A5FEC0251858C3BC0084B4C5 /* TPEpisodeListModel.h */,
+				A5FEC0261858C3BC0084B4C5 /* TPEpisodeListModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5FEBFFA1858B2940084B4C5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A5FEC0111858BE170084B4C5 /* TPAuthorListCell.h */,
+				A5FEC0121858BE170084B4C5 /* TPAuthorListCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A5FEBFFD1858B2AB0084B4C5 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				A5FEBFFE1858B2AB0084B4C5 /* TPAppDelegate.h */,
+				A5FEBFFF1858B2AB0084B4C5 /* TPAppDelegate.m */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		A5FEC00A1858BA0B0084B4C5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A5FEC00E1858BA340084B4C5 /* NSDictionary+TPAdditions.h */,
+				A5FEC00F1858BA340084B4C5 /* NSDictionary+TPAdditions.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		A5FEC0171858C11C0084B4C5 /* AuthorList */ = {
+			isa = PBXGroup;
+			children = (
+				A5FEBFF51858B2940084B4C5 /* TPAuthorListViewController.h */,
+				A5FEBFF61858B2940084B4C5 /* TPAuthorListViewController.m */,
+			);
+			name = AuthorList;
+			sourceTree = "<group>";
+		};
+		A5FEC0181858C1260084B4C5 /* ShowList */ = {
+			isa = PBXGroup;
+			children = (
+				A5FEBFF71858B2940084B4C5 /* TPShowListViewController.h */,
+				A5FEBFF81858B2940084B4C5 /* TPShowListViewController.m */,
+			);
+			name = ShowList;
+			sourceTree = "<group>";
+		};
+		A5FEC0191858C12E0084B4C5 /* TableViewControlelr */ = {
+			isa = PBXGroup;
+			children = (
+				A5FEC0041858B4540084B4C5 /* TPTableViewController.h */,
+				A5FEC0051858B4540084B4C5 /* TPTableViewController.m */,
+			);
+			name = TableViewControlelr;
+			sourceTree = "<group>";
+		};
+		A5FEC0201858C37A0084B4C5 /* AuthorInfo */ = {
+			isa = PBXGroup;
+			children = (
+				A5FEC01A1858C1440084B4C5 /* TPAuthorInfoViewController.h */,
+				A5FEC01B1858C1440084B4C5 /* TPAuthorInfoViewController.m */,
+			);
+			name = AuthorInfo;
+			sourceTree = "<group>";
+		};
+		A5FEC0211858C3870084B4C5 /* ShowInfo */ = {
+			isa = PBXGroup;
+			children = (
+				A5FEC01D1858C1520084B4C5 /* TPShowInfoViewController.h */,
+				A5FEC01E1858C1520084B4C5 /* TPShowInfoViewController.m */,
+			);
+			name = ShowInfo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,10 +349,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5FEBFCA1858AF390084B4C5 /* TPAppDelegate.m in Sources */,
-				A5FEBFD31858AF390084B4C5 /* TPFirstViewController.m in Sources */,
-				A5FEBFD61858AF390084B4C5 /* TPSecondViewController.m in Sources */,
+				A5FEC0161858BEEB0084B4C5 /* TPShowListModel.m in Sources */,
+				A5FEC01F1858C1520084B4C5 /* TPShowInfoViewController.m in Sources */,
+				A5FEC01C1858C1440084B4C5 /* TPAuthorInfoViewController.m in Sources */,
+				A5FEBFFC1858B2940084B4C5 /* TPShowListViewController.m in Sources */,
+				A5FEC0031858B2C40084B4C5 /* TPListModel.m in Sources */,
+				A5FEC0101858BA340084B4C5 /* NSDictionary+TPAdditions.m in Sources */,
+				A5FEC0241858C3A30084B4C5 /* TPEpisodeListViewController.m in Sources */,
 				A5FEBFC61858AF390084B4C5 /* main.m in Sources */,
+				A5FEC0091858B6350084B4C5 /* TPAuthorListModel.m in Sources */,
+				A5FEC0001858B2AB0084B4C5 /* TPAppDelegate.m in Sources */,
+				A5FEC0131858BE170084B4C5 /* TPAuthorListCell.m in Sources */,
+				A5FEBFFB1858B2940084B4C5 /* TPAuthorListViewController.m in Sources */,
+				A5FEC0061858B4540084B4C5 /* TPTableViewController.m in Sources */,
+				A5FEC0271858C3BC0084B4C5 /* TPEpisodeListModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

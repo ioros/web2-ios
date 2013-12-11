@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TPSecondViewController : UIViewController
+#import "TPTableViewController.h"
+
+@interface TPShowListViewController : TPTableViewController
 
 @end
