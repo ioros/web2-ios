@@ -59,9 +59,23 @@
     return [self.model numberOfSections];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return [self.model titleForHeaderInSection:section];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.model numberOfRowsInSection:section];
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    if([self.model respondsToSelector:@selector(sectionIndexTitles)])
+    {
+        return [self.model performSelector:@selector(sectionIndexTitles)];
+    }
+    return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

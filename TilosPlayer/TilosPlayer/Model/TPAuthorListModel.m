@@ -9,6 +9,7 @@
 #import "TPAuthorListModel.h"
 
 #import "AFNetworking.h"
+#import "NSArray+TPIndexedSorting.h"
 
 @implementation TPAuthorListModel
 
@@ -47,7 +48,18 @@
 
 - (void)parseContent:(id)JSON
 {
-    self.sections = @[[TPListSection sectionWithTitle:@"Authors" items:(NSArray *)JSON]];
+    NSDictionary *indexes = [(NSArray *)JSON indexesWithSortingKey:@"name" ascending:YES];
+    NSArray *sortedKeys = [indexes.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    
+    NSMutableArray *sections = [NSMutableArray array];
+    for(NSString *key in sortedKeys)
+    {
+        TPListSection *section = [TPListSection sectionWithTitle:key items:[indexes objectForKey:key]];
+        [sections addObject:section];
+    }
+    
+    self.indexTitles = sortedKeys;
+    self.sections = sections;
     [self sendFinished];
 }
 

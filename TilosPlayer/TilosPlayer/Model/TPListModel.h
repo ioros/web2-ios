@@ -37,6 +37,7 @@
 @interface TPListModel : NSObject
 
 @property (nonatomic, retain) NSArray *sections;
+@property (nonatomic, retain) NSArray *indexTitles;
 @property (nonatomic, retain) id<TPListModelDelegate> delegate;
 
 - (void)loadForced:(BOOL)forced;
@@ -49,5 +50,6 @@
 - (id)dataForIndexPath:(NSIndexPath *)indexPath;
 - (NSInteger)numberOfSections;
 - (NSInteger)numberOfRowsInSection:(NSInteger)section;
+- (NSString *)titleForHeaderInSection:(NSInteger)section;
 
 @end

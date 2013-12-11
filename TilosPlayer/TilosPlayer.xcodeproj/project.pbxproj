@@ -31,6 +31,7 @@
 		A5FEC0271858C3BC0084B4C5 /* TPEpisodeListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0261858C3BC0084B4C5 /* TPEpisodeListModel.m */; };
 		A5FEC02A1858C9F20084B4C5 /* TPEpisodeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0291858C9F20084B4C5 /* TPEpisodeListCell.m */; };
 		A5FEC02D1858DDC60084B4C5 /* TPPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC02C1858DDC60084B4C5 /* TPPlayerViewController.m */; };
+		A5FEC030185901CA0084B4C5 /* NSArray+TPIndexedSorting.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC02F185901CA0084B4C5 /* NSArray+TPIndexedSorting.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +79,8 @@
 		A5FEC0291858C9F20084B4C5 /* TPEpisodeListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPEpisodeListCell.m; sourceTree = "<group>"; };
 		A5FEC02B1858DDC60084B4C5 /* TPPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPPlayerViewController.h; sourceTree = "<group>"; };
 		A5FEC02C1858DDC60084B4C5 /* TPPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPPlayerViewController.m; sourceTree = "<group>"; };
+		A5FEC02E185901CA0084B4C5 /* NSArray+TPIndexedSorting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+TPIndexedSorting.h"; sourceTree = "<group>"; };
+		A5FEC02F185901CA0084B4C5 /* NSArray+TPIndexedSorting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+TPIndexedSorting.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +211,8 @@
 			children = (
 				A5FEC00E1858BA340084B4C5 /* NSDictionary+TPAdditions.h */,
 				A5FEC00F1858BA340084B4C5 /* NSDictionary+TPAdditions.m */,
+				A5FEC02E185901CA0084B4C5 /* NSArray+TPIndexedSorting.h */,
+				A5FEC02F185901CA0084B4C5 /* NSArray+TPIndexedSorting.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -371,6 +376,7 @@
 				A5FEBFC61858AF390084B4C5 /* main.m in Sources */,
 				A5FEC0091858B6350084B4C5 /* TPAuthorListModel.m in Sources */,
 				A5FEC0001858B2AB0084B4C5 /* TPAppDelegate.m in Sources */,
+				A5FEC030185901CA0084B4C5 /* NSArray+TPIndexedSorting.m in Sources */,
 				A5FEC0131858BE170084B4C5 /* TPAuthorListCell.m in Sources */,
 				A5FEBFFB1858B2940084B4C5 /* TPAuthorListViewController.m in Sources */,
 				A5FEC0061858B4540084B4C5 /* TPTableViewController.m in Sources */,

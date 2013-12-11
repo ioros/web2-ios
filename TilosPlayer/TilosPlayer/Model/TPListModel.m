@@ -65,6 +65,17 @@
     return s.items.count;
 }
 
+- (NSString *)titleForHeaderInSection:(NSInteger)section
+{
+    TPListSection *s = [self.sections objectAtIndex:section];
+    return s.title;
+}
+
+- (NSArray *)sectionIndexTitles
+{
+    return self.indexTitles;
+}
+
 #pragma mark - delegate helpers
 
 - (void)sendFinished

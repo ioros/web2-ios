@@ -160,7 +160,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JJ1-d9-ctO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1893" y="-929"/>
+            <point key="canvasLocation" x="1533" y="-937"/>
         </scene>
         <!--Author Info View Controller-->
         <scene sceneID="RNQ-Ds-YZ1">
@@ -212,7 +212,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1rM-ef-Dg1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2406" y="-937"/>
+            <point key="canvasLocation" x="2150" y="-937"/>
         </scene>
         <!--Episode List View Controller-->
         <scene sceneID="Nq4-Js-Gyl">
@@ -296,6 +296,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="LnF-iP-Ifn"/>
+        <segue reference="oGH-td-vvm"/>
     </inferredMetricsTieBreakers>
 </document>

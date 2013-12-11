@@ -12,6 +12,7 @@
 
 @interface TPAuthorListModel : TPListModel
 
+@property (nonatomic, retain) NSArray *indexTitles;
 @property (nonatomic, retain) AFJSONRequestOperation *operation;
 
 @end
