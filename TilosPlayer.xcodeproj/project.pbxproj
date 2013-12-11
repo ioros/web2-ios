@@ -29,6 +29,7 @@
 		A5FEC01F1858C1520084B4C5 /* TPShowInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC01E1858C1520084B4C5 /* TPShowInfoViewController.m */; };
 		A5FEC0241858C3A30084B4C5 /* TPEpisodeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0231858C3A30084B4C5 /* TPEpisodeListViewController.m */; };
 		A5FEC0271858C3BC0084B4C5 /* TPEpisodeListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0261858C3BC0084B4C5 /* TPEpisodeListModel.m */; };
+		A5FEC02A1858C9F20084B4C5 /* TPEpisodeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0291858C9F20084B4C5 /* TPEpisodeListCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,8 @@
 		A5FEC0231858C3A30084B4C5 /* TPEpisodeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPEpisodeListViewController.m; sourceTree = "<group>"; };
 		A5FEC0251858C3BC0084B4C5 /* TPEpisodeListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPEpisodeListModel.h; sourceTree = "<group>"; };
 		A5FEC0261858C3BC0084B4C5 /* TPEpisodeListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPEpisodeListModel.m; sourceTree = "<group>"; };
+		A5FEC0281858C9F20084B4C5 /* TPEpisodeListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPEpisodeListCell.h; sourceTree = "<group>"; };
+		A5FEC0291858C9F20084B4C5 /* TPEpisodeListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPEpisodeListCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +183,8 @@
 			children = (
 				A5FEC0111858BE170084B4C5 /* TPAuthorListCell.h */,
 				A5FEC0121858BE170084B4C5 /* TPAuthorListCell.m */,
+				A5FEC0281858C9F20084B4C5 /* TPEpisodeListCell.h */,
+				A5FEC0291858C9F20084B4C5 /* TPEpisodeListCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -354,6 +359,7 @@
 				A5FEC01C1858C1440084B4C5 /* TPAuthorInfoViewController.m in Sources */,
 				A5FEBFFC1858B2940084B4C5 /* TPShowListViewController.m in Sources */,
 				A5FEC0031858B2C40084B4C5 /* TPListModel.m in Sources */,
+				A5FEC02A1858C9F20084B4C5 /* TPEpisodeListCell.m in Sources */,
 				A5FEC0101858BA340084B4C5 /* NSDictionary+TPAdditions.m in Sources */,
 				A5FEC0241858C3A30084B4C5 /* TPEpisodeListViewController.m in Sources */,
 				A5FEBFC61858AF390084B4C5 /* main.m in Sources */,
