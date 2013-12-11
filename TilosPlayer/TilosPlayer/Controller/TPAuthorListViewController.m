@@ -11,10 +11,6 @@
 #import "TPAuthorListCell.h"
 #import "TPAuthorInfoViewController.h"
 
-@interface TPAuthorListViewController ()
-
-@end
-
 @implementation TPAuthorListViewController
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

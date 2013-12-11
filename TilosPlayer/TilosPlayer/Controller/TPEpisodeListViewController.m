@@ -28,7 +28,11 @@
     
     NSDictionary *data = [self.model dataForIndexPath:indexPath];
     cell.textLabel.text = [[data objectForKey:@"show"] objectForKey:@"name"];
-    cell.detailTextLabel.text = [[data objectForKey:@"show"] objectForKey:@"definition"];
+    NSArray *contributors = [[data objectForKey:@"show"] objectForKey:@"contributors"];
+
+    NSMutableArray *nicks = [NSMutableArray array];
+    for(NSDictionary *contributor in contributors) [nicks addObject:[contributor objectForKey:@"nick"]];
+    cell.detailTextLabel.text = [nicks componentsJoinedByString:@", "];
     
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[data objectForKey:@"plannedFrom"] integerValue]];
     NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
