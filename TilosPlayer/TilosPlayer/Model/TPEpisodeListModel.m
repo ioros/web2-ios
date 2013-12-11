@@ -58,7 +58,7 @@
 
 - (void)parseContent:(id)JSON
 {
-    self.sections = @[[TPListSection sectionWithTitle:@"Authors" items:(NSArray *)JSON]];
+    self.sections = @[[TPListSection sectionWithTitle:nil items:(NSArray *)JSON]];
     [self sendFinished];
 }
 
