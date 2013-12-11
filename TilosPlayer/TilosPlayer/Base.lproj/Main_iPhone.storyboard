@@ -28,12 +28,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AuthorListCell" id="cQd-Qm-lnG" customClass="TPAuthorListCell">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cQd-Qm-lnG" id="BzE-CR-stO">
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="wWe-lj-QEL" kind="push" id="ovU-Ju-17F"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="CZ4-MO-1fc" id="laQ-d1-lBX"/>
                             <outlet property="delegate" destination="CZ4-MO-1fc" id="ZgV-ji-6gP"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="fWe-mS-32o"/>
+                    <navigationItem key="navigationItem" id="fWe-mS-32o">
+                        <barButtonItem key="rightBarButtonItem" title="Player" id="kTA-Zf-LZN">
+                            <connections>
+                                <segue destination="f13-fK-yu8" kind="modal" id="oGH-td-vvm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="model" destination="l0T-2C-nnM" id="Xb8-Z3-4TZ"/>
                         <outlet property="view" destination="Lpt-bV-y0g" id="SKA-HE-thr"/>
@@ -68,12 +87,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ShowListCell" id="l1o-Qh-hia">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l1o-Qh-hia" id="D8m-Tt-D7v">
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="4UW-zr-eiy" kind="push" id="zNl-Nd-4yt"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="QUy-BD-bpt" id="Z4T-Ht-PrN"/>
                             <outlet property="delegate" destination="QUy-BD-bpt" id="veK-w5-bX4"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="EaL-GE-Ams"/>
+                    <navigationItem key="navigationItem" id="EaL-GE-Ams">
+                        <barButtonItem key="rightBarButtonItem" title="Player" id="wja-zf-doa">
+                            <connections>
+                                <segue destination="f13-fK-yu8" kind="modal" id="gz2-Yg-7d9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="model" destination="25H-kE-CBL" id="JE7-gw-a5W"/>
                         <outlet property="view" destination="EXy-Dh-QCZ" id="wlm-qR-0sy"/>
@@ -84,6 +122,84 @@
             </objects>
             <point key="canvasLocation" x="-307" y="370"/>
         </scene>
+        <!--Show Info View Controller-->
+        <scene sceneID="55S-e5-2lt">
+            <objects>
+                <viewController id="4UW-zr-eiy" customClass="TPShowInfoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PS0-he-YRd"/>
+                        <viewControllerLayoutGuide type="bottom" id="dIe-tV-cWZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dLP-Hu-3OP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="8Xa-JI-DZv"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F2G-Y7-yAZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="699" y="473"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="e1t-ie-0cQ">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="f13-fK-yu8" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="77M-8O-tzK">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="603-eY-62r" kind="relationship" relationship="rootViewController" id="IdM-ec-cnl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JJ1-d9-ctO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="717" y="-1273"/>
+        </scene>
+        <!--Author Info View Controller-->
+        <scene sceneID="RNQ-Ds-YZ1">
+            <objects>
+                <viewController id="wWe-lj-QEL" customClass="TPAuthorInfoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FoS-77-604"/>
+                        <viewControllerLayoutGuide type="bottom" id="0cI-DO-dlz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5hq-bm-vCf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="u9M-jv-M0S"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jYb-Im-Nd4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="691" y="-335"/>
+        </scene>
+        <!--Player View Controller-->
+        <scene sceneID="LwP-32-r9b">
+            <objects>
+                <viewController id="603-eY-62r" customClass="TPPlayerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="o4l-SJ-lfs"/>
+                        <viewControllerLayoutGuide type="bottom" id="IMM-WC-yiv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RiV-5d-PVH">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="g9I-tV-sMG">
+                        <barButtonItem key="rightBarButtonItem" title="Close" id="VvI-4W-ANl">
+                            <connections>
+                                <action selector="close:" destination="603-eY-62r" id="33m-zK-cOZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1rM-ef-Dg1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1230" y="-1265"/>
+        </scene>
         <!--Episode List View Controller-->
         <scene sceneID="Nq4-Js-Gyl">
             <objects>
@@ -92,8 +208,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="Bhi-6p-bNm" id="i6M-R8-4Eg"/>
+                            <outlet property="delegate" destination="Bhi-6p-bNm" id="zYY-2I-i5E"/>
+                        </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="86b-59-dvK"/>
+                    <navigationItem key="navigationItem" id="86b-59-dvK">
+                        <barButtonItem key="rightBarButtonItem" title="Player" id="0l0-hc-eOE">
+                            <connections>
+                                <segue destination="f13-fK-yu8" kind="modal" id="Orb-VI-iE7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="model" destination="6q8-Sf-1NB" id="t4p-sV-z5J"/>
                     </connections>
@@ -145,4 +271,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="oGH-td-vvm"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -30,6 +30,7 @@
 		A5FEC0241858C3A30084B4C5 /* TPEpisodeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0231858C3A30084B4C5 /* TPEpisodeListViewController.m */; };
 		A5FEC0271858C3BC0084B4C5 /* TPEpisodeListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0261858C3BC0084B4C5 /* TPEpisodeListModel.m */; };
 		A5FEC02A1858C9F20084B4C5 /* TPEpisodeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0291858C9F20084B4C5 /* TPEpisodeListCell.m */; };
+		A5FEC02D1858DDC60084B4C5 /* TPPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC02C1858DDC60084B4C5 /* TPPlayerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +76,8 @@
 		A5FEC0261858C3BC0084B4C5 /* TPEpisodeListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPEpisodeListModel.m; sourceTree = "<group>"; };
 		A5FEC0281858C9F20084B4C5 /* TPEpisodeListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPEpisodeListCell.h; sourceTree = "<group>"; };
 		A5FEC0291858C9F20084B4C5 /* TPEpisodeListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPEpisodeListCell.m; sourceTree = "<group>"; };
+		A5FEC02B1858DDC60084B4C5 /* TPPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPPlayerViewController.h; sourceTree = "<group>"; };
+		A5FEC02C1858DDC60084B4C5 /* TPPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPPlayerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,11 +157,13 @@
 			children = (
 				A5FEC0211858C3870084B4C5 /* ShowInfo */,
 				A5FEC0201858C37A0084B4C5 /* AuthorInfo */,
-				A5FEC0191858C12E0084B4C5 /* TableViewControlelr */,
+				A5FEC0191858C12E0084B4C5 /* TableViewController */,
 				A5FEC0181858C1260084B4C5 /* ShowList */,
 				A5FEC0171858C11C0084B4C5 /* AuthorList */,
 				A5FEC0221858C3A30084B4C5 /* TPEpisodeListViewController.h */,
 				A5FEC0231858C3A30084B4C5 /* TPEpisodeListViewController.m */,
+				A5FEC02B1858DDC60084B4C5 /* TPPlayerViewController.h */,
+				A5FEC02C1858DDC60084B4C5 /* TPPlayerViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -225,13 +230,13 @@
 			name = ShowList;
 			sourceTree = "<group>";
 		};
-		A5FEC0191858C12E0084B4C5 /* TableViewControlelr */ = {
+		A5FEC0191858C12E0084B4C5 /* TableViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A5FEC0041858B4540084B4C5 /* TPTableViewController.h */,
 				A5FEC0051858B4540084B4C5 /* TPTableViewController.m */,
 			);
-			name = TableViewControlelr;
+			name = TableViewController;
 			sourceTree = "<group>";
 		};
 		A5FEC0201858C37A0084B4C5 /* AuthorInfo */ = {
@@ -357,6 +362,7 @@
 				A5FEC0161858BEEB0084B4C5 /* TPShowListModel.m in Sources */,
 				A5FEC01F1858C1520084B4C5 /* TPShowInfoViewController.m in Sources */,
 				A5FEC01C1858C1440084B4C5 /* TPAuthorInfoViewController.m in Sources */,
+				A5FEC02D1858DDC60084B4C5 /* TPPlayerViewController.m in Sources */,
 				A5FEBFFC1858B2940084B4C5 /* TPShowListViewController.m in Sources */,
 				A5FEC0031858B2C40084B4C5 /* TPListModel.m in Sources */,
 				A5FEC02A1858C9F20084B4C5 /* TPEpisodeListCell.m in Sources */,
