@@ -39,8 +39,6 @@
     NSString *queryString = [NSString stringWithFormat:@"start=%d&end=%d", (int)[startOfDay timeIntervalSince1970], (int)[endOfDay timeIntervalSince1970]];
     NSString *url  =[NSString stringWithFormat:@"http://tilos.anzix.net/api/episode?%@", queryString];
 
-    NSLog(@"now %@ %@ %@", now, startOfDay, url);
-
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
     __block TPEpisodeListModel *weakSelf = self;
