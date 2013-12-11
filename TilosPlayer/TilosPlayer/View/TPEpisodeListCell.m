@@ -14,12 +14,26 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-        self.timeLabel.backgroundColor = [UIColor whiteColor];
-        self.timeLabel.textAlignment = NSTextAlignmentRight;
-        [self.contentView addSubview:self.timeLabel];
+        [self setup];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if(self)
+    {
+        [self setup];
+    }
+    return self;
+}
+- (void)setup
+{
+    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    self.timeLabel.backgroundColor = [UIColor whiteColor];
+    self.timeLabel.textAlignment = NSTextAlignmentRight;
+    [self.contentView addSubview:self.timeLabel];
 }
 
 - (void)layoutSubviews

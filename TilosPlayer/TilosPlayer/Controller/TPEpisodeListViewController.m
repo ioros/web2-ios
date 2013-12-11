@@ -19,26 +19,25 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    TPEpisodeListCell *cell = (TPEpisodeListCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(cell == nil)
-    {
-        cell = [[TPEpisodeListCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    }
+    static NSString *CellIdentifier = @"EpisodeListCell";
+    return [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TPEpisodeListCell *episodeCell = (TPEpisodeListCell *)cell;
     
     NSDictionary *data = [self.model dataForIndexPath:indexPath];
-    cell.textLabel.text = [[data objectForKey:@"show"] objectForKey:@"name"];
+    episodeCell.textLabel.text = [[data objectForKey:@"show"] objectForKey:@"name"];
+    
     NSArray *contributors = [[data objectForKey:@"show"] objectForKey:@"contributors"];
-
     NSMutableArray *nicks = [NSMutableArray array];
     for(NSDictionary *contributor in contributors) [nicks addObject:[contributor objectForKey:@"nick"]];
-    cell.detailTextLabel.text = [nicks componentsJoinedByString:@", "];
+    episodeCell.detailTextLabel.text = [nicks componentsJoinedByString:@", "];
     
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[data objectForKey:@"plannedFrom"] integerValue]];
     NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
-    cell.timeLabel.text = [NSString stringWithFormat:@"%d:%02d", components.hour, components.minute];
-    
-    return cell;
+    episodeCell.timeLabel.text = [NSString stringWithFormat:@"%d:%02d", components.hour, components.minute];
 }
 
 @end

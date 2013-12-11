@@ -27,4 +27,18 @@
     // [cell.imageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"AuthorAvatarPlaceholder.png"]];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UITableViewCell *cell = (UITableViewCell*)sender;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    id data = [self.model dataForIndexPath:indexPath];
+    
+    UIViewController *destination = segue.destinationViewController;
+    if([destination respondsToSelector:@selector(setData:)])
+    {
+        [destination performSelector:@selector(setData:) withObject:data];
+    }
+}
+
 @end
