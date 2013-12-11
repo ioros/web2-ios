@@ -158,15 +158,13 @@
 		A5FEBFF41858B2940084B4C5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A5FEC032185909E50084B4C5 /* Player */,
 				A5FEC0211858C3870084B4C5 /* ShowInfo */,
 				A5FEC0201858C37A0084B4C5 /* AuthorInfo */,
 				A5FEC0191858C12E0084B4C5 /* TableViewController */,
 				A5FEC0181858C1260084B4C5 /* ShowList */,
 				A5FEC0171858C11C0084B4C5 /* AuthorList */,
-				A5FEC0221858C3A30084B4C5 /* TPEpisodeListViewController.h */,
-				A5FEC0231858C3A30084B4C5 /* TPEpisodeListViewController.m */,
-				A5FEC02B1858DDC60084B4C5 /* TPPlayerViewController.h */,
-				A5FEC02C1858DDC60084B4C5 /* TPPlayerViewController.m */,
+				A5FEC031185909CE0084B4C5 /* EpisodeList */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -260,6 +258,24 @@
 				A5FEC01E1858C1520084B4C5 /* TPShowInfoViewController.m */,
 			);
 			name = ShowInfo;
+			sourceTree = "<group>";
+		};
+		A5FEC031185909CE0084B4C5 /* EpisodeList */ = {
+			isa = PBXGroup;
+			children = (
+				A5FEC0221858C3A30084B4C5 /* TPEpisodeListViewController.h */,
+				A5FEC0231858C3A30084B4C5 /* TPEpisodeListViewController.m */,
+			);
+			name = EpisodeList;
+			sourceTree = "<group>";
+		};
+		A5FEC032185909E50084B4C5 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				A5FEC02B1858DDC60084B4C5 /* TPPlayerViewController.h */,
+				A5FEC02C1858DDC60084B4C5 /* TPPlayerViewController.m */,
+			);
+			name = Player;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
