@@ -11,3 +11,9 @@ Setup instructions
 - Run pod install in the top TilosPlayer directory
 - This will install the dependencies
 - Use the generated XCode workspace from now on
+
+Contributors:
+=============
+
+- Dániel Lángh daniel@rumori.hu
+- Kántor Tibor commander.cantor@gmail.com
