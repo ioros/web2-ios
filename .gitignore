@@ -1,0 +1,4 @@
+*.xcworkspace
+TilosPlayer/Podfile.lock
+TilosPlayer/Pods/
+.DS_store
