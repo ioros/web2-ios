@@ -19,6 +19,15 @@
     
     self.title = NSLocalizedString(@"Episodes", nil);
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0);
+    self.tableView.rowHeight = 100;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *data = [self.model dataForIndexPath:indexPath];
+    CGFloat height = [TPEpisodeListCell estimatedHeightWithTitle:[data episodeName] description:[data episodeDefinition] authors:[[data episodeContributorNicknames] componentsJoinedByString:@", "] forWidth:320];
+    
+    return height;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -32,8 +41,9 @@
     TPEpisodeListCell *episodeCell = (TPEpisodeListCell *)cell;
     
     NSDictionary *data = [self.model dataForIndexPath:indexPath];
-    episodeCell.textLabel.text = [[data objectForKey:@"show"] objectForKey:@"name"];
-    episodeCell.detailTextLabel.text = [[data episodeContributorNicknames] componentsJoinedByString:@", "];
+    episodeCell.textLabel.text = [data episodeName];
+    episodeCell.authorLabel.text = [[data episodeContributorNicknames] componentsJoinedByString:@", "];
+    episodeCell.detailTextLabel.text = [data episodeDefinition];
     episodeCell.timeLabel.attributedText = [data episodeStartTime];
 }
 

@@ -11,5 +11,11 @@
 @interface TPEpisodeListCell : UITableViewCell
 
 @property (nonatomic, retain) UILabel *timeLabel;
+@property (nonatomic, retain) UILabel *authorLabel;
+
++ (CGFloat)estimatedHeightWithTitle:(NSString *)title
+                        description:(NSString *)description
+                            authors:(NSString *)authors
+                           forWidth:(CGFloat)width;
 
 @end

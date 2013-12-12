@@ -30,9 +30,8 @@
     NSDictionary *data = [self.model dataForIndexPath:indexPath];
     cell.textLabel.text = [data objectForKey:@"name"];
     
-    NSString *avatar = [data objectForKeyOrNil:@"avatar"];
-    NSString *url = [NSString stringWithFormat:@"http://tilos.anzix.net/upload/bio/%@", avatar];
-    [cell.imageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"AuthorAvatarPlaceholder.png"]];
+    NSString *avatarUrl = [data objectForKeyOrNil:@"avatar"];
+    [cell.imageView setImageWithURL:[NSURL URLWithString:avatarUrl] placeholderImage:[UIImage imageNamed:@"AuthorAvatarPlaceholder.png"]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString*)title atIndex:(NSInteger)index

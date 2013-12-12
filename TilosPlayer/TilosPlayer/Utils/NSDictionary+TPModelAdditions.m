@@ -34,4 +34,20 @@
     return string;
 }
 
+- (NSString *)episodeName
+{
+    return [[self objectForKey:@"show"] objectForKey:@"name"];
+}
+- (NSString *)episodeBannerUrl
+{
+    return [[self objectForKey:@"show"] objectForKey:@"banner"];
+}
+- (NSString *)episodeDefinition
+{
+    NSString *definition = [[self objectForKey:@"show"] objectForKeyOrNil:@"definition"];
+    if([definition isEqualToString:@""]) definition = nil;
+    return definition;
+}
+
+
 @end

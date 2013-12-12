@@ -12,5 +12,8 @@
 
 - (NSArray *)episodeContributorNicknames;
 - (NSAttributedString *)episodeStartTime;
+- (NSString *)episodeName;
+- (NSString *)episodeDefinition;
+- (NSString *)episodeBannerUrl;
 
 @end

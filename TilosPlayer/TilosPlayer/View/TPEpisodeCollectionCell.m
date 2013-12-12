@@ -58,11 +58,10 @@
 {
     _data = data;
     
-    self.textLabel.text = [[data objectForKey:@"show"] objectForKey:@"name"];
-    self.detailTextView.text = [[data objectForKey:@"show"] objectForKey:@"definition"];
-
-    NSString *banner = [[data objectForKeyOrNil:@"show"] objectForKeyOrNil:@"banner"];
-    NSString *url = [NSString stringWithFormat:@"http://tilos.anzix.net/upload/musorok/%@", banner];
+    self.textLabel.text = [data episodeName];
+    self.detailTextView.text = [data episodeDefinition];
+    
+    NSString *url =[data episodeBannerUrl];
     [self.imageView setImageWithURL:[NSURL URLWithString:url]];
     
     [self setNeedsLayout];
@@ -74,9 +73,10 @@
 
     CGRect b = self.bounds;
     CGFloat w = b.size.width;
-    CGFloat imageHeight = floorf(w/ 210.0f * 60.f);
+    CGFloat imageWidth = w-40;
+    CGFloat imageHeight = floorf(imageWidth/ 210.0f * 60.f);
 
-    self.imageView.frame = CGRectMake(0, 0, w, imageHeight);
+    self.imageView.frame = CGRectMake(20, 0, imageWidth, imageHeight);
     
     CGSize s = [self.textLabel sizeThatFits:CGSizeMake(w - 40, 1000)];
     self.textLabel.frame = CGRectMake(20, 100, w-40, s.height);
