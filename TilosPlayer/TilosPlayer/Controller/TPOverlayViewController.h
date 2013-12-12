@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TPOverlayViewController : UIViewController
+#import "TPPlayerViewController.h"
+
+@interface TPOverlayViewController : UIViewController <UITabBarControllerDelegate, TPPlayerViewControllerDelegate>
 
 @property (nonatomic, retain) IBOutlet UIViewController *rootViewController;
+@property (nonatomic, retain) IBOutlet UIViewController *overlayViewController;
 
 - (id)initWithRootViewController:(UIViewController *)viewController;
 

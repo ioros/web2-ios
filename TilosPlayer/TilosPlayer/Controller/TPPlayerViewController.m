@@ -13,33 +13,99 @@
 #import "TPEpisodeCollectionCell.h"
 #import "TPTapeCollectionCell.h"
 #import "TPTapeCollectionLayout.h"
+#import "TPLogoView.h"
+
+#import "TPAudioPlayer.h"
+
+
+@interface TPPlayerViewController ()
+
+@property (nonatomic, assign) BOOL opened;
+
+@end
+
+#pragma mark -
 
 @implementation TPPlayerViewController
 
 
-#pragma mark -
+- (void)loadView
+{
+    self.opened = YES;
+    
+    CGRect frame = CGRectMake(0, 0, 320, 480);
+    UIView *v = [[UIView alloc] initWithFrame:frame];
+    v.backgroundColor = [UIColor clearColor];
+    self.view = v;
+    
+    UIView *fadeView = [[UIView alloc] initWithFrame:frame];
+    fadeView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    fadeView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
+    self.fadeView = fadeView;
+    [self.view addSubview:self.fadeView];
+    
+
+    TPLogoView *logoView = [[TPLogoView alloc] initWithFrame:CGRectMake(0, 0, 320, 140)];
+    logoView.backgroundColor = [UIColor clearColor];
+    logoView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
+    self.logoView = logoView;
+    
+
+    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 170)];
+    topView.backgroundColor = [UIColor whiteColor];
+    topView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
+    self.topView = topView;
+    
+
+    UIView *middleView = [[UIView alloc] initWithFrame:CGRectMake(0, 170, 320, 230)];
+    middleView.backgroundColor = [UIColor whiteColor];
+    middleView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
+    self.middleView = middleView;
+
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 420, 320, 80)];
+    bottomView.backgroundColor = [UIColor whiteColor];
+    bottomView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+    self.bottomView = bottomView;
+    
+    [self.view addSubview:self.bottomView];
+    [self.view addSubview:self.middleView];
+    [self.view addSubview:self.topView];
+    [self.view addSubview:self.logoView];
+    
+    ///////////////////////////
+    
+    [logoView.button addTarget:self action:@selector(toggle:) forControlEvents:UIControlEventTouchUpInside];
+
+    
+    TPTapeCollectionLayout *collectionViewLayout = [[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(150, 20)];
+    self.tapeCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 140, 320, 30) collectionViewLayout:collectionViewLayout];
+    self.tapeCollectionView.backgroundColor = [UIColor whiteColor];
+    self.tapeCollectionView.delegate = self;
+    self.tapeCollectionView.showsHorizontalScrollIndicator = NO;
+    self.tapeCollectionView.dataSource = self;
+    self.tapeCollectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+    [self.tapeCollectionView registerClass:[TPTapeCollectionCell class] forCellWithReuseIdentifier:@"TapeCollectionCell"];
+    [self.topView addSubview:self.tapeCollectionView];
+    
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 10, 320, 220) collectionViewLayout:[[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(320, 220)]];
+    self.collectionView.pagingEnabled = YES;
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.showsHorizontalScrollIndicator = NO;
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
+    self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+    [self.collectionView registerClass:[TPEpisodeCollectionCell class] forCellWithReuseIdentifier:@"EpisodeCollectionCell"];
+    [self.middleView addSubview:self.collectionView];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    TPTapeCollectionLayout *collectionViewLayout = [[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(150, 30)];
-    self.tapeCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, 320, 60) collectionViewLayout:collectionViewLayout];
-    self.tapeCollectionView.backgroundColor = [UIColor lightGrayColor];
-    self.tapeCollectionView.delegate = self;
-    self.tapeCollectionView.dataSource = self;
-    self.tapeCollectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-    [self.tapeCollectionView registerClass:[TPTapeCollectionCell class] forCellWithReuseIdentifier:@"TapeCollectionCell"];
-    [self.view addSubview:self.tapeCollectionView];
-
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 124, 320, 220) collectionViewLayout:[[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(320, 220)]];
-    self.collectionView.pagingEnabled = YES;
-    self.collectionView.backgroundColor = [UIColor lightGrayColor];
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
-    self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-    [self.collectionView registerClass:[TPEpisodeCollectionCell class] forCellWithReuseIdentifier:@"EpisodeCollectionCell"];
-    [self.view addSubview:self.collectionView];
+    
+    [self.nextButton addTarget:self action:@selector(next:) forControlEvents:UIControlEventTouchUpInside];
+    [self.prevButton addTarget:self action:@selector(prev:) forControlEvents:UIControlEventTouchUpInside];
+    [self.playButton addTarget:self action:@selector(play:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -56,7 +122,6 @@
     {
         [self.model loadForced:NO];
     }
-    // http://archive.tilos.hu/online/2013/12/11/tilosradio-20131211-0000.mp3
 }
 
 #pragma mark -
@@ -74,6 +139,145 @@
 - (IBAction)close:(id)sender
 {
     [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)prev:(id)sender
+{
+    NSInteger selectedIndex = [self selectedIndexInCollectionView];
+    if(selectedIndex > 0)
+    {
+        [self scrollToIndexInCollectionView:selectedIndex-1 animated:YES];
+    }
+}
+
+- (IBAction)next:(id)sender
+{
+    NSInteger selectedIndex = [self selectedIndexInCollectionView];
+    if(selectedIndex >= 0)
+    {
+        [self scrollToIndexInCollectionView:selectedIndex+1 animated:YES];
+    }
+}
+
+- (IBAction)play:(id)sender
+{
+}
+
+- (void)closeAnimated:(BOOL)animated
+{
+    if(!_opened) return;
+    
+    [self doClose:animated];
+}
+- (void)doClose:(BOOL)animated
+{
+    [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.logoView.frame = CGRectMake(0, 0, 320, 64);
+        self.topView.frame = CGRectMake(0, 0, 320, 64);
+        self.middleView.frame = CGRectMake(0, -180, 320, 230);
+        self.bottomView.frame = CGRectMake(0, 0, 320, 64);
+        self.fadeView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        if([_delegate respondsToSelector:@selector(playerViewControllerDidClose:)])
+        {
+            [_delegate performSelector:@selector(playerViewControllerDidClose:) withObject:self];
+        }
+    }];
+    
+    _opened = NO;
+}
+- (void)openAnimated:(BOOL)animated
+{
+    if(_opened) return;
+    
+    [self doOpen:animated];
+}
+- (void)doOpen:(BOOL)animated
+{
+    if([_delegate respondsToSelector:@selector(playerViewControllerWillOpen:)])
+    {
+        [_delegate performSelector:@selector(playerViewControllerWillOpen:) withObject:self];
+    }
+
+    [UIView animateWithDuration:0.3 animations:^{
+        self.logoView.frame = CGRectMake(0, 0, 320, 140);
+        self.topView.frame = CGRectMake(0, 0, 320, 170);
+        self.middleView.frame = CGRectMake(0, 170, 320, 230);
+        self.bottomView.frame = CGRectMake(0, 400, 320, self.view.bounds.size.height-400);
+        self.fadeView.alpha = 1.0f;
+    }];
+
+    _opened = YES;
+}
+- (void)toggleAnimated:(BOOL)animated
+{
+    if(_opened) [self closeAnimated:animated];
+    else [self openAnimated:animated];
+}
+
+- (void)toggle:(id)sender
+{
+    [self toggleAnimated:YES];
+}
+
+#pragma mark - helpers
+
+- (NSInteger)selectedIndexInCollectionView
+{
+    return (NSInteger)floorf(self.collectionView.contentOffset.x / 320);
+}
+
+- (void)scrollToIndexInCollectionView:(NSInteger)index animated:(BOOL)animated
+{
+    [self.collectionView setContentOffset:CGPointMake(index * 320, 0) animated:animated];
+}
+
+
+#pragma mark -
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if(self.tapeCollectionView == scrollView)
+    {
+        if(!decelerate) [self finishTapeScrolling];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if(self.tapeCollectionView == scrollView)
+    {
+        [self finishTapeScrolling];
+    }
+}
+
+- (void)finishTapeScrolling
+{
+    CGPoint offset = self.tapeCollectionView.contentOffset;
+    CGFloat horizontalOffset = offset.x ;//+ self.tapeCollectionView.bounds.size.width / 2;
+    
+//    NSLog(@"finish tape scrolling %f %d %f", horizontalOffset, partIndex, partOffset);
+
+    CGFloat minuteOffset = horizontalOffset / 30.0f;
+
+    // get a date trimmed to current half an hour
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:[NSDate date]];
+    components.minute = (NSInteger)floorf(((float)[components minute] / 30.0f)) * 30;
+    NSDate *date = [[NSCalendar currentCalendar] dateFromComponents:components];
+    
+    // go back a week
+    date = [date dateByAddingTimeInterval:-24 * 60 * 60 * 7];
+    
+    // add the offset to it
+    date = [date dateByAddingTimeInterval:minuteOffset * 60];
+    
+    NSString *url = [TPTilosUtils urlForArchiveSegmentAtDate:date];
+
+    NSInteger partIndex = (NSInteger)floorf((minuteOffset / 30.0f));
+    NSInteger secondOffset = (minuteOffset - 30 * partIndex) * 60;
+    
+    [[TPAudioPlayer sharedPlayer] cueUrl:url atPosition:secondOffset];
+    [[TPAudioPlayer sharedPlayer] play];
 }
 
 #pragma mark - collection view

@@ -11,6 +11,9 @@
 		A5628CB9185917F4007CA45C /* TPTapeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */; };
 		A5DD0FFB1859FE42009D1A1A /* TPTapeCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD0FFA1859FE42009D1A1A /* TPTapeCollectionLayout.m */; };
 		A5DD0FFE185A100F009D1A1A /* TPOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD0FFD185A100F009D1A1A /* TPOverlayViewController.m */; };
+		A5DD1001185A1708009D1A1A /* TPTilosUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1000185A1708009D1A1A /* TPTilosUtils.m */; };
+		A5DD1004185A1C02009D1A1A /* TPAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1003185A1C02009D1A1A /* TPAudioPlayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5DD1008185A3735009D1A1A /* TPLogoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1007185A3735009D1A1A /* TPLogoView.m */; };
 		A5E2479418590C1A006391AF /* TPEpisodeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */; };
 		A5FEBFBA1858AF390084B4C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFB91858AF390084B4C5 /* Foundation.framework */; };
 		A5FEBFBC1858AF390084B4C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */; };
@@ -47,6 +50,13 @@
 		A5DD0FFA1859FE42009D1A1A /* TPTapeCollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTapeCollectionLayout.m; sourceTree = "<group>"; };
 		A5DD0FFC185A100F009D1A1A /* TPOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPOverlayViewController.h; sourceTree = "<group>"; };
 		A5DD0FFD185A100F009D1A1A /* TPOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPOverlayViewController.m; sourceTree = "<group>"; };
+		A5DD0FFF185A1708009D1A1A /* TPTilosUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTilosUtils.h; sourceTree = "<group>"; };
+		A5DD1000185A1708009D1A1A /* TPTilosUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTilosUtils.m; sourceTree = "<group>"; };
+		A5DD1002185A1C02009D1A1A /* TPAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAudioPlayer.h; sourceTree = "<group>"; };
+		A5DD1003185A1C02009D1A1A /* TPAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAudioPlayer.m; sourceTree = "<group>"; };
+		A5DD1005185A1C71009D1A1A /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
+		A5DD1006185A3735009D1A1A /* TPLogoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPLogoView.h; sourceTree = "<group>"; };
+		A5DD1007185A3735009D1A1A /* TPLogoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPLogoView.m; sourceTree = "<group>"; };
 		A5E2479218590C1A006391AF /* TPEpisodeCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPEpisodeCollectionCell.h; sourceTree = "<group>"; };
 		A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPEpisodeCollectionCell.m; sourceTree = "<group>"; };
 		A5FEBFB61858AF390084B4C5 /* TilosPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TilosPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -170,7 +180,7 @@
 		A5FEBFF41858B2940084B4C5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A5FEC032185909E50084B4C5 /* Player */,
+				A5FEC032185909E50084B4C5 /* PlayerView */,
 				A5FEC0211858C3870084B4C5 /* ShowInfo */,
 				A5FEC0201858C37A0084B4C5 /* AuthorInfo */,
 				A5FEC0191858C12E0084B4C5 /* TableViewController */,
@@ -209,6 +219,8 @@
 				A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */,
 				A5628CB7185917F4007CA45C /* TPTapeCollectionCell.h */,
 				A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */,
+				A5DD1006185A3735009D1A1A /* TPLogoView.h */,
+				A5DD1007185A3735009D1A1A /* TPLogoView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -225,12 +237,17 @@
 		A5FEC00A1858BA0B0084B4C5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				A5DD1005185A1C71009D1A1A /* SynthesizeSingleton.h */,
 				A5FEC00E1858BA340084B4C5 /* NSDictionary+TPAdditions.h */,
 				A5FEC00F1858BA340084B4C5 /* NSDictionary+TPAdditions.m */,
 				A5FEC02E185901CA0084B4C5 /* NSArray+TPIndexedSorting.h */,
 				A5FEC02F185901CA0084B4C5 /* NSArray+TPIndexedSorting.m */,
 				A5DD0FF91859FE42009D1A1A /* TPTapeCollectionLayout.h */,
 				A5DD0FFA1859FE42009D1A1A /* TPTapeCollectionLayout.m */,
+				A5DD0FFF185A1708009D1A1A /* TPTilosUtils.h */,
+				A5DD1000185A1708009D1A1A /* TPTilosUtils.m */,
+				A5DD1002185A1C02009D1A1A /* TPAudioPlayer.h */,
+				A5DD1003185A1C02009D1A1A /* TPAudioPlayer.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -289,13 +306,13 @@
 			name = EpisodeList;
 			sourceTree = "<group>";
 		};
-		A5FEC032185909E50084B4C5 /* Player */ = {
+		A5FEC032185909E50084B4C5 /* PlayerView */ = {
 			isa = PBXGroup;
 			children = (
 				A5FEC02B1858DDC60084B4C5 /* TPPlayerViewController.h */,
 				A5FEC02C1858DDC60084B4C5 /* TPPlayerViewController.m */,
 			);
-			name = Player;
+			name = PlayerView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -408,13 +425,16 @@
 				A5FEC02D1858DDC60084B4C5 /* TPPlayerViewController.m in Sources */,
 				A5FEBFFC1858B2940084B4C5 /* TPShowListViewController.m in Sources */,
 				A5FEC0031858B2C40084B4C5 /* TPListModel.m in Sources */,
+				A5DD1004185A1C02009D1A1A /* TPAudioPlayer.m in Sources */,
 				A5FEC02A1858C9F20084B4C5 /* TPEpisodeListCell.m in Sources */,
 				A5FEC0101858BA340084B4C5 /* NSDictionary+TPAdditions.m in Sources */,
 				A5FEC0241858C3A30084B4C5 /* TPEpisodeListViewController.m in Sources */,
 				A5FEBFC61858AF390084B4C5 /* main.m in Sources */,
 				A5FEC0091858B6350084B4C5 /* TPAuthorListModel.m in Sources */,
 				A5DD0FFE185A100F009D1A1A /* TPOverlayViewController.m in Sources */,
+				A5DD1008185A3735009D1A1A /* TPLogoView.m in Sources */,
 				A5FEC0001858B2AB0084B4C5 /* TPAppDelegate.m in Sources */,
+				A5DD1001185A1708009D1A1A /* TPTilosUtils.m in Sources */,
 				A5FEC030185901CA0084B4C5 /* NSArray+TPIndexedSorting.m in Sources */,
 				A5FEC0131858BE170084B4C5 /* TPAuthorListCell.m in Sources */,
 				A5FEBFFB1858B2940084B4C5 /* TPAuthorListViewController.m in Sources */,
