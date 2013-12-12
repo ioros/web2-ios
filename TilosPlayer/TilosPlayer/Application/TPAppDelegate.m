@@ -14,7 +14,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window.tintColor = [UIColor colorWithHexRGB:0x1485CC];
+    //self.window.tintColor = [UIColor colorWithHexRGB:0x1485CC];
+    self.window.tintColor = [UIColor blackColor];
     return YES;
 }
 							

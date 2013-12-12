@@ -15,6 +15,8 @@
 		A5DD1004185A1C02009D1A1A /* TPAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1003185A1C02009D1A1A /* TPAudioPlayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A5DD1008185A3735009D1A1A /* TPLogoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1007185A3735009D1A1A /* TPLogoView.m */; };
 		A5DD100B185A53CC009D1A1A /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD100A185A53CC009D1A1A /* UIColor+Additions.m */; };
+		A5DD100D185A5963009D1A1A /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5DD100C185A5963009D1A1A /* CoreText.framework */; };
+		A5DD1010185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD100F185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.m */; };
 		A5E2479418590C1A006391AF /* TPEpisodeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */; };
 		A5FEBFBA1858AF390084B4C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFB91858AF390084B4C5 /* Foundation.framework */; };
 		A5FEBFBC1858AF390084B4C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */; };
@@ -60,6 +62,9 @@
 		A5DD1007185A3735009D1A1A /* TPLogoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPLogoView.m; sourceTree = "<group>"; };
 		A5DD1009185A53CC009D1A1A /* UIColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additions.h"; sourceTree = "<group>"; };
 		A5DD100A185A53CC009D1A1A /* UIColor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additions.m"; sourceTree = "<group>"; };
+		A5DD100C185A5963009D1A1A /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		A5DD100E185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+TPModelAdditions.h"; sourceTree = "<group>"; };
+		A5DD100F185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TPModelAdditions.m"; sourceTree = "<group>"; };
 		A5E2479218590C1A006391AF /* TPEpisodeCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPEpisodeCollectionCell.h; sourceTree = "<group>"; };
 		A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPEpisodeCollectionCell.m; sourceTree = "<group>"; };
 		A5FEBFB61858AF390084B4C5 /* TilosPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TilosPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5DD100D185A5963009D1A1A /* CoreText.framework in Frameworks */,
 				A5FEBFBC1858AF390084B4C5 /* CoreGraphics.framework in Frameworks */,
 				A5FEBFBE1858AF390084B4C5 /* UIKit.framework in Frameworks */,
 				A5FEBFBA1858AF390084B4C5 /* Foundation.framework in Frameworks */,
@@ -144,6 +150,7 @@
 		A5FEBFB81858AF390084B4C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A5DD100C185A5963009D1A1A /* CoreText.framework */,
 				A5FEBFB91858AF390084B4C5 /* Foundation.framework */,
 				A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */,
 				A5FEBFBD1858AF390084B4C5 /* UIKit.framework */,
@@ -253,6 +260,8 @@
 				A5DD1000185A1708009D1A1A /* TPTilosUtils.m */,
 				A5DD1002185A1C02009D1A1A /* TPAudioPlayer.h */,
 				A5DD1003185A1C02009D1A1A /* TPAudioPlayer.m */,
+				A5DD100E185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.h */,
+				A5DD100F185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -430,6 +439,7 @@
 				A5DD100B185A53CC009D1A1A /* UIColor+Additions.m in Sources */,
 				A5FEC02D1858DDC60084B4C5 /* TPPlayerViewController.m in Sources */,
 				A5FEBFFC1858B2940084B4C5 /* TPShowListViewController.m in Sources */,
+				A5DD1010185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.m in Sources */,
 				A5FEC0031858B2C40084B4C5 /* TPListModel.m in Sources */,
 				A5DD1004185A1C02009D1A1A /* TPAudioPlayer.m in Sources */,
 				A5FEC02A1858C9F20084B4C5 /* TPEpisodeListCell.m in Sources */,

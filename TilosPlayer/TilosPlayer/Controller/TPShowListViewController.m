@@ -14,6 +14,11 @@
 {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"Shows", nil);
+    
+    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"All", nil), NSLocalizedString(@"Music", nil), NSLocalizedString(@"Talk", nil)]];
+    segmentedControl.frame = CGRectMake(0, 0, 200, 25);
+    segmentedControl.selectedSegmentIndex = 0;
+    self.navigationItem.titleView = segmentedControl;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

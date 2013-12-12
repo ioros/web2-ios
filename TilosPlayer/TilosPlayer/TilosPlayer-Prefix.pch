@@ -15,4 +15,5 @@
     #import <Foundation/Foundation.h>
     #import "NSDictionary+TPAdditions.h"
     #import "TPTilosUtils.h"
+    #import "NSDictionary+TPModelAdditions.h"
 #endif

@@ -8,6 +8,7 @@
 
 #import "TPEpisodeListViewController.h"
 #import "TPEpisodeListCell.h"
+#import <CoreText/CoreText.h>
 
 @implementation TPEpisodeListViewController
 
@@ -32,15 +33,8 @@
     
     NSDictionary *data = [self.model dataForIndexPath:indexPath];
     episodeCell.textLabel.text = [[data objectForKey:@"show"] objectForKey:@"name"];
-    
-    NSArray *contributors = [[data objectForKey:@"show"] objectForKey:@"contributors"];
-    NSMutableArray *nicks = [NSMutableArray array];
-    for(NSDictionary *contributor in contributors) [nicks addObject:[contributor objectForKey:@"nick"]];
-    episodeCell.detailTextLabel.text = [nicks componentsJoinedByString:@", "];
-    
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[data objectForKey:@"plannedFrom"] integerValue]];
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
-    episodeCell.timeLabel.text = [NSString stringWithFormat:@"%d:%02d", components.hour, components.minute];
+    episodeCell.detailTextLabel.text = [[data episodeContributorNicknames] componentsJoinedByString:@", "];
+    episodeCell.timeLabel.attributedText = [data episodeStartTime];
 }
 
 @end

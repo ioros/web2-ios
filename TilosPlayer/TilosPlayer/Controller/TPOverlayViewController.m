@@ -9,6 +9,8 @@
 #import "TPOverlayViewController.h"
 #import "TPPlayerViewController.h"
 
+#define kTabbarHeight 48.0f
+
 @interface TPOverlayViewController ()
 
 @end
@@ -69,7 +71,7 @@
         UIViewController *viewController = self.overlayViewController;
         UIView *view = viewController.view;
         
-        view.frame = UIEdgeInsetsInsetRect(self.view.bounds, UIEdgeInsetsMake(0, 0, 49.5, 0));
+        view.frame = UIEdgeInsetsInsetRect(self.view.bounds, UIEdgeInsetsMake(0, 0, kTabbarHeight, 0));
         [self addChildViewController:viewController];
         [self.view addSubview:view];
     }
@@ -79,7 +81,7 @@
 
 - (void)playerViewControllerWillOpen:(TPPlayerViewController *)playerViewController
 {
-    self.overlayViewController.view.frame = UIEdgeInsetsInsetRect(self.view.bounds, UIEdgeInsetsMake(0, 0, 49.5, 0));
+    self.overlayViewController.view.frame = UIEdgeInsetsInsetRect(self.view.bounds, UIEdgeInsetsMake(0, 0, kTabbarHeight, 0));
 }
 - (void)playerViewControllerDidClose:(TPPlayerViewController *)playerViewController
 {
