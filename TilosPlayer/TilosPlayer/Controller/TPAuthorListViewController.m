@@ -14,6 +14,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.title = NSLocalizedString(@"Authors", nil);
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0);
 }
 

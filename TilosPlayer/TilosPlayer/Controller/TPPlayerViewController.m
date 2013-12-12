@@ -40,7 +40,7 @@
     
     UIView *fadeView = [[UIView alloc] initWithFrame:frame];
     fadeView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    fadeView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
+    fadeView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1.0];
     self.fadeView = fadeView;
     [self.view addSubview:self.fadeView];
     
@@ -112,6 +112,8 @@
 {
     [super viewWillAppear:animated];
     
+    [self doOpen:NO];
+    
     if(self.model == nil)
     {
         self.model = [TPEpisodeListModel new];
@@ -171,20 +173,42 @@
 }
 - (void)doClose:(BOOL)animated
 {
-    [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.logoView.frame = CGRectMake(0, 0, 320, 64);
-        self.topView.frame = CGRectMake(0, 0, 320, 64);
-        self.middleView.frame = CGRectMake(0, -180, 320, 230);
-        self.bottomView.frame = CGRectMake(0, 0, 320, 64);
-        self.fadeView.alpha = 0.0f;
-    } completion:^(BOOL finished) {
+    CGRect logoTargetRect = CGRectMake(0, 0, 320, 64);
+    CGRect topTargetRect = CGRectMake(0, 0, 320, 64);
+    CGRect middleTargetRect = CGRectMake(0, -180, 320, 230);
+    CGRect bottomTargetRect = CGRectMake(0, 0, 320, 64);
+    CGFloat fadeTargetAlpha = 0.0f;
+
+    _opened = NO;
+
+    if(animated)
+    {
+        [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.logoView.frame = logoTargetRect;
+            self.topView.frame = topTargetRect;
+            self.middleView.frame = middleTargetRect;
+            self.bottomView.frame = bottomTargetRect;
+            self.fadeView.alpha = fadeTargetAlpha;
+        } completion:^(BOOL finished) {
+            if([_delegate respondsToSelector:@selector(playerViewControllerDidClose:)])
+            {
+                [_delegate performSelector:@selector(playerViewControllerDidClose:) withObject:self];
+            }
+        }];
+    }
+    else
+    {
+        self.logoView.frame = logoTargetRect;
+        self.topView.frame = topTargetRect;
+        self.middleView.frame = middleTargetRect;
+        self.bottomView.frame = bottomTargetRect;
+        self.fadeView.alpha = fadeTargetAlpha;
+        
         if([_delegate respondsToSelector:@selector(playerViewControllerDidClose:)])
         {
             [_delegate performSelector:@selector(playerViewControllerDidClose:) withObject:self];
         }
-    }];
-    
-    _opened = NO;
+    }
 }
 - (void)openAnimated:(BOOL)animated
 {
@@ -198,16 +222,34 @@
     {
         [_delegate performSelector:@selector(playerViewControllerWillOpen:) withObject:self];
     }
-
-    [UIView animateWithDuration:0.3 animations:^{
-        self.logoView.frame = CGRectMake(0, 0, 320, 140);
-        self.topView.frame = CGRectMake(0, 0, 320, 170);
-        self.middleView.frame = CGRectMake(0, 170, 320, 230);
-        self.bottomView.frame = CGRectMake(0, 400, 320, self.view.bounds.size.height-400);
-        self.fadeView.alpha = 1.0f;
-    }];
+    
+    CGRect logoTargetRect = CGRectMake(0, 0, 320, 140);
+    CGRect topTargetRect = CGRectMake(0, 0, 320, 170);
+    CGRect middleTargetRect = CGRectMake(0, 170, 320, 230);
+    CGRect bottomTargetRect = CGRectMake(0, 400, 320, self.view.bounds.size.height-400);
+    CGFloat fadeTargetAlpha = 1.0f;
 
     _opened = YES;
+
+    if(animated)
+    {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.logoView.frame = logoTargetRect;
+            self.topView.frame = topTargetRect;
+            self.middleView.frame = middleTargetRect;
+            self.bottomView.frame = bottomTargetRect;
+            self.fadeView.alpha = fadeTargetAlpha;
+        }];
+    }
+    else
+    {
+        self.logoView.frame = logoTargetRect;
+        self.topView.frame = topTargetRect;
+        self.middleView.frame = middleTargetRect;
+        self.bottomView.frame = bottomTargetRect;
+        self.fadeView.alpha = fadeTargetAlpha;
+    }
+
 }
 - (void)toggleAnimated:(BOOL)animated
 {

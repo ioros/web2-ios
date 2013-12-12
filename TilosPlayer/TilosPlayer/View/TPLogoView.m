@@ -29,10 +29,12 @@
 {
     if(self.bounds.size.height > 100)
     {
-        self.button.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height-40);
+        self.button.frame = CGRectMake(0, 0, 60, 60);
+        self.button.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height-55);
     }
     else
     {
+        self.button.frame = CGRectMake(0, 0, 40, 40);
         self.button.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height-15);
     }
 }
