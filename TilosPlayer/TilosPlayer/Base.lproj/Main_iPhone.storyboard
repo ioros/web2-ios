@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A2093" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A2093" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="X5K-m2-mOs">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -8,7 +8,7 @@
         <scene sceneID="bat-30-Z1S">
             <objects>
                 <navigationController title="Authors" definesPresentationContext="YES" id="ak0-7k-rFp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Authors" id="CWs-Cn-iNq"/>
+                    <tabBarItem key="tabBarItem" title="Authors" image="TabItem" id="CWs-Cn-iNq"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WcO-dV-WEV">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -63,11 +63,29 @@
             </objects>
             <point key="canvasLocation" x="-307" y="-418"/>
         </scene>
+        <!--Overlay View Controller-->
+        <scene sceneID="7j3-8e-sT5">
+            <objects>
+                <viewController id="X5K-m2-mOs" customClass="TPOverlayViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="czz-bl-91U"/>
+                        <viewControllerLayoutGuide type="bottom" id="FGY-Jf-COu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Lwn-he-Ce0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KRL-au-ISo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2035" y="-398"/>
+        </scene>
         <!--Navigation Controller - Shows-->
         <scene sceneID="kNi-T8-pgj">
             <objects>
                 <navigationController definesPresentationContext="YES" id="o6Q-8w-fsK" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Shows" id="oti-hi-f0n"/>
+                    <tabBarItem key="tabBarItem" title="Shows" image="TabItem" id="oti-hi-f0n"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="73E-XI-OlD">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -127,8 +145,8 @@
             <objects>
                 <viewController id="4UW-zr-eiy" customClass="TPShowInfoViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="PS0-he-YRd"/>
-                        <viewControllerLayoutGuide type="bottom" id="dIe-tV-cWZ"/>
+                        <viewControllerLayoutGuide type="top" id="ErU-Ly-crM"/>
+                        <viewControllerLayoutGuide type="bottom" id="6Hp-lS-Ibp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dLP-Hu-3OP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -160,15 +178,15 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JJ1-d9-ctO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1533" y="-937"/>
+            <point key="canvasLocation" x="1501" y="-961"/>
         </scene>
         <!--Author Info View Controller-->
         <scene sceneID="RNQ-Ds-YZ1">
             <objects>
                 <viewController id="wWe-lj-QEL" customClass="TPAuthorInfoViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="FoS-77-604"/>
-                        <viewControllerLayoutGuide type="bottom" id="0cI-DO-dlz"/>
+                        <viewControllerLayoutGuide type="top" id="Ff8-Jh-GBn"/>
+                        <viewControllerLayoutGuide type="bottom" id="k1e-VS-bZA"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="5hq-bm-vCf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -194,8 +212,8 @@
             <objects>
                 <viewController id="603-eY-62r" customClass="TPPlayerViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="o4l-SJ-lfs"/>
-                        <viewControllerLayoutGuide type="bottom" id="IMM-WC-yiv"/>
+                        <viewControllerLayoutGuide type="top" id="qh3-ol-mhb"/>
+                        <viewControllerLayoutGuide type="bottom" id="DOf-Eg-9OZ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="RiV-5d-PVH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -212,7 +230,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1rM-ef-Dg1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2150" y="-937"/>
+            <point key="canvasLocation" x="2110" y="-969"/>
         </scene>
         <!--Episode List View Controller-->
         <scene sceneID="Nq4-Js-Gyl">
@@ -257,7 +275,7 @@
         <scene sceneID="Ece-AW-Ueg">
             <objects>
                 <navigationController definesPresentationContext="YES" id="z2x-KY-0wg" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Today" id="Fqd-ec-zki"/>
+                    <tabBarItem key="tabBarItem" title="Today" image="TabItem" id="Fqd-ec-zki"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gWL-dG-678">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -272,7 +290,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
             <objects>
-                <tabBarController id="8YX-ce-x5E" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabbarController" id="8YX-ce-x5E" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="JQR-rB-NYL">
                         <rect key="frame" x="0.0" y="431" width="320" height="49"/>
@@ -287,15 +305,18 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1366" y="68"/>
+            <point key="canvasLocation" x="-1630" y="-412"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="TabItem" width="30" height="30"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="gz2-Yg-7d9"/>
+        <segue reference="oGH-td-vvm"/>
     </inferredMetricsTieBreakers>
 </document>

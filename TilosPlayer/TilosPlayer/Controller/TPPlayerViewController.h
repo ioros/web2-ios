@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TPPlayerViewController : UIViewController
+#import "TPListModel.h"
 
+@interface TPPlayerViewController : UIViewController <TPListModelDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+
+@property (nonatomic, retain) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, retain) IBOutlet UICollectionView *tapeCollectionView;
+@property (nonatomic, retain) TPListModel *model;
 
 - (IBAction)close:(id)sender;
 

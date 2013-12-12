@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3EEC304AD91C45138A3AF475 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ED5DDE7360B4497AE32A859 /* libPods.a */; };
+		A5628CB9185917F4007CA45C /* TPTapeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */; };
+		A5DD0FFB1859FE42009D1A1A /* TPTapeCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD0FFA1859FE42009D1A1A /* TPTapeCollectionLayout.m */; };
+		A5DD0FFE185A100F009D1A1A /* TPOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD0FFD185A100F009D1A1A /* TPOverlayViewController.m */; };
+		A5E2479418590C1A006391AF /* TPEpisodeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */; };
 		A5FEBFBA1858AF390084B4C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFB91858AF390084B4C5 /* Foundation.framework */; };
 		A5FEBFBC1858AF390084B4C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */; };
 		A5FEBFBE1858AF390084B4C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBD1858AF390084B4C5 /* UIKit.framework */; };
@@ -37,6 +41,14 @@
 /* Begin PBXFileReference section */
 		3ED5DDE7360B4497AE32A859 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		950B5CB517C8490BAE5DBB13 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		A5628CB7185917F4007CA45C /* TPTapeCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTapeCollectionCell.h; sourceTree = "<group>"; };
+		A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTapeCollectionCell.m; sourceTree = "<group>"; };
+		A5DD0FF91859FE42009D1A1A /* TPTapeCollectionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTapeCollectionLayout.h; sourceTree = "<group>"; };
+		A5DD0FFA1859FE42009D1A1A /* TPTapeCollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTapeCollectionLayout.m; sourceTree = "<group>"; };
+		A5DD0FFC185A100F009D1A1A /* TPOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPOverlayViewController.h; sourceTree = "<group>"; };
+		A5DD0FFD185A100F009D1A1A /* TPOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPOverlayViewController.m; sourceTree = "<group>"; };
+		A5E2479218590C1A006391AF /* TPEpisodeCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPEpisodeCollectionCell.h; sourceTree = "<group>"; };
+		A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPEpisodeCollectionCell.m; sourceTree = "<group>"; };
 		A5FEBFB61858AF390084B4C5 /* TilosPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TilosPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5FEBFB91858AF390084B4C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -165,6 +177,8 @@
 				A5FEC0181858C1260084B4C5 /* ShowList */,
 				A5FEC0171858C11C0084B4C5 /* AuthorList */,
 				A5FEC031185909CE0084B4C5 /* EpisodeList */,
+				A5DD0FFC185A100F009D1A1A /* TPOverlayViewController.h */,
+				A5DD0FFD185A100F009D1A1A /* TPOverlayViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -191,6 +205,10 @@
 				A5FEC0121858BE170084B4C5 /* TPAuthorListCell.m */,
 				A5FEC0281858C9F20084B4C5 /* TPEpisodeListCell.h */,
 				A5FEC0291858C9F20084B4C5 /* TPEpisodeListCell.m */,
+				A5E2479218590C1A006391AF /* TPEpisodeCollectionCell.h */,
+				A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */,
+				A5628CB7185917F4007CA45C /* TPTapeCollectionCell.h */,
+				A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -211,6 +229,8 @@
 				A5FEC00F1858BA340084B4C5 /* NSDictionary+TPAdditions.m */,
 				A5FEC02E185901CA0084B4C5 /* NSArray+TPIndexedSorting.h */,
 				A5FEC02F185901CA0084B4C5 /* NSArray+TPIndexedSorting.m */,
+				A5DD0FF91859FE42009D1A1A /* TPTapeCollectionLayout.h */,
+				A5DD0FFA1859FE42009D1A1A /* TPTapeCollectionLayout.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -382,7 +402,9 @@
 			files = (
 				A5FEC0161858BEEB0084B4C5 /* TPShowListModel.m in Sources */,
 				A5FEC01F1858C1520084B4C5 /* TPShowInfoViewController.m in Sources */,
+				A5628CB9185917F4007CA45C /* TPTapeCollectionCell.m in Sources */,
 				A5FEC01C1858C1440084B4C5 /* TPAuthorInfoViewController.m in Sources */,
+				A5E2479418590C1A006391AF /* TPEpisodeCollectionCell.m in Sources */,
 				A5FEC02D1858DDC60084B4C5 /* TPPlayerViewController.m in Sources */,
 				A5FEBFFC1858B2940084B4C5 /* TPShowListViewController.m in Sources */,
 				A5FEC0031858B2C40084B4C5 /* TPListModel.m in Sources */,
@@ -391,12 +413,14 @@
 				A5FEC0241858C3A30084B4C5 /* TPEpisodeListViewController.m in Sources */,
 				A5FEBFC61858AF390084B4C5 /* main.m in Sources */,
 				A5FEC0091858B6350084B4C5 /* TPAuthorListModel.m in Sources */,
+				A5DD0FFE185A100F009D1A1A /* TPOverlayViewController.m in Sources */,
 				A5FEC0001858B2AB0084B4C5 /* TPAppDelegate.m in Sources */,
 				A5FEC030185901CA0084B4C5 /* NSArray+TPIndexedSorting.m in Sources */,
 				A5FEC0131858BE170084B4C5 /* TPAuthorListCell.m in Sources */,
 				A5FEBFFB1858B2940084B4C5 /* TPAuthorListViewController.m in Sources */,
 				A5FEC0061858B4540084B4C5 /* TPTableViewController.m in Sources */,
 				A5FEC0271858C3BC0084B4C5 /* TPEpisodeListModel.m in Sources */,
+				A5DD0FFB1859FE42009D1A1A /* TPTapeCollectionLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
