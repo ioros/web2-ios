@@ -16,7 +16,7 @@
     [super viewDidLoad];
     
     
-    self.title = NSLocalizedString(@"Today", nil);
+    self.title = NSLocalizedString(@"Episodes", nil);
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0);
 }
 
