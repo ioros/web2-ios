@@ -15,6 +15,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setup];
+        
+        self.opaque = NO;
     }
     return self;
 }
@@ -37,13 +39,13 @@
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
 
-    [[UIColor whiteColor] set];
+    [[UIColor clearColor] set];
     CGContextFillRect(ctx, rect);
     
-    [[UIColor blackColor] set];
+    [[UIColor whiteColor] set];
     CGContextFillEllipseInRect(ctx, CGRectMake(-3, rect.size.height/2-3, 6, 6));
     CGContextFillEllipseInRect(ctx, CGRectMake(rect.size.width-3, rect.size.height/2-3, 6, 6));
-    CGContextFillRect(ctx, CGRectMake(0, rect.size.height/2-0.5, rect.size.width, 1));
+    CGContextFillRect(ctx, CGRectMake(0, floorf(rect.size.height/2), rect.size.width, 0.5));
     
     for(int i=1; i<5; i++)
     {

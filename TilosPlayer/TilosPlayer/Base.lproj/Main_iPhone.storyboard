@@ -26,7 +26,7 @@
             <objects>
                 <viewController title="First" id="CZ4-MO-1fc" customClass="TPAuthorListViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Lpt-bV-y0g">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -103,11 +103,11 @@
             <objects>
                 <viewController title="Second" id="QUy-BD-bpt" customClass="TPShowListViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="EXy-Dh-QCZ">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ShowListCell" id="l1o-Qh-hia">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ShowListCell" id="l1o-Qh-hia" customClass="TPShowListCell">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l1o-Qh-hia" id="D8m-Tt-D7v">
@@ -140,7 +140,7 @@
             <objects>
                 <viewController id="4UW-zr-eiy" customClass="TPShowInfoViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="2Od-vf-9Pp">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -174,7 +174,7 @@
             <objects>
                 <viewController id="wWe-lj-QEL" customClass="TPAuthorInfoViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5hq-bm-vCf">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -186,17 +186,17 @@
             </objects>
             <point key="canvasLocation" x="291" y="-431"/>
         </scene>
-        <!--Episode List View Controller - Today-->
+        <!--Episode List View Controller-->
         <scene sceneID="Nq4-Js-Gyl">
             <objects>
-                <tableViewController title="Today" id="Bhi-6p-bNm" customClass="TPEpisodeListViewController" sceneMemberID="viewController">
+                <tableViewController id="Bhi-6p-bNm" customClass="TPEpisodeListViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" id="3kj-wv-XHK">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EpisodeListCell" textLabel="Kat-dq-sQ0" detailTextLabel="HkN-R7-tu5" style="IBUITableViewCellStyleSubtitle" id="8sU-hH-VF1" customClass="TPEpisodeListCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8sU-hH-VF1" id="CVP-yq-OaA">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -240,9 +240,8 @@
             <objects>
                 <navigationController definesPresentationContext="YES" id="z2x-KY-0wg" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="EmptyDot" id="Fqd-ec-zki"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="gWL-dG-678">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gWL-dG-678">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="Bhi-6p-bNm" kind="relationship" relationship="rootViewController" id="gRF-ho-adY"/>
@@ -257,6 +256,7 @@
             <objects>
                 <tabBarController storyboardIdentifier="tabbarController" id="8YX-ce-x5E" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="JQR-rB-NYL" customClass="TPTabBar">
                         <rect key="frame" x="0.0" y="431" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>

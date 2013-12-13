@@ -27,11 +27,12 @@
         self.label = [[UILabel alloc] initWithFrame:self.bounds];
         self.label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.label.textAlignment = NSTextAlignmentCenter;
-        self.label.backgroundColor = [UIColor whiteColor];
+        self.label.font = kTitleFont;
+        self.label.backgroundColor = [UIColor clearColor];
         [self addSubview:self.label];
         
         self.pagerView = [[UIImageView alloc] initWithFrame:self.bounds];
-        self.pagerView.opaque = YES;
+        self.pagerView.opaque = NO;
         
         self.clipsToBounds = YES;
     }
@@ -59,7 +60,7 @@
     
 	if(UIGraphicsBeginImageContextWithOptions != NULL)
 	{
-		UIGraphicsBeginImageContextWithOptions(b.size, YES, 0.0);
+		UIGraphicsBeginImageContextWithOptions(b.size, NO, 0.0);
 	}
 	else
 	{

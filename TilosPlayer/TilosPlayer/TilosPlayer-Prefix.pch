@@ -17,4 +17,12 @@
     #import "TPTilosUtils.h"
     #import "NSDictionary+TPModelAdditions.h"
     #import "AFNetworking.h"
+    #import "UIImage+ImageEffects.h"
 #endif
+
+
+#define kTitleFont [UIFont fontWithName:@"Avenir-Medium" size:23]
+#define kDescFont [UIFont fontWithName:@"Avenir-Light" size:13]
+#define kSubFont [UIFont fontWithName:@"Avenir-Light" size:11]
+
+#define kListFont [UIFont fontWithName:@"Avenir-Light" size:16]

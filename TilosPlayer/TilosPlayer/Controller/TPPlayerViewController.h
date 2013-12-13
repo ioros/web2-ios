@@ -28,16 +28,14 @@
 @property (nonatomic, retain) TPListModel *model;
 
 @property (nonatomic, retain) UIButton *logoButton;
-@property (nonatomic, retain) UIView *logoView;
+@property (nonatomic, retain) IBOutlet UIButton *playButton;
+
 @property (nonatomic, retain) UIView *topView;
 @property (nonatomic, retain) UIView *middleView;
-@property (nonatomic, retain) UIView *bottomView;
+@property (nonatomic, retain) UIImageView *backgroundView;
 
 @property (nonatomic, retain) UIView *fadeView;
 
-@property (nonatomic, retain) IBOutlet UIButton *playButton;
-@property (nonatomic, retain) IBOutlet UIButton *prevButton;
-@property (nonatomic, retain) IBOutlet UIButton *nextButton;
 
 @property (nonatomic, assign) id<TPPlayerViewControllerDelegate> delegate;
 

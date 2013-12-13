@@ -14,7 +14,6 @@
 
 @property (nonatomic, retain) NSArray *buttons;
 @property (nonatomic, assign) NSInteger selectedIndex;
-@property (nonatomic, retain) UIView *coverView;
 
 @end
 
@@ -41,12 +40,17 @@
 
 - (void)setup
 {
-    UIView *v = [[UIView alloc] initWithFrame:self.bounds];
-    v.backgroundColor = [UIColor whiteColor];
-    v.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [super addSubview:v];
+    UIImageView *imageView;
+    imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+    imageView.clipsToBounds = YES;
+    imageView.contentMode = UIViewContentModeTop;
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [super addSubview:imageView];
     
-    self.coverView = v;
+    ////////////////////
+    
+    
+    self.coverView = imageView;
     
     self.selectedIndex = -1;
 }
@@ -68,6 +72,8 @@
 {
     NSArray *items = self.items;
     
+    [self bringSubviewToFront:self.coverView];
+    
     [self.buttons makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     NSMutableArray *buttons = [NSMutableArray array];
@@ -81,7 +87,7 @@
         [button setImage:item.image forState:UIControlStateNormal];
         [button setImage:[UIImage imageNamed:@"FullDot.png"] forState:UIControlStateSelected];
         //[button setTitle:item.title forState:UIControlStateNormal];
-        button.backgroundColor = [UIColor whiteColor];
+        //button.backgroundColor = [UIColor whiteColor];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         button.frame = CGRectMake(part * counter, 0, part, self.bounds.size.height);
         button.tag = counter;

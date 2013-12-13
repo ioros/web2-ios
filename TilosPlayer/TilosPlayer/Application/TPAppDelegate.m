@@ -15,9 +15,16 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self setupAudio];
-    //self.window.tintColor = [UIColor colorWithHexRGB:0x1485CC];
-    self.window.tintColor = [UIColor blackColor];
+    [self setupAppearance];
+    
     return YES;
+}
+
+- (void)setupAppearance
+{
+    self.window.tintColor = [UIColor blackColor];
+    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:kDescFont} forState:UIControlStateNormal];
+    [[UISegmentedControl appearance] setTintColor:[UIColor darkGrayColor]];
 }
 
 - (void)setupAudio

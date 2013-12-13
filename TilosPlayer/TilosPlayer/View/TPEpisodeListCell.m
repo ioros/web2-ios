@@ -8,15 +8,10 @@
 
 #import "TPEpisodeListCell.h"
 
-#define kTitleFont [UIFont systemFontOfSize:20]
-#define kTextFont [UIFont systemFontOfSize:13]
-#define kAuthorFont [UIFont boldSystemFontOfSize:11]
-
 #define kTextGap 6.0f
 #define kTitleGap 6.0f
 #define kBottomGap 9.0f
 #define kTopGap 9.0f
-
 
 @implementation TPEpisodeListCell
 
@@ -45,7 +40,7 @@
     self.textLabel.font = kTitleFont;
 
     self.detailTextLabel.numberOfLines = 0;
-    self.detailTextLabel.font = kTextFont;
+    self.detailTextLabel.font = kDescFont;
     self.detailTextLabel.lineBreakMode = NSLineBreakByTruncatingTail | NSLineBreakByWordWrapping;
 
     self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
@@ -57,7 +52,7 @@
     self.authorLabel.lineBreakMode = NSLineBreakByTruncatingTail | NSLineBreakByWordWrapping;
     self.authorLabel.backgroundColor = [UIColor whiteColor];
     self.authorLabel.numberOfLines = 0;
-    self.authorLabel.font = kAuthorFont;
+    self.authorLabel.font = kSubFont;
     [self.contentView addSubview:self.authorLabel];
 }
 
@@ -105,7 +100,7 @@
     {
         offset += kTitleGap;
         
-        s = [description sizeWithFont:kTextFont constrainedToSize:CGSizeMake(textWidth, 200) lineBreakMode:NSLineBreakByWordWrapping |NSLineBreakByTruncatingTail];
+        s = [description sizeWithFont:kDescFont constrainedToSize:CGSizeMake(textWidth, 200) lineBreakMode:NSLineBreakByWordWrapping |NSLineBreakByTruncatingTail];
         offset += ceilf(s.height);
     }
 
@@ -113,7 +108,7 @@
     {
         offset += kTextGap;
         
-        s = [authors sizeWithFont:kAuthorFont constrainedToSize:CGSizeMake(textWidth, 200) lineBreakMode:NSLineBreakByWordWrapping | NSLineBreakByTruncatingTail];
+        s = [authors sizeWithFont:kSubFont constrainedToSize:CGSizeMake(textWidth, 200) lineBreakMode:NSLineBreakByWordWrapping | NSLineBreakByTruncatingTail];
         offset += ceilf(s.height);
     }
 

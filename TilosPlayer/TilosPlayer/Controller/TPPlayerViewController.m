@@ -13,7 +13,7 @@
 #import "TPEpisodeCollectionCell.h"
 #import "TPTapeCollectionCell.h"
 #import "TPTapeCollectionLayout.h"
-#import "TPLogoView.h"
+#import "UIImage+ImageEffects.h"
 
 #import "TPAudioPlayer.h"
 
@@ -36,56 +36,43 @@
     
     CGRect frame = CGRectMake(0, 0, 320, 480);
     UIView *v = [[UIView alloc] initWithFrame:frame];
+    v.clipsToBounds = YES;
     v.backgroundColor = [UIColor clearColor];
     self.view = v;
     
-    UIView *fadeView = [[UIView alloc] initWithFrame:frame];
+    UIView *fadeView = [[UIView alloc] initWithFrame:CGRectMake(0, 110, 320, 340)];
+    fadeView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
     fadeView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    fadeView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1.0];
     self.fadeView = fadeView;
     [self.view addSubview:self.fadeView];
     
-
-    TPLogoView *logoView = [[TPLogoView alloc] initWithFrame:CGRectMake(0, 0, 320, 140)];
-    logoView.backgroundColor = [UIColor clearColor];
-    logoView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
-    self.logoView = logoView;
-    
-
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 170)];
-    topView.backgroundColor = [UIColor whiteColor];
+    topView.backgroundColor = [UIColor clearColor];
     topView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
     self.topView = topView;
     
 
     UIView *middleView = [[UIView alloc] initWithFrame:CGRectMake(0, 170, 320, 230)];
-    middleView.backgroundColor = [UIColor whiteColor];
+    middleView.backgroundColor = [UIColor clearColor];
     middleView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
     self.middleView = middleView;
 
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 420, 320, 80)];
-    bottomView.backgroundColor = [UIColor whiteColor];
-    bottomView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-    self.bottomView = bottomView;
-    
-    [self.view addSubview:self.bottomView];
+    UIImageView *backgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 170, 320, 230)];
+    backgroundView.backgroundColor = [UIColor whiteColor];
+    backgroundView.contentMode = UIViewContentModeTop;
+    backgroundView.clipsToBounds = YES;
+    backgroundView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
+    self.backgroundView = backgroundView;
+
+    [self.view addSubview:self.backgroundView];
     [self.view addSubview:self.middleView];
     [self.view addSubview:self.topView];
-    [self.view addSubview:self.logoView];
     
     ///////////////////////////
     
-    [logoView.button addTarget:self action:@selector(toggle:) forControlEvents:UIControlEventTouchUpInside];
-
-    UIButton *pauseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [pauseButton setImage:[UIImage imageNamed:@"PauseButton.png"] forState:UIControlStateNormal];
-    pauseButton.frame = CGRectMake(0, 0, 50, 50);
-    pauseButton.center = CGPointMake(160, 30);
-    [self.bottomView addSubview:pauseButton];
-    
     TPTapeCollectionLayout *collectionViewLayout = [[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(150, 20)];
-    self.tapeCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 140, 320, 30) collectionViewLayout:collectionViewLayout];
-    self.tapeCollectionView.backgroundColor = [UIColor whiteColor];
+    self.tapeCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 125, 320, 44) collectionViewLayout:collectionViewLayout];
+    self.tapeCollectionView.backgroundColor = [UIColor clearColor];
     self.tapeCollectionView.delegate = self;
     self.tapeCollectionView.showsHorizontalScrollIndicator = NO;
     self.tapeCollectionView.dataSource = self;
@@ -93,9 +80,9 @@
     [self.tapeCollectionView registerClass:[TPTapeCollectionCell class] forCellWithReuseIdentifier:@"TapeCollectionCell"];
     [self.topView addSubview:self.tapeCollectionView];
     
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 20, 320, 210) collectionViewLayout:[[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(320, 210)]];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 15, 320, 220) collectionViewLayout:[[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(320, 220)]];
     self.collectionView.pagingEnabled = YES;
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.backgroundColor = [UIColor clearColor];
     self.collectionView.showsHorizontalScrollIndicator = NO;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -103,23 +90,34 @@
     [self.collectionView registerClass:[TPEpisodeCollectionCell class] forCellWithReuseIdentifier:@"EpisodeCollectionCell"];
     [self.middleView addSubview:self.collectionView];
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    ////////////////
+    
+    UIButton *button = nil;
+
+    /////////////////////
+    
+    button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setImage:[UIImage imageNamed:@"PlayButton.png"] forState:UIControlStateNormal];
+    button.frame = CGRectMake(0, 0, 60, 60);
+    button.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
+    button.center = CGPointMake(160, 400);
+    
+    [self.view addSubview:button];
+    self.playButton = button;
+    
+    [self.playButton addTarget:self action:@selector(play:) forControlEvents:UIControlEventTouchUpInside];
+
+    /////////////
+    
+    button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setImage:[UIImage imageNamed:@"logoAlpha.png"] forState:UIControlStateNormal];
     button.frame = CGRectMake(0, 0, 60, 60);
     button.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
     button.center = CGPointMake(160, 100);
+    [button addTarget:self action:@selector(toggle:) forControlEvents:UIControlEventTouchUpInside];
+
     [self.view addSubview:button];
     self.logoButton = button;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    
-    [self.nextButton addTarget:self action:@selector(next:) forControlEvents:UIControlEventTouchUpInside];
-    [self.prevButton addTarget:self action:@selector(prev:) forControlEvents:UIControlEventTouchUpInside];
-    [self.playButton addTarget:self action:@selector(play:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -187,12 +185,12 @@
 }
 - (void)doClose:(BOOL)animated
 {
-    CGRect logoTargetRect = CGRectMake(0, 0, 320, 64);
     CGRect topTargetRect = CGRectMake(0, 0, 320, 64);
-    CGRect middleTargetRect = CGRectMake(0, -180, 320, 230);
-    CGRect bottomTargetRect = CGRectMake(0, 0, 320, 64);
+    CGRect middleTargetRect = CGRectMake(0, -250, 320, 260);
     CGFloat fadeTargetAlpha = 0.0f;
-    CGRect logoButtonTargetRect = CGRectMake(140, 28, 40, 40);
+    CGRect logoButtonTargetRect = CGRectMake(140, 20, 40, 40);
+    CGRect playButtonTargetRect = CGRectMake(140, 20, 40, 40);
+    CGRect backgroundTargetRect = CGRectMake(0, 0, 320, 64);
 
     _opened = NO;
 
@@ -203,12 +201,12 @@
               initialSpringVelocity:0.2
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
-                            self.logoView.frame = logoTargetRect;
                              self.topView.frame = topTargetRect;
                              self.middleView.frame = middleTargetRect;
-                             self.bottomView.frame = bottomTargetRect;
                              self.fadeView.alpha = fadeTargetAlpha;
                              self.logoButton.frame = logoButtonTargetRect;
+                             self.playButton.frame = playButtonTargetRect;
+                             self.backgroundView.frame = backgroundTargetRect;
         } completion:^(BOOL finished) {
             if([_delegate respondsToSelector:@selector(playerViewControllerDidClose:)])
             {
@@ -218,12 +216,12 @@
     }
     else
     {
-        self.logoView.frame = logoTargetRect;
         self.topView.frame = topTargetRect;
         self.middleView.frame = middleTargetRect;
-        self.bottomView.frame = bottomTargetRect;
         self.fadeView.alpha = fadeTargetAlpha;
         self.logoButton.frame = logoButtonTargetRect;
+        self.playButton.frame = playButtonTargetRect;
+        self.backgroundView.frame = backgroundTargetRect;
         
         if([_delegate respondsToSelector:@selector(playerViewControllerDidClose:)])
         {
@@ -244,12 +242,12 @@
         [_delegate performSelector:@selector(playerViewControllerWillOpen:) withObject:self];
     }
     
-    CGRect logoTargetRect = CGRectMake(0, 0, 320, 140);
     CGRect topTargetRect = CGRectMake(0, 0, 320, 170);
-    CGRect middleTargetRect = CGRectMake(0, 170, 320, 230);
-    CGRect bottomTargetRect = CGRectMake(0, 400, 320, self.view.bounds.size.height-400);
+    CGRect middleTargetRect = CGRectMake(0, 170, 320, self.view.bounds.size.height - 170);
     CGFloat fadeTargetAlpha = 1.0f;
-    CGRect logoButtonTargetRect = CGRectMake(130, 70, 60, 60);
+    CGRect logoButtonTargetRect = CGRectMake(130, 50, 60, 60);
+    CGRect playButtonTargetRect = CGRectMake(130, 420, 60, 60);
+    CGRect backgroundTargetRect = CGRectMake(0, 0, 320, self.view.bounds.size.height);
 
     _opened = YES;
 
@@ -260,12 +258,14 @@
               initialSpringVelocity:0.2
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
-                             self.logoView.frame = logoTargetRect;
                              self.topView.frame = topTargetRect;
                              self.middleView.frame = middleTargetRect;
-                             self.bottomView.frame = bottomTargetRect;
                              self.fadeView.alpha = fadeTargetAlpha;
                              self.logoButton.frame = logoButtonTargetRect;
+                             self.playButton.frame = playButtonTargetRect;
+                             self.backgroundView.frame = backgroundTargetRect;
+
+
         } completion:nil];
         
 //        [UIView animateWithDuration:kAnimationDuration delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -273,12 +273,12 @@
     }
     else
     {
-        self.logoView.frame = logoTargetRect;
         self.topView.frame = topTargetRect;
         self.middleView.frame = middleTargetRect;
-        self.bottomView.frame = bottomTargetRect;
         self.fadeView.alpha = fadeTargetAlpha;
         self.logoButton.frame = logoButtonTargetRect;
+        self.playButton.frame = playButtonTargetRect;
+        self.backgroundView.frame = backgroundTargetRect;
     }
 
 }

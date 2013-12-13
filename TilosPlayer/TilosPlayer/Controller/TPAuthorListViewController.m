@@ -19,13 +19,13 @@
     // this way we can get only the chevron for the back button
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 260, 30)];
-    label.font = [UIFont systemFontOfSize:16];
+    label.font = kTitleFont;
     label.textAlignment = NSTextAlignmentCenter;
     label.text = NSLocalizedString(@"Authors", nil);
     self.navigationItem.titleView = label;
     
     self.title = @"";
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0);
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 50, 0, 0);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

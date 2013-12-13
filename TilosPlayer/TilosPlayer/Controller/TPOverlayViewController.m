@@ -11,6 +11,7 @@
 #import "TPTabBar.h"
 
 #define kTabbarHeight 48.0f
+#define kTopbarHeight 64.0f
 
 @interface TPOverlayViewController ()
 
@@ -74,9 +75,12 @@
     
     if(self.rootViewController)
     {
-        self.rootViewController.view.frame = UIEdgeInsetsInsetRect(self.view.bounds, UIEdgeInsetsMake(64, 0, 0, 0));
-        [self addChildViewController:self.rootViewController];
-        [self.view addSubview:self.rootViewController.view];
+        UIViewController *viewController = self.rootViewController;
+        UIView *view = viewController.view;
+        view.frame = UIEdgeInsetsInsetRect(self.view.bounds, UIEdgeInsetsMake(kTopbarHeight, 0, 0, 0));
+        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self addChildViewController:viewController];
+        [self.view addSubview:view];
 
         UITabBarController *tabbarController = (UITabBarController *)_rootViewController;
         tabbarController.delegate = self;
@@ -89,9 +93,55 @@
         UIView *view = viewController.view;
         
         view.frame = UIEdgeInsetsInsetRect(self.view.bounds, UIEdgeInsetsMake(0, 0, kTabbarHeight, 0));
+        view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [self addChildViewController:viewController];
         [self.view addSubview:view];
     }
+    
+    ///
+    
+    UIImage *image = [UIImage imageNamed:@"DefaultBanner.png"];
+    UIColor *tintColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+    image = [image applyBlurWithRadius:7 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
+
+    CGSize size = CGSizeMake(320.0f, 568.0f);
+    CGFloat scale = MAX(size.width / image.size.width, size.height / image.size.height);
+    CGSize scaledSize = CGSizeMake(image.size.width * scale, image.size.height * scale);
+    
+    if(UIGraphicsBeginImageContextWithOptions != NULL)
+	{
+		UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
+	}
+	else
+	{
+		UIGraphicsBeginImageContext(size);
+	}
+    [image drawInRect:CGRectMake( (size.width - scaledSize.width)/2, (size.height - scaledSize.height)/2, scaledSize.width, scaledSize.height)];
+    
+	UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+
+    
+    
+    size = CGSizeMake(320, 50);
+    
+    if(UIGraphicsBeginImageContextWithOptions != NULL)
+	{
+		UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
+	}
+	else
+	{
+		UIGraphicsBeginImageContext(size);
+	}
+    [scaledImage drawInRect:CGRectMake(0, -568.0f + size.height, size.width, 568.0f)];
+    
+	UIImage *tabbarImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    ////////////
+    
+    UITabBarController *tabbarController = (UITabBarController *)_rootViewController;
+    [[(TPTabBar *)[tabbarController tabBar] coverView] setImage:tabbarImage];
+    
+    [[(TPPlayerViewController *)[self overlayViewController] backgroundView] setImage:scaledImage];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -109,10 +159,15 @@
 }
 - (void)playerViewControllerDidClose:(TPPlayerViewController *)playerViewController
 {
-    self.overlayViewController.view.frame = CGRectMake(0, 0, 320, 64);
+    self.overlayViewController.view.frame = CGRectMake(0, 0, 320, kTopbarHeight);
 }
 
 #pragma mark -
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 
 - (BOOL)shouldAutomaticallyForwardAppearanceMethods
 {

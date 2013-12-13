@@ -10,15 +10,40 @@
 
 @implementation TPAuthorListCell
 
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if(self)
+    {
+        [self setup];
+    }
+    return self;
+}
+
+- (void)setup
+{
+    self.textLabel.font = kListFont;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     
     CGRect b = self.bounds;
-    CGFloat textWidth = b.size.width - 80;
     
-    self.imageView.frame = CGRectMake(0, 0, 50, 50);
-    self.textLabel.frame = CGRectMake(60, 15, textWidth, 20);
+    CGFloat imageWidth = b.size.height;
+    CGFloat textWidth = b.size.width - imageWidth - 25;
+    
+    self.imageView.frame = CGRectMake(0, 0, imageWidth, imageWidth);
+    self.textLabel.frame = CGRectMake(imageWidth + 10, (b.size.height - 17)/2, textWidth, 20);
     //self.detailTextLabel.frame = CGRectMake(60, 27, b.size.width - 80, 20);
 }
 @end

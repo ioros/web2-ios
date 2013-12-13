@@ -13,7 +13,6 @@
 		A5DD0FFE185A100F009D1A1A /* TPOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD0FFD185A100F009D1A1A /* TPOverlayViewController.m */; };
 		A5DD1001185A1708009D1A1A /* TPTilosUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1000185A1708009D1A1A /* TPTilosUtils.m */; };
 		A5DD1004185A1C02009D1A1A /* TPAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1003185A1C02009D1A1A /* TPAudioPlayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A5DD1008185A3735009D1A1A /* TPLogoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1007185A3735009D1A1A /* TPLogoView.m */; };
 		A5DD100B185A53CC009D1A1A /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD100A185A53CC009D1A1A /* UIColor+Additions.m */; };
 		A5DD100D185A5963009D1A1A /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5DD100C185A5963009D1A1A /* CoreText.framework */; };
 		A5DD1010185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD100F185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.m */; };
@@ -25,6 +24,8 @@
 		A5DD1022185A8F0E009D1A1A /* TPFlipLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1021185A8F0E009D1A1A /* TPFlipLabelView.m */; };
 		A5DD1025185A9725009D1A1A /* NSDate+TPAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1024185A9725009D1A1A /* NSDate+TPAdditions.m */; };
 		A5DD1028185A9D83009D1A1A /* TPTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1027185A9D83009D1A1A /* TPTabBar.m */; };
+		A5DD102B185AC26C009D1A1A /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD102A185AC26C009D1A1A /* UIImage+ImageEffects.m */; };
+		A5DD102E185AEE16009D1A1A /* TPShowListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD102D185AEE16009D1A1A /* TPShowListCell.m */; };
 		A5E2479418590C1A006391AF /* TPEpisodeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */; };
 		A5FEBFBA1858AF390084B4C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFB91858AF390084B4C5 /* Foundation.framework */; };
 		A5FEBFBC1858AF390084B4C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */; };
@@ -66,8 +67,6 @@
 		A5DD1002185A1C02009D1A1A /* TPAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAudioPlayer.h; sourceTree = "<group>"; };
 		A5DD1003185A1C02009D1A1A /* TPAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAudioPlayer.m; sourceTree = "<group>"; };
 		A5DD1005185A1C71009D1A1A /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
-		A5DD1006185A3735009D1A1A /* TPLogoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPLogoView.h; sourceTree = "<group>"; };
-		A5DD1007185A3735009D1A1A /* TPLogoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPLogoView.m; sourceTree = "<group>"; };
 		A5DD1009185A53CC009D1A1A /* UIColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additions.h"; sourceTree = "<group>"; };
 		A5DD100A185A53CC009D1A1A /* UIColor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additions.m"; sourceTree = "<group>"; };
 		A5DD100C185A5963009D1A1A /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -87,6 +86,10 @@
 		A5DD1024185A9725009D1A1A /* NSDate+TPAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TPAdditions.m"; sourceTree = "<group>"; };
 		A5DD1026185A9D83009D1A1A /* TPTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTabBar.h; sourceTree = "<group>"; };
 		A5DD1027185A9D83009D1A1A /* TPTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTabBar.m; sourceTree = "<group>"; };
+		A5DD1029185AC26C009D1A1A /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		A5DD102A185AC26C009D1A1A /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		A5DD102C185AEE16009D1A1A /* TPShowListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPShowListCell.h; sourceTree = "<group>"; };
+		A5DD102D185AEE16009D1A1A /* TPShowListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPShowListCell.m; sourceTree = "<group>"; };
 		A5E2479218590C1A006391AF /* TPEpisodeCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPEpisodeCollectionCell.h; sourceTree = "<group>"; };
 		A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPEpisodeCollectionCell.m; sourceTree = "<group>"; };
 		A5FEBFB61858AF390084B4C5 /* TilosPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TilosPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -267,14 +270,14 @@
 				A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */,
 				A5628CB7185917F4007CA45C /* TPTapeCollectionCell.h */,
 				A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */,
-				A5DD1006185A3735009D1A1A /* TPLogoView.h */,
-				A5DD1007185A3735009D1A1A /* TPLogoView.m */,
 				A5DD1017185A7F4B009D1A1A /* TPShowInfoHeaderView.h */,
 				A5DD1018185A7F4B009D1A1A /* TPShowInfoHeaderView.m */,
 				A5DD1020185A8F0E009D1A1A /* TPFlipLabelView.h */,
 				A5DD1021185A8F0E009D1A1A /* TPFlipLabelView.m */,
 				A5DD1026185A9D83009D1A1A /* TPTabBar.h */,
 				A5DD1027185A9D83009D1A1A /* TPTabBar.m */,
+				A5DD102C185AEE16009D1A1A /* TPShowListCell.h */,
+				A5DD102D185AEE16009D1A1A /* TPShowListCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -291,6 +294,8 @@
 		A5FEC00A1858BA0B0084B4C5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				A5DD1029185AC26C009D1A1A /* UIImage+ImageEffects.h */,
+				A5DD102A185AC26C009D1A1A /* UIImage+ImageEffects.m */,
 				A5DD1009185A53CC009D1A1A /* UIColor+Additions.h */,
 				A5DD100A185A53CC009D1A1A /* UIColor+Additions.m */,
 				A5DD1005185A1C71009D1A1A /* SynthesizeSingleton.h */,
@@ -477,6 +482,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5DD102B185AC26C009D1A1A /* UIImage+ImageEffects.m in Sources */,
 				A5FEC0161858BEEB0084B4C5 /* TPShowListModel.m in Sources */,
 				A5FEC01F1858C1520084B4C5 /* TPShowInfoViewController.m in Sources */,
 				A5628CB9185917F4007CA45C /* TPTapeCollectionCell.m in Sources */,
@@ -495,7 +501,6 @@
 				A5FEBFC61858AF390084B4C5 /* main.m in Sources */,
 				A5FEC0091858B6350084B4C5 /* TPAuthorListModel.m in Sources */,
 				A5DD0FFE185A100F009D1A1A /* TPOverlayViewController.m in Sources */,
-				A5DD1008185A3735009D1A1A /* TPLogoView.m in Sources */,
 				A5FEC0001858B2AB0084B4C5 /* TPAppDelegate.m in Sources */,
 				A5DD1001185A1708009D1A1A /* TPTilosUtils.m in Sources */,
 				A5DD1028185A9D83009D1A1A /* TPTabBar.m in Sources */,
@@ -503,6 +508,7 @@
 				A5FEC030185901CA0084B4C5 /* NSArray+TPIndexedSorting.m in Sources */,
 				A5FEC0131858BE170084B4C5 /* TPAuthorListCell.m in Sources */,
 				A5DD1016185A7634009D1A1A /* TPShowInfoModel.m in Sources */,
+				A5DD102E185AEE16009D1A1A /* TPShowListCell.m in Sources */,
 				A5DD1013185A75A8009D1A1A /* TPModel.m in Sources */,
 				A5FEBFFB1858B2940084B4C5 /* TPAuthorListViewController.m in Sources */,
 				A5FEC0061858B4540084B4C5 /* TPTableViewController.m in Sources */,

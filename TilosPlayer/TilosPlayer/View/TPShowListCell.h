@@ -1,5 +1,5 @@
 //
-//  TPTabBar.h
+//  TPShowListCell.h
 //  TilosPlayer
 //
 //  Created by Daniel Langh on 13/12/13.
@@ -8,11 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TPTabBar : UITabBar
-
-@property (nonatomic, retain) UIImageView *coverView;
-
-- (void)deselectItems;
-
+@interface TPShowListCell : UITableViewCell
 
 @end
