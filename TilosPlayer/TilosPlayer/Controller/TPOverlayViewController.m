@@ -98,12 +98,26 @@
         [self.view addSubview:view];
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAmbience:) name:@"updateAmbience" object:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    UITabBarController *tabbarController = (UITabBarController *)_rootViewController;
+    [(TPTabBar *)tabbarController.tabBar deselectItems];
+}
+
+#pragma mark -
+
+- (void)updateAmbience:(NSNotification *)n
+{
     ///
     
-    UIImage *image = [UIImage imageNamed:@"DefaultBanner.png"];
+    UIImage *image = [n.userInfo objectForKey:@"image"];
     UIColor *tintColor = [UIColor colorWithWhite:0.0 alpha:0.5];
     image = [image applyBlurWithRadius:7 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
-
+    
     CGSize size = CGSizeMake(320.0f, 568.0f);
     CGFloat scale = MAX(size.width / image.size.width, size.height / image.size.height);
     CGSize scaledSize = CGSizeMake(image.size.width * scale, image.size.height * scale);
@@ -119,7 +133,7 @@
     [image drawInRect:CGRectMake( (size.width - scaledSize.width)/2, (size.height - scaledSize.height)/2, scaledSize.width, scaledSize.height)];
     
 	UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-
+    
     
     
     size = CGSizeMake(320, 50);
@@ -139,16 +153,25 @@
     ////////////
     
     UITabBarController *tabbarController = (UITabBarController *)_rootViewController;
-    [[(TPTabBar *)[tabbarController tabBar] coverView] setImage:tabbarImage];
-    
-    [[(TPPlayerViewController *)[self overlayViewController] backgroundView] setImage:scaledImage];
-}
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    UITabBarController *tabbarController = (UITabBarController *)_rootViewController;
-    [(TPTabBar *)tabbarController.tabBar deselectItems];
+    UIImageView *view = nil;
+    
+    view = [(TPTabBar *)[tabbarController tabBar] coverView];
+    [UIView transitionWithView:view
+                      duration:0.3f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        view.image = tabbarImage;
+                    } completion:NULL];
+
+    
+    view = [(TPPlayerViewController *)[self overlayViewController] backgroundView];
+    [UIView transitionWithView:view
+                      duration:0.3f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        view.image = scaledImage;
+                    } completion:NULL];
 }
 
 #pragma mark -

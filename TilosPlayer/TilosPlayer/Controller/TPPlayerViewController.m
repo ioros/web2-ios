@@ -314,6 +314,10 @@
     {
         if(!decelerate) [self finishTapeScrolling];
     }
+    else if(self.collectionView == scrollView)
+    {
+        if(!decelerate) [self finishCollectionScrolling];
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -321,6 +325,22 @@
     if(self.tapeCollectionView == scrollView)
     {
         [self finishTapeScrolling];
+    }
+    else if(self.collectionView == scrollView)
+    {
+        [self finishCollectionScrolling];
+    }
+}
+
+- (void)finishCollectionScrolling
+{
+    NSArray *visibleCells = self.collectionView.visibleCells;
+    if(visibleCells.count == 0) return;
+
+    TPEpisodeCollectionCell *cell = [visibleCells objectAtIndex:0];
+    if(cell.imageView.image)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateAmbience" object:self userInfo:@{@"image":cell.imageView.image}];
     }
 }
 
