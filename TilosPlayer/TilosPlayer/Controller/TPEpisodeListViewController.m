@@ -40,6 +40,8 @@ static const int DAY_SECONDS = 60 * 60 * 24;
     tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     tableView.delegate = self;
     tableView.dataSource = self;
+    tableView.contentInset = UIEdgeInsetsMake(7, 0, 0, 0);
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [tableView registerClass:[TPEpisodeListCell class] forCellReuseIdentifier:@"EpisodeListCell"];
     self.tableView = tableView;
     

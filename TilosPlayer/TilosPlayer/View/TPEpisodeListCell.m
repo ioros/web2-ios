@@ -46,7 +46,7 @@
     self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     self.timeLabel.backgroundColor = [UIColor whiteColor];
     self.timeLabel.textAlignment = NSTextAlignmentRight;
-    [self.contentView addSubview:self.timeLabel];
+    //[self.contentView addSubview:self.timeLabel];
 
     self.authorLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     self.authorLabel.lineBreakMode = NSLineBreakByTruncatingTail | NSLineBreakByWordWrapping;
@@ -54,6 +54,10 @@
     self.authorLabel.numberOfLines = 0;
     self.authorLabel.font = kSubFont;
     [self.contentView addSubview:self.authorLabel];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimeTest.png"]];
+    imageView.frame = CGRectMake(7, 0, imageView.bounds.size.width, imageView.bounds.size.height);
+    [self.contentView addSubview:imageView];
 }
 
 - (void)layoutSubviews
