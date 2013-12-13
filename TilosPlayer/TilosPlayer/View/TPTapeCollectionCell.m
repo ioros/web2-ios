@@ -37,19 +37,24 @@
 
 - (void)drawRect:(CGRect)rect
 {
+    const CGFloat smallDot = 3.0f;
+    const CGFloat bigDot = 6.0f;
+    
     CGContextRef ctx = UIGraphicsGetCurrentContext();
 
     [[UIColor clearColor] set];
     CGContextFillRect(ctx, rect);
     
     [[UIColor whiteColor] set];
-    CGContextFillEllipseInRect(ctx, CGRectMake(-3, rect.size.height/2-3, 6, 6));
-    CGContextFillEllipseInRect(ctx, CGRectMake(rect.size.width-3, rect.size.height/2-3, 6, 6));
+
     CGContextFillRect(ctx, CGRectMake(0, floorf(rect.size.height/2), rect.size.width, 0.5));
+
+    CGContextFillEllipseInRect(ctx, CGRectMake(-bigDot/2, rect.size.height/2-bigDot/2, bigDot, bigDot));
+    CGContextFillEllipseInRect(ctx, CGRectMake(rect.size.width-bigDot/2, rect.size.height/2-bigDot/2, bigDot, bigDot));
     
     for(int i=1; i<5; i++)
     {
-        CGContextFillEllipseInRect(ctx, CGRectMake(i*30, rect.size.height/2-2, 4, 4));
+        CGContextFillEllipseInRect(ctx, CGRectMake(i*30-smallDot/2, rect.size.height/2-smallDot/2, smallDot, smallDot));
     }
 }
 

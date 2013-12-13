@@ -84,8 +84,8 @@
     for(UITabBarItem *item in items)
     {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setImage:item.image forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"FullDot.png"] forState:UIControlStateSelected];
+        [button setImage:[UIImage imageNamed:@"ClockTab.png"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"ClockTabSelected.png"] forState:UIControlStateSelected];
         //[button setTitle:item.title forState:UIControlStateNormal];
         //button.backgroundColor = [UIColor whiteColor];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
