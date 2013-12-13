@@ -11,6 +11,25 @@
 
 @implementation TPEpisodeListModel
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.date = [NSDate date];
+    }
+    return self;
+}
+
+- (id)initWithParameters:(id)parameters
+{
+    self = [super initWithParameters:parameters];
+    if(self)
+    {
+        self.date = parameters;
+    }
+    return self;
+}
+
 - (void)dealloc
 {
     [self.operation cancel];
@@ -31,10 +50,7 @@
 
 - (void)loadForced:(BOOL)forced
 {
-    if(self.date == nil)
-    {
-        self.date = [NSDate date];
-    }
+    if(self.date == nil) return;
     
     [self.operation cancel];
     self.operation = nil;

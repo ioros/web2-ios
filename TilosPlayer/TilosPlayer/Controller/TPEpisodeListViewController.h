@@ -10,9 +10,15 @@
 
 #import "TPListModel.h"
 
+@class TPFlipLabelView;
+@class TPEpisodeListModel;
+
 @interface TPEpisodeListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, TPListModelDelegate>
 
 @property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic, retain) TPListModel *model;
+
+@property (nonatomic, readonly) TPFlipLabelView *flipLabelView;
+@property (nonatomic, readonly) TPEpisodeListModel *episodeListModel;
 
 @end

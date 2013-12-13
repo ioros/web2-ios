@@ -10,6 +10,8 @@
 #import "TPEpisodeListCell.h"
 #import <CoreText/CoreText.h>
 #import "TPEpisodeListModel.h"
+#import "TPFlipLabelView.h"
+#import "NSDate+TPAdditions.h"
 
 @interface TPEpisodeListViewController ()
 
@@ -23,6 +25,7 @@
 
 static const CGFloat PULL_OFFSET = 60.0f;
 static const int DAY_SECONDS = 60 * 60 * 24;
+
 
 @implementation TPEpisodeListViewController
 
@@ -50,6 +53,8 @@ static const int DAY_SECONDS = 60 * 60 * 24;
 {
     [super viewDidLoad];
     
+    self.navigationItem.titleView = [[TPFlipLabelView alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
+    
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0);
     self.tableView.rowHeight = 100;
 }
@@ -62,6 +67,8 @@ static const int DAY_SECONDS = 60 * 60 * 24;
     {
         self.model = [[TPEpisodeListModel alloc] initWithParameters:[NSDate date]];
     }
+    
+    [self.flipLabelView setText:[self.episodeListModel.date dayName]];
 
     [self.model loadForced:NO];
 }
@@ -71,6 +78,7 @@ static const int DAY_SECONDS = 60 * 60 * 24;
 - (void)setModel:(TPListModel *)model
 {
     _model.delegate = nil;
+    
     _model = model;
     _model.delegate = self;
     
@@ -159,13 +167,14 @@ static const int DAY_SECONDS = 60 * 60 * 24;
 {
     [self updateScreenshot];
     
-    NSDate *d = [[(TPEpisodeListModel*)[self model] date] dateByAddingTimeInterval:-DAY_SECONDS];
+    NSDate *d = [self.episodeListModel.date dateByAddingTimeInterval:-DAY_SECONDS];
     
     _scrollToEndWhenLoaded = YES;
     
     [self.model clear];
     [self.tableView reloadData];
     [(TPEpisodeListModel *)[self model] loadWithDate:d];
+    [self.flipLabelView setText:[d dayName] fromTop:NO];
     
     [self animatePaging:NO];
 }
@@ -173,13 +182,14 @@ static const int DAY_SECONDS = 60 * 60 * 24;
 {
     [self updateScreenshot];
     
-    NSDate *d = [[(TPEpisodeListModel*)[self model] date] dateByAddingTimeInterval:DAY_SECONDS];
+    NSDate *d = [self.episodeListModel.date dateByAddingTimeInterval:DAY_SECONDS];
     
     _scrollToEndWhenLoaded = NO;
     
     [self.model clear];
     [self.tableView reloadData];
     [(TPEpisodeListModel *)self.model loadWithDate:d];
+    [self.flipLabelView setText:[d dayName] fromTop:YES];
     
     [self animatePaging:YES];
 }
@@ -230,6 +240,18 @@ static const int DAY_SECONDS = 60 * 60 * 24;
         _pagerView.center = CGPointMake(self.view.bounds.size.width * 0.5, self.view.bounds.size.height * 1.5f);
     }
     [UIView commitAnimations];
+}
+
+#pragma mark -
+
+- (TPFlipLabelView *)flipLabelView
+{
+    return (TPFlipLabelView *)[self.navigationItem titleView];
+}
+
+- (TPEpisodeListModel *)episodeListModel
+{
+    return (TPEpisodeListModel *)[self model];
 }
 
 @end
