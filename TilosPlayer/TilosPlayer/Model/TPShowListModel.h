@@ -8,10 +8,18 @@
 
 #import "TPListModel.h"
 
-@class AFJSONRequestOperation;
+
+typedef enum {
+    TPShowListModelFilterAll,
+    TPShowListModelFilterMusic,
+    TPShowListModelFilterTalk
+} TPShowListModelFilter;
 
 @interface TPShowListModel : TPListModel
 
 @property (nonatomic, retain) AFJSONRequestOperation *operation;
+@property (nonatomic, assign) TPShowListModelFilter filter;
+
+@property (nonatomic, retain) id data;
 
 @end
