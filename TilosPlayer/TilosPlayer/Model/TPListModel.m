@@ -53,6 +53,12 @@
     // override this
 }
 
+- (void)clear
+{
+    [self cancel];
+    self.sections = nil;
+}
+
 #pragma mark -
 
 - (id)dataForIndexPath:(NSIndexPath *)indexPath

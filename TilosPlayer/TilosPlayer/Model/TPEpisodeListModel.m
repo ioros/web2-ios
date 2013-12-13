@@ -23,18 +23,26 @@
     self.operation = nil;
 }
 
+- (void)loadWithDate:(NSDate *)date
+{
+    self.date = date;
+    [self loadForced:YES];
+}
+
 - (void)loadForced:(BOOL)forced
 {
+    if(self.date == nil)
+    {
+        self.date = [NSDate date];
+    }
     
     [self.operation cancel];
     self.operation = nil;
     
-    NSDate *now = [NSDate date];
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit) fromDate:now];
+    NSDateComponents *components = [calendar components:(NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit) fromDate:self.date];
     NSDate *startOfDay = [calendar dateFromComponents:components];
     NSDate *endOfDay = [startOfDay dateByAddingTimeInterval:24 * 60 * 60];
-    
     
     NSString *queryString = [NSString stringWithFormat:@"start=%d&end=%d", (int)[startOfDay timeIntervalSince1970], (int)[endOfDay timeIntervalSince1970]];
     NSString *url  =[NSString stringWithFormat:@"http://tilos.anzix.net/api/episode?%@", queryString];

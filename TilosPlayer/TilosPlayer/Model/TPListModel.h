@@ -43,6 +43,7 @@
 
 - (void)loadForced:(BOOL)forced;
 - (void)cancel;
+- (void)clear;
 
 - (void)sendFinished;
 - (void)sendError:(NSError *)error;

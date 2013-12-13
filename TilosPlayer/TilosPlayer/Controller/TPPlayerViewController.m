@@ -116,7 +116,7 @@
     
     if(self.model == nil)
     {
-        self.model = [TPEpisodeListModel new];
+        self.model = [[TPEpisodeListModel alloc] initWithParameters:[NSDate date]];
         self.model.delegate = self;
     }
     

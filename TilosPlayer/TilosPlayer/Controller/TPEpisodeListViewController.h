@@ -8,6 +8,11 @@
 
 #import "TPTableViewController.h"
 
-@interface TPEpisodeListViewController : TPTableViewController
+#import "TPListModel.h"
+
+@interface TPEpisodeListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, TPListModelDelegate>
+
+@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, retain) TPListModel *model;
 
 @end

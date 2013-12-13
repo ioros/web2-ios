@@ -15,4 +15,7 @@
 
 @property (nonatomic, retain) AFJSONRequestOperation *operation;
 
+@property (nonatomic, retain) NSDate *date;
+- (void)loadWithDate:(NSDate *)date;
+
 @end

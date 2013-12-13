@@ -56,6 +56,10 @@
 - (NSString *)showDefinition
 {
     NSString *definition = [self objectForKeyOrNil:@"definition"];
+    
+    // TODO: remove this
+    definition = [definition stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
     if([definition isEqualToString:@""]) definition = nil;
     return definition;
 }
