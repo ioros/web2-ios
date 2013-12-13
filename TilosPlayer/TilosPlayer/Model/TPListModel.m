@@ -34,6 +34,16 @@
 
 #pragma mark -
 
+- (id)initWithParameters:(id)parameters
+{
+    self = [super init];
+    if(self)
+    {
+        self.parameters = parameters;
+    }
+    return self;
+}
+
 - (void)loadForced:(BOOL)forced
 {
     [self sendFinished];

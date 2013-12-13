@@ -14,6 +14,11 @@
 - (NSAttributedString *)episodeStartTime;
 - (NSString *)episodeName;
 - (NSString *)episodeDefinition;
-- (NSString *)episodeBannerUrl;
+- (NSURL *)episodeBannerUrl;
+- (NSDate *)episodePlannedFromDate;
+
+- (NSString *)showName;
+- (NSURL *)showBannerUrl;
+- (NSString *)showDefinition;
 
 @end

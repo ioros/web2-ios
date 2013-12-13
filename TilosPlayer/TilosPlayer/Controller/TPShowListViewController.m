@@ -13,7 +13,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = NSLocalizedString(@"Shows", nil);
+    
+    self.title = @"";
     
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"All", nil), NSLocalizedString(@"Music", nil), NSLocalizedString(@"Talk", nil)]];
     segmentedControl.frame = CGRectMake(0, 0, 200, 25);

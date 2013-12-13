@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TPTableViewController.h"
 
-@interface TPShowInfoViewController : UIViewController
+
+@class TPShowInfoHeaderView;
+
+@interface TPShowInfoViewController : TPTableViewController
+
+@property (nonatomic, retain) id data;
+@property (nonatomic, readonly) TPShowInfoHeaderView *headerView;
 
 @end

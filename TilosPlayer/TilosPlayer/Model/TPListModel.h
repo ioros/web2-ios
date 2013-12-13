@@ -39,12 +39,15 @@
 @property (nonatomic, retain) NSArray *sections;
 @property (nonatomic, retain) NSArray *indexTitles;
 @property (nonatomic, retain) id<TPListModelDelegate> delegate;
+@property (nonatomic, retain) id parameters;
 
 - (void)loadForced:(BOOL)forced;
 - (void)cancel;
 
 - (void)sendFinished;
 - (void)sendError:(NSError *)error;
+
+- (id)initWithParameters:(id)parameters;
 
 - (id)dataForRow:(NSInteger)row section:(NSInteger)section;
 - (id)dataForIndexPath:(NSIndexPath *)indexPath;

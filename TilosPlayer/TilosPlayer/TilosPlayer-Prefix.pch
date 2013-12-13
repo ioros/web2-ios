@@ -16,4 +16,5 @@
     #import "NSDictionary+TPAdditions.h"
     #import "TPTilosUtils.h"
     #import "NSDictionary+TPModelAdditions.h"
+    #import "AFNetworking.h"
 #endif

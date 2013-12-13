@@ -36,17 +36,38 @@
 
 - (NSString *)episodeName
 {
-    return [[self objectForKey:@"show"] objectForKey:@"name"];
+    return [[self objectForKey:@"show"] showName];
 }
-- (NSString *)episodeBannerUrl
+- (NSURL *)episodeBannerUrl
 {
-    return [[self objectForKey:@"show"] objectForKey:@"banner"];
+    return [[self objectForKey:@"show"] showBannerUrl];
 }
 - (NSString *)episodeDefinition
 {
-    NSString *definition = [[self objectForKey:@"show"] objectForKeyOrNil:@"definition"];
+    return [[self objectForKey:@"show"] showDefinition];
+}
+
+- (NSDate *)episodePlannedFromDate
+{
+    NSTimeInterval interval = [[self objectForKey:@"plannedFrom"] integerValue];
+    return [NSDate dateWithTimeIntervalSince1970:interval];
+}
+
+- (NSString *)showDefinition
+{
+    NSString *definition = [self objectForKeyOrNil:@"definition"];
     if([definition isEqualToString:@""]) definition = nil;
     return definition;
+}
+
+- (NSString *)showName
+{
+    return [self objectForKeyOrNil:@"name"];
+}
+
+- (NSURL *)showBannerUrl
+{
+    return [NSURL URLWithString:[self objectForKeyOrNil:@"banner"]];
 }
 
 

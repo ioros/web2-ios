@@ -15,7 +15,16 @@
 {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"Authors", nil);
+    // fake the title with a uilabel
+    // this way we can get only the chevron for the back button
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 260, 30)];
+    label.font = [UIFont systemFontOfSize:16];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.text = NSLocalizedString(@"Authors", nil);
+    self.navigationItem.titleView = label;
+    
+    self.title = @"";
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0);
 }
 
