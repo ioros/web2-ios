@@ -39,7 +39,7 @@
     [self.operation cancel];
     self.operation = nil;
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://tilos.anzix.net/api/show"]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/show", kAPIBase]]];
     
     __block TPShowListModel *weakSelf = self;
     self.operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {

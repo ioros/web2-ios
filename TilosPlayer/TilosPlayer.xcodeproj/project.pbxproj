@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3EEC304AD91C45138A3AF475 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ED5DDE7360B4497AE32A859 /* libPods.a */; };
+		A51B1FDB185BA678009FA46D /* TPPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A51B1FDA185BA678009FA46D /* TPPlayerManager.m */; };
 		A5628CB9185917F4007CA45C /* TPTapeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */; };
 		A5DD0FFB1859FE42009D1A1A /* TPTapeCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD0FFA1859FE42009D1A1A /* TPTapeCollectionLayout.m */; };
 		A5DD0FFE185A100F009D1A1A /* TPOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD0FFD185A100F009D1A1A /* TPOverlayViewController.m */; };
@@ -56,6 +57,8 @@
 /* Begin PBXFileReference section */
 		3ED5DDE7360B4497AE32A859 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		950B5CB517C8490BAE5DBB13 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		A51B1FD9185BA678009FA46D /* TPPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPPlayerManager.h; sourceTree = "<group>"; };
+		A51B1FDA185BA678009FA46D /* TPPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPPlayerManager.m; sourceTree = "<group>"; };
 		A5628CB7185917F4007CA45C /* TPTapeCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTapeCollectionCell.h; sourceTree = "<group>"; };
 		A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTapeCollectionCell.m; sourceTree = "<group>"; };
 		A5DD0FF91859FE42009D1A1A /* TPTapeCollectionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTapeCollectionLayout.h; sourceTree = "<group>"; };
@@ -294,6 +297,10 @@
 		A5FEC00A1858BA0B0084B4C5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				A51B1FD9185BA678009FA46D /* TPPlayerManager.h */,
+				A51B1FDA185BA678009FA46D /* TPPlayerManager.m */,
+				A5DD100E185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.h */,
+				A5DD100F185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.m */,
 				A5DD1029185AC26C009D1A1A /* UIImage+ImageEffects.h */,
 				A5DD102A185AC26C009D1A1A /* UIImage+ImageEffects.m */,
 				A5DD1009185A53CC009D1A1A /* UIColor+Additions.h */,
@@ -309,8 +316,6 @@
 				A5DD1000185A1708009D1A1A /* TPTilosUtils.m */,
 				A5DD1002185A1C02009D1A1A /* TPAudioPlayer.h */,
 				A5DD1003185A1C02009D1A1A /* TPAudioPlayer.m */,
-				A5DD100E185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.h */,
-				A5DD100F185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.m */,
 				A5DD1023185A9725009D1A1A /* NSDate+TPAdditions.h */,
 				A5DD1024185A9725009D1A1A /* NSDate+TPAdditions.m */,
 			);
@@ -492,6 +497,7 @@
 				A5DD100B185A53CC009D1A1A /* UIColor+Additions.m in Sources */,
 				A5FEC02D1858DDC60084B4C5 /* TPPlayerViewController.m in Sources */,
 				A5FEBFFC1858B2940084B4C5 /* TPShowListViewController.m in Sources */,
+				A51B1FDB185BA678009FA46D /* TPPlayerManager.m in Sources */,
 				A5DD1010185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.m in Sources */,
 				A5FEC0031858B2C40084B4C5 /* TPListModel.m in Sources */,
 				A5DD1004185A1C02009D1A1A /* TPAudioPlayer.m in Sources */,

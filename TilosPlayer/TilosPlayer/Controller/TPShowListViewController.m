@@ -55,10 +55,6 @@
     NSDictionary *data = [self.model dataForIndexPath:indexPath];
     cell.textLabel.text = [data objectForKey:@"name"];
     cell.detailTextLabel.text = [data objectForKey:@"definition"];
-    
-    // NSString *banner = [data objectForKeyOrNil:@"banner"];
-    // NSString *url = [NSString stringWithFormat:@"http://tilos.anzix.net/upload/bio/%@", avatar];
-    // [cell.imageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"AuthorAvatarPlaceholder.png"]];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

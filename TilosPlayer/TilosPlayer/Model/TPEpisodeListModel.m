@@ -61,7 +61,7 @@
     NSDate *endOfDay = [startOfDay dateByAddingTimeInterval:24 * 60 * 60];
     
     NSString *queryString = [NSString stringWithFormat:@"start=%d&end=%d", (int)[startOfDay timeIntervalSince1970], (int)[endOfDay timeIntervalSince1970]];
-    NSString *url  =[NSString stringWithFormat:@"http://tilos.anzix.net/api/episode?%@", queryString];
+    NSString *url  =[NSString stringWithFormat:@"%@/episode?%@", kAPIBase, queryString];
 
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     

@@ -14,13 +14,12 @@
 #import "TPTapeCollectionCell.h"
 #import "TPTapeCollectionLayout.h"
 #import "UIImage+ImageEffects.h"
-
-#import "TPAudioPlayer.h"
-
+#import "TPPlayerManager.h"
 
 @interface TPPlayerViewController ()
 
 @property (nonatomic, assign) BOOL opened;
+@property (nonatomic, assign) NSTimeInterval startTime;
 
 @end
 
@@ -29,6 +28,7 @@
 @implementation TPPlayerViewController
 
 #define kAnimationDuration 0.7f
+#define kTapeArchiveSectionCount 1000
 
 - (void)loadView
 {
@@ -124,6 +124,7 @@
 {
     [super viewWillAppear:animated];
     
+    // initialize the layout
     [self doOpen:NO];
     
     if(self.model == nil)
@@ -136,6 +137,17 @@
     {
         [self.model loadForced:NO];
     }
+    
+    // TODO: handle this thing properly
+    
+    // setup the starttime, we cheat for now and place the startTime to 20 weeks in the past
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit fromDate:[NSDate date]];
+    NSDate *pastDate = [[NSCalendar currentCalendar] dateFromComponents:components];
+    pastDate = [pastDate dateByAddingTimeInterval:-20 * 7 * 24 * 60 * 60];
+    self.startTime = [pastDate timeIntervalSince1970];
+    
+    // seek to something reasonable
+    [self.tapeCollectionView setContentOffset:CGPointMake(kTapeArchiveSectionCount / 2 * 150.0f, 0)];
 }
 
 #pragma mark -
@@ -347,30 +359,13 @@
 - (void)finishTapeScrolling
 {
     CGPoint offset = self.tapeCollectionView.contentOffset;
-    CGFloat horizontalOffset = offset.x ;//+ self.tapeCollectionView.bounds.size.width / 2;
-    
-//    NSLog(@"finish tape scrolling %f %d %f", horizontalOffset, partIndex, partOffset);
 
-    CGFloat minuteOffset = horizontalOffset / 30.0f;
+    // TODO: adjust to the center coordinate
+    CGFloat horizontalOffset = offset.x;
+    
+    NSTimeInterval time = self.startTime + (horizontalOffset / 30.0f) * 60.0f;
 
-    // get a date trimmed to current half an hour
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:[NSDate date]];
-    components.minute = (NSInteger)floorf(((float)[components minute] / 30.0f)) * 30;
-    NSDate *date = [[NSCalendar currentCalendar] dateFromComponents:components];
-    
-    // go back a week
-    date = [date dateByAddingTimeInterval:-24 * 60 * 60 * 7];
-    
-    // add the offset to it
-    date = [date dateByAddingTimeInterval:minuteOffset * 60];
-    
-    NSString *url = [TPTilosUtils urlForArchiveSegmentAtDate:date];
-
-    NSInteger partIndex = (NSInteger)floorf((minuteOffset / 30.0f));
-    NSInteger secondOffset = (minuteOffset - 30 * partIndex) * 60;
-    
-    [[TPAudioPlayer sharedPlayer] cueUrl:url atPosition:secondOffset];
-    [[TPAudioPlayer sharedPlayer] play];
+    [[TPPlayerManager sharedManager] playAtTime:time];
 }
 
 #pragma mark - collection view
@@ -395,7 +390,7 @@
     }
     else
     {
-        return 100;
+        return kTapeArchiveSectionCount;
     }
 }
 

@@ -29,7 +29,7 @@
     
     NSString *showId = self.parameters;
     
-    NSString *url = [NSString stringWithFormat:@"http://tilos.anzix.net/api/show/%@", showId];
+    NSString *url = [NSString stringWithFormat:@"%@/show/%@", kAPIBase, showId];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     

@@ -31,7 +31,7 @@
     [self.operation cancel];
     self.operation = nil;
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://tilos.anzix.net/api/author"]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", kAPIBase, @"author"]]];
     
     __block TPAuthorListModel *weakSelf = self;
     self.operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
