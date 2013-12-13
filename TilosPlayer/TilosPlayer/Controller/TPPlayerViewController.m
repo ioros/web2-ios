@@ -28,6 +28,7 @@
 
 @implementation TPPlayerViewController
 
+#define kAnimationDuration 0.7f
 
 - (void)loadView
 {
@@ -76,6 +77,11 @@
     
     [logoView.button addTarget:self action:@selector(toggle:) forControlEvents:UIControlEventTouchUpInside];
 
+    UIButton *pauseButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [pauseButton setImage:[UIImage imageNamed:@"PauseButton.png"] forState:UIControlStateNormal];
+    pauseButton.frame = CGRectMake(0, 0, 50, 50);
+    pauseButton.center = CGPointMake(160, 30);
+    [self.bottomView addSubview:pauseButton];
     
     TPTapeCollectionLayout *collectionViewLayout = [[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(150, 20)];
     self.tapeCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 140, 320, 30) collectionViewLayout:collectionViewLayout];
@@ -87,7 +93,7 @@
     [self.tapeCollectionView registerClass:[TPTapeCollectionCell class] forCellWithReuseIdentifier:@"TapeCollectionCell"];
     [self.topView addSubview:self.tapeCollectionView];
     
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 10, 320, 220) collectionViewLayout:[[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(320, 220)]];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 20, 320, 210) collectionViewLayout:[[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(320, 210)]];
     self.collectionView.pagingEnabled = YES;
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.showsHorizontalScrollIndicator = NO;
@@ -96,6 +102,14 @@
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     [self.collectionView registerClass:[TPEpisodeCollectionCell class] forCellWithReuseIdentifier:@"EpisodeCollectionCell"];
     [self.middleView addSubview:self.collectionView];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setImage:[UIImage imageNamed:@"logoAlpha.png"] forState:UIControlStateNormal];
+    button.frame = CGRectMake(0, 0, 60, 60);
+    button.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
+    button.center = CGPointMake(160, 100);
+    [self.view addSubview:button];
+    self.logoButton = button;
 }
 
 - (void)viewDidLoad
@@ -178,17 +192,23 @@
     CGRect middleTargetRect = CGRectMake(0, -180, 320, 230);
     CGRect bottomTargetRect = CGRectMake(0, 0, 320, 64);
     CGFloat fadeTargetAlpha = 0.0f;
+    CGRect logoButtonTargetRect = CGRectMake(140, 28, 40, 40);
 
     _opened = NO;
 
     if(animated)
     {
-        [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            self.logoView.frame = logoTargetRect;
-            self.topView.frame = topTargetRect;
-            self.middleView.frame = middleTargetRect;
-            self.bottomView.frame = bottomTargetRect;
-            self.fadeView.alpha = fadeTargetAlpha;
+        [UIView animateWithDuration:kAnimationDuration delay:0.0f
+             usingSpringWithDamping:1.0f
+              initialSpringVelocity:0.2
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                            self.logoView.frame = logoTargetRect;
+                             self.topView.frame = topTargetRect;
+                             self.middleView.frame = middleTargetRect;
+                             self.bottomView.frame = bottomTargetRect;
+                             self.fadeView.alpha = fadeTargetAlpha;
+                             self.logoButton.frame = logoButtonTargetRect;
         } completion:^(BOOL finished) {
             if([_delegate respondsToSelector:@selector(playerViewControllerDidClose:)])
             {
@@ -203,6 +223,7 @@
         self.middleView.frame = middleTargetRect;
         self.bottomView.frame = bottomTargetRect;
         self.fadeView.alpha = fadeTargetAlpha;
+        self.logoButton.frame = logoButtonTargetRect;
         
         if([_delegate respondsToSelector:@selector(playerViewControllerDidClose:)])
         {
@@ -228,18 +249,27 @@
     CGRect middleTargetRect = CGRectMake(0, 170, 320, 230);
     CGRect bottomTargetRect = CGRectMake(0, 400, 320, self.view.bounds.size.height-400);
     CGFloat fadeTargetAlpha = 1.0f;
+    CGRect logoButtonTargetRect = CGRectMake(130, 70, 60, 60);
 
     _opened = YES;
 
     if(animated)
     {
-        [UIView animateWithDuration:0.3 animations:^{
-            self.logoView.frame = logoTargetRect;
-            self.topView.frame = topTargetRect;
-            self.middleView.frame = middleTargetRect;
-            self.bottomView.frame = bottomTargetRect;
-            self.fadeView.alpha = fadeTargetAlpha;
-        }];
+        [UIView animateWithDuration:kAnimationDuration delay:0.0f
+             usingSpringWithDamping:1.0f
+              initialSpringVelocity:0.2
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             self.logoView.frame = logoTargetRect;
+                             self.topView.frame = topTargetRect;
+                             self.middleView.frame = middleTargetRect;
+                             self.bottomView.frame = bottomTargetRect;
+                             self.fadeView.alpha = fadeTargetAlpha;
+                             self.logoButton.frame = logoButtonTargetRect;
+        } completion:nil];
+        
+//        [UIView animateWithDuration:kAnimationDuration delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+ //       } completion:nil];
     }
     else
     {
@@ -248,6 +278,7 @@
         self.middleView.frame = middleTargetRect;
         self.bottomView.frame = bottomTargetRect;
         self.fadeView.alpha = fadeTargetAlpha;
+        self.logoButton.frame = logoButtonTargetRect;
     }
 
 }

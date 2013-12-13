@@ -42,6 +42,8 @@
     
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
     self.imageView.backgroundColor = [UIColor lightGrayColor];
+    self.imageView.layer.cornerRadius = 5.0f;
+    self.imageView.clipsToBounds = YES;
     [self.contentView addSubview:self.imageView];
     
     self.detailTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];

@@ -8,6 +8,7 @@
 
 #import "TPOverlayViewController.h"
 #import "TPPlayerViewController.h"
+#import "TPTabBar.h"
 
 #define kTabbarHeight 48.0f
 
@@ -25,7 +26,11 @@
     if(self)
     {
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-        UIViewController *vc = [sb instantiateViewControllerWithIdentifier:@"tabbarController"];
+        UITabBarController *vc = (UITabBarController *)[sb instantiateViewControllerWithIdentifier:@"tabbarController"];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabSelected:) name:@"itemSelected" object:vc.tabBar];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabDeselected:) name:@"itemDeselected" object:vc.tabBar];
+        
         self.rootViewController = vc;
         
         TPPlayerViewController *playerViewController = [TPPlayerViewController new];
@@ -33,6 +38,18 @@
         self.overlayViewController = playerViewController;
     }
     return self;
+}
+
+- (void)tabSelected:(NSNotification *)n
+{
+    NSInteger index = [[n.userInfo objectForKey:@"index"] integerValue];
+    [(UITabBarController *)[self rootViewController] setSelectedIndex:index];
+    [(TPPlayerViewController*)[self overlayViewController] closeAnimated:YES];
+}
+
+- (void)tabDeselected:(NSNotification *)n
+{
+    [(TPPlayerViewController*)[self overlayViewController] openAnimated:YES];
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
@@ -63,7 +80,7 @@
 
         UITabBarController *tabbarController = (UITabBarController *)_rootViewController;
         tabbarController.delegate = self;
-        tabbarController.selectedIndex = -1;
+        [(TPTabBar *)tabbarController.tabBar deselectItems];
     }
     
     if(self.overlayViewController)
@@ -75,6 +92,13 @@
         [self addChildViewController:viewController];
         [self.view addSubview:view];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    UITabBarController *tabbarController = (UITabBarController *)_rootViewController;
+    [(TPTabBar *)tabbarController.tabBar deselectItems];
 }
 
 #pragma mark -

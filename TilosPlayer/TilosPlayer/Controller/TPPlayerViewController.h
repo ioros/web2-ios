@@ -27,6 +27,7 @@
 @property (nonatomic, retain) IBOutlet UICollectionView *tapeCollectionView;
 @property (nonatomic, retain) TPListModel *model;
 
+@property (nonatomic, retain) UIButton *logoButton;
 @property (nonatomic, retain) UIView *logoView;
 @property (nonatomic, retain) UIView *topView;
 @property (nonatomic, retain) UIView *middleView;

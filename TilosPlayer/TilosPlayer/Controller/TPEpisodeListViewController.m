@@ -47,6 +47,8 @@ static const int DAY_SECONDS = 60 * 60 * 24;
     
     self.pagerView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
     self.pagerView.opaque = YES;
+    
+    self.scrollToEndWhenLoaded = NO;
 }
 
 - (void)viewDidLoad
@@ -97,6 +99,8 @@ static const int DAY_SECONDS = 60 * 60 * 24;
     // update position in tableview
     if(_scrollToEndWhenLoaded)
     {
+        _scrollToEndWhenLoaded = NO;
+        
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[_model numberOfRowsInSection:0]-1 inSection:0];
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     }

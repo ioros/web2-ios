@@ -8,7 +8,7 @@
         <scene sceneID="bat-30-Z1S">
             <objects>
                 <navigationController title="Authors" definesPresentationContext="YES" id="ak0-7k-rFp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Authors" image="EmptyDot" id="CWs-Cn-iNq"/>
+                    <tabBarItem key="tabBarItem" image="EmptyDot" id="CWs-Cn-iNq"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="WcO-dV-WEV">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -257,7 +257,7 @@
             <objects>
                 <tabBarController storyboardIdentifier="tabbarController" id="8YX-ce-x5E" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="JQR-rB-NYL">
+                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="JQR-rB-NYL" customClass="TPTabBar">
                         <rect key="frame" x="0.0" y="431" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
