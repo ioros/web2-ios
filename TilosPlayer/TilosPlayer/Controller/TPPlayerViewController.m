@@ -246,7 +246,7 @@
     CGRect middleTargetRect = CGRectMake(0, 170, 320, self.view.bounds.size.height - 170);
     CGFloat fadeTargetAlpha = 1.0f;
     CGRect logoButtonTargetRect = CGRectMake(130, 50, 60, 60);
-    CGRect playButtonTargetRect = CGRectMake(130, 420, 60, 60);
+    CGRect playButtonTargetRect = CGRectMake(130, 430, 60, 60);
     CGRect backgroundTargetRect = CGRectMake(0, 0, 320, self.view.bounds.size.height);
 
     _opened = YES;

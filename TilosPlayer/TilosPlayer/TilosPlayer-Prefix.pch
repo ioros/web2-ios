@@ -25,4 +25,4 @@
 #define kDescFont [UIFont fontWithName:@"Avenir-Light" size:13]
 #define kSubFont [UIFont fontWithName:@"Avenir-Light" size:11]
 
-#define kListFont [UIFont fontWithName:@"Avenir-Light" size:16]
+#define kListFont [UIFont fontWithName:@"Avenir-Light" size:17]
