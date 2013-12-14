@@ -11,7 +11,7 @@
 #import "TPTabBar.h"
 #import "TPPlayerManager.h"
 
-#define kTabbarHeight 48.0f
+#define kTabbarHeight 49.0f
 #define kTopbarHeight 64.0f
 
 @interface TPOverlayViewController ()
