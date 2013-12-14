@@ -10,7 +10,7 @@
 
 @interface TPShowInfoModel : TPListModel
 
-@property (nonatomic, retain) AFJSONRequestOperation *operation;
+@property (nonatomic, retain) AFHTTPRequestOperation *operation;
 
 @property (nonatomic, retain) NSDictionary *show;
 

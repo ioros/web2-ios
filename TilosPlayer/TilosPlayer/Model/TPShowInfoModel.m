@@ -33,17 +33,26 @@
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
+    
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc]
+                                         initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+
+    self.operation = operation;
+
     __block TPShowInfoModel *weakSelf = self;
-    self.operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+
         if(weakSelf == nil) return;
-        [self parseContent:JSON];
+        [self parseContent:responseObject];
         
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if(weakSelf == nil) return;
         [weakSelf sendError:error];
     }];
+    [operation start];
     
-    [self.operation start];
 }
 
 - (void)parseContent:(id)JSON

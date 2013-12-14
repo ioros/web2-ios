@@ -15,4 +15,6 @@
 @property (nonatomic, retain) UIImageView *imageView;
 @property (nonatomic, retain) UITextView *detailTextView;
 
+@property (nonatomic, retain) AFHTTPRequestOperation *operation;
+
 @end

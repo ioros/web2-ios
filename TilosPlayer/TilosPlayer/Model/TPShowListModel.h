@@ -17,7 +17,7 @@ typedef enum {
 
 @interface TPShowListModel : TPListModel
 
-@property (nonatomic, retain) AFJSONRequestOperation *operation;
+@property (nonatomic, retain) AFHTTPRequestOperation *operation;
 @property (nonatomic, assign) TPShowListModelFilter filter;
 
 @property (nonatomic, retain) id data;

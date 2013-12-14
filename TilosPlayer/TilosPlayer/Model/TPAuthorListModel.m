@@ -34,16 +34,24 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", kAPIBase, @"author"]]];
     
     __block TPAuthorListModel *weakSelf = self;
-    self.operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+    
+    
+    
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc]
+                                         initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    self.operation = operation;
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         if(weakSelf == nil) return;
-        [self parseContent:JSON];
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        [self parseContent:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if(weakSelf == nil) return;
         [weakSelf sendError:error];
     }];
-    
-    [self.operation start];
+    [operation start];
 }
 
 - (void)parseContent:(id)JSON

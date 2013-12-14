@@ -8,11 +8,9 @@
 
 #import "TPListModel.h"
 
-@class AFJSONRequestOperation;
-
 @interface TPAuthorListModel : TPListModel
 
 @property (nonatomic, retain) NSArray *indexTitles;
-@property (nonatomic, retain) AFJSONRequestOperation *operation;
+@property (nonatomic, retain) AFHTTPRequestOperation *operation;
 
 @end

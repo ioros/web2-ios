@@ -8,12 +8,9 @@
 
 #import "TPListModel.h"
 
-@class AFJSONRequestOperation;
-
-
 @interface TPEpisodeListModel : TPListModel
 
-@property (nonatomic, retain) AFJSONRequestOperation *operation;
+@property (nonatomic, retain) AFHTTPRequestOperation *operation;
 
 @property (nonatomic, retain) NSDate *date;
 - (void)loadWithDate:(NSDate *)date;

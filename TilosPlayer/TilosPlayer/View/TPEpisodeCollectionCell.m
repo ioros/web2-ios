@@ -73,8 +73,7 @@
     self.detailTextView.text = [data episodeDefinition];
     
     
-    UIImage *image = [UIImage imageNamed:@"DefaultBanner.png"];
-    [self.imageView setImageWithURL:[data episodeBannerUrl] placeholderImage:image];
+//    [self.imageView setImageWithURL:[data episodeBannerUrl]];
     
     [self setNeedsLayout];
 }
