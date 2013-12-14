@@ -23,9 +23,18 @@
         self.detailTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
         self.detailTextView.textAlignment = NSTextAlignmentCenter;
         self.detailTextView.font = kDescFont;
-        self.detailTextView.backgroundColor = [UIColor clearColor];
+        self.detailTextView.contentInset = UIEdgeInsetsZero;
         self.detailTextView.editable = NO;
+        self.detailTextView.backgroundColor = [UIColor clearColor];
         [self addSubview:self.detailTextView];
+        
+        self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"Info", nil), NSLocalizedString(@"Episodes", nil)]];
+        [self.segmentedControl sizeToFit];
+        [self addSubview:self.segmentedControl];
+        
+        [self.segmentedControl setSelectedSegmentIndex:1];
+        
+        self.backgroundColor = [UIColor whiteColor];
 
     }
     return self;
@@ -44,6 +53,23 @@
     
     CGFloat offset = imageHeight;
     self.detailTextView.frame = CGRectMake(10, offset, w-20, b.size.height-offset);
+    
+    self.segmentedControl.center = CGPointMake(w/2, b.size.height - 17);
+}
+
+- (void)sizeToFit
+{
+    CGRect frame = self.frame;
+
+    CGFloat w = frame.size.width;
+    CGFloat imageWidth = w;
+    CGFloat imageHeight = floorf(imageWidth/ 210.0f * 60.f);
+
+    CGSize s = [self.detailTextView sizeThatFits:CGSizeMake(w-20, 1000)];
+    
+    CGFloat h = s.height + imageHeight + 35;
+    
+    self.frame = CGRectMake(frame.origin.x, frame.origin.y, w, h);
 }
 
 

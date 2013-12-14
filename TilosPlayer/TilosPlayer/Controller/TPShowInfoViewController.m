@@ -31,6 +31,9 @@ static const CGFloat titleWidth = 200.0f;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    
+    /// try to size that label a little
     
     NSString *showName = [self.data showName];
     UIFont *font = kTitleFont;
@@ -38,11 +41,14 @@ static const CGFloat titleWidth = 200.0f;
     if(s.width > titleWidth){
         font = kHalfTitleFont;
     }
-    
     self.titleLabel.font = font;
     self.titleLabel.text = showName;
     
+    /////////////////////////////////////
+    
     self.headerView.detailTextView.text = [self.data showDefinition];
+    [self.headerView sizeToFit];
+    self.tableView.tableHeaderView = self.headerView;
 
     if(self.data && self.model == nil)
     {
