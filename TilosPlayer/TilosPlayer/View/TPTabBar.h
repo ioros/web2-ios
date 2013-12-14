@@ -12,6 +12,8 @@
 
 @property (nonatomic, retain) UIImageView *coverView;
 
+@property (nonatomic, assign) NSInteger selectedIndex;
+
 - (void)deselectItems;
 
 

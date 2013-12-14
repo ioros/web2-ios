@@ -83,6 +83,12 @@ static int kPlayingContext;
     [self.tapeCollectionView registerClass:[TPTapeCollectionCell class] forCellWithReuseIdentifier:@"TapeCollectionCell"];
     [self.topView addSubview:self.tapeCollectionView];
     
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedDot.png"]];
+    imageView.center = CGPointMake(160, 125 + 22);
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+    [self.topView addSubview:imageView];
+    
+    
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 15, 320, 220) collectionViewLayout:[[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(320, 220)]];
     self.collectionView.pagingEnabled = YES;
     self.collectionView.backgroundColor = [UIColor clearColor];
@@ -256,6 +262,11 @@ static int kPlayingContext;
 }
 - (void)doClose:(BOOL)animated
 {
+    if([_delegate respondsToSelector:@selector(playerViewControllerWillClose:)])
+    {
+        [_delegate performSelector:@selector(playerViewControllerWillClose:) withObject:self];
+    }
+    
     CGRect topTargetRect = CGRectMake(0, 0, 320, 64);
     CGRect middleTargetRect = CGRectMake(0, -250, 320, 260);
     CGFloat fadeTargetAlpha = 0.0f;

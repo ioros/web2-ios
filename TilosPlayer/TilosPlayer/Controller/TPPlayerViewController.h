@@ -15,6 +15,7 @@
 @protocol TPPlayerViewControllerDelegate <NSObject>
 
 @optional
+- (void)playerViewControllerWillClose:(TPPlayerViewController *)playerViewController;
 - (void)playerViewControllerDidClose:(TPPlayerViewController *)playerViewController;
 - (void)playerViewControllerWillOpen:(TPPlayerViewController *)playerViewController;
 

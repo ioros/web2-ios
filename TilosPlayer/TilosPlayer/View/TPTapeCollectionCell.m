@@ -38,7 +38,7 @@
 - (void)drawRect:(CGRect)rect
 {
     const CGFloat smallDot = 3.0f;
-    const CGFloat bigDot = 6.0f;
+    const CGFloat bigDot = 5.0f;
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
 

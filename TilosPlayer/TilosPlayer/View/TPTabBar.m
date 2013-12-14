@@ -13,7 +13,6 @@
 @interface TPTabBar ()
 
 @property (nonatomic, retain) NSArray *buttons;
-@property (nonatomic, assign) NSInteger selectedIndex;
 
 @end
 
@@ -118,10 +117,10 @@
     [super setSelectedItem:selectedItem];
     
     NSInteger index = [self.items indexOfObject:selectedItem];
-    [self setSelectedButton:index];
+    [self setSelectedButtonIndex:index];
 }
 
-- (void)setSelectedButton:(NSInteger)index
+- (void)setSelectedButtonIndex:(NSInteger)index
 {
     if(_selectedIndex == index) return;
     
@@ -136,9 +135,14 @@
     }
 }
 
+- (void)setSelectedIndex:(NSInteger)selectedIndex
+{
+    [self setSelectedButtonIndex:selectedIndex];
+}
+
 - (void)deselectItems
 {
-    [self setSelectedButton:-1];
+    [self setSelectedButtonIndex:-1];
 }
 
 - (void)tabSelected:(UIButton *)sender
@@ -147,12 +151,12 @@
     
     if(_selectedIndex == index)
     {
-        [self setSelectedButton:-1];
+        [self setSelectedButtonIndex:-1];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"itemDeselected" object:self userInfo:@{@"index":[NSNumber numberWithInt:index]}];
     }
     else
     {
-        [self setSelectedButton:index];
+        [self setSelectedButtonIndex:index];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"itemSelected" object:self userInfo:@{@"index":[NSNumber numberWithInt:index]}];
     }
 }

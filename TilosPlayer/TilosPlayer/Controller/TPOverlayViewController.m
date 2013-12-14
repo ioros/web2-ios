@@ -49,7 +49,7 @@
 - (void)tabSelected:(NSNotification *)n
 {
     NSInteger index = [[n.userInfo objectForKey:@"index"] integerValue];
-    [(UITabBarController *)[self rootViewController] setSelectedIndex:index];
+    self.tilosTabbarController.selectedIndex = index;
     [(TPPlayerViewController*)[self overlayViewController] closeAnimated:YES];
 }
 
@@ -68,9 +68,7 @@
 - (void)playEpisode:(NSNotification *)n
 {
     [(TPPlayerViewController*)[self overlayViewController] openAnimated:YES];
-    UITabBarController *tabbarController = (UITabBarController *)_rootViewController;
-    [(TPTabBar *)tabbarController.tabBar deselectItems];
-
+    [self.tabbar deselectItems];
     [[TPPlayerManager sharedManager] playEpisode:[n.userInfo objectForKey:@"episode"]];
 }
 
@@ -100,9 +98,8 @@
         [self addChildViewController:viewController];
         [self.view addSubview:view];
 
-        UITabBarController *tabbarController = (UITabBarController *)_rootViewController;
-        tabbarController.delegate = self;
-        [(TPTabBar *)tabbarController.tabBar deselectItems];
+        self.tilosTabbarController.delegate = self;
+        [self.tabbar deselectItems];
     }
     
     if(self.overlayViewController)
@@ -122,8 +119,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    UITabBarController *tabbarController = (UITabBarController *)_rootViewController;
-    [(TPTabBar *)tabbarController.tabBar deselectItems];
+    [[self tabbar] deselectItems];
 }
 
 #pragma mark -
@@ -170,11 +166,9 @@
     
     ////////////
     
-    UITabBarController *tabbarController = (UITabBarController *)_rootViewController;
-
     UIImageView *view = nil;
     
-    view = [(TPTabBar *)[tabbarController tabBar] coverView];
+    view = [self.tabbar coverView];
     [UIView transitionWithView:view
                       duration:0.3f
                        options:UIViewAnimationOptionTransitionCrossDissolve
@@ -197,10 +191,27 @@
 - (void)playerViewControllerWillOpen:(TPPlayerViewController *)playerViewController
 {
     self.overlayViewController.view.frame = UIEdgeInsetsInsetRect(self.view.bounds, UIEdgeInsetsMake(0, 0, kTabbarHeight, 0));
+    [self.tabbar deselectItems];
 }
 - (void)playerViewControllerDidClose:(TPPlayerViewController *)playerViewController
 {
     self.overlayViewController.view.frame = CGRectMake(0, 0, 320, kTopbarHeight);
+}
+- (void)playerViewControllerWillClose:(TPPlayerViewController *)playerViewController
+{
+    [self.tabbar setSelectedIndex:self.tilosTabbarController.selectedIndex];
+}
+
+#pragma mark -
+
+- (TPTabBar *)tabbar
+{
+    return (TPTabBar *)[self.tilosTabbarController tabBar];
+}
+
+- (UITabBarController *)tilosTabbarController
+{
+    return (UITabBarController *)_rootViewController;
 }
 
 #pragma mark -
