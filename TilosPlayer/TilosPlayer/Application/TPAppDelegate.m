@@ -8,8 +8,6 @@
 
 #import "TPAppDelegate.h"
 
-#import "UIColor+Additions.h"
-
 @implementation TPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -17,8 +15,30 @@
     [self setupAudio];
     [self setupAppearance];
     
+    if([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey])
+    {
+        [self handleURL:[launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]];
+    }
+    
     return YES;
 }
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [self handleURL:url];
+}
+
+- (BOOL)handleURL:(NSURL *)url
+{
+    if([self.window.rootViewController respondsToSelector:@selector(openURL:)])
+    {
+        [self.window.rootViewController performSelector:@selector(openURL:) withObject:url];
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark -
 
 - (void)setupAppearance
 {

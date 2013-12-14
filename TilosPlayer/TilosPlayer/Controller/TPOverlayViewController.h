@@ -10,6 +10,7 @@
 
 #import "TPPlayerViewController.h"
 
+@class TPPlayerViewController;
 @class TPTabBar;
 
 @interface TPOverlayViewController : UIViewController <UITabBarControllerDelegate, TPPlayerViewControllerDelegate>
@@ -17,8 +18,11 @@
 @property (nonatomic, retain) IBOutlet UIViewController *rootViewController;
 @property (nonatomic, retain) IBOutlet UIViewController *overlayViewController;
 
+@property (nonatomic, readonly) TPPlayerViewController *playerViewController;
 @property (nonatomic, readonly) UITabBarController *tilosTabbarController;
 @property (nonatomic, readonly) TPTabBar *tabbar;
+
+@property (nonatomic, retain) NSURL *urlToOpen;
 
 - (id)initWithRootViewController:(UIViewController *)viewController;
 

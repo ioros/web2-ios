@@ -14,10 +14,6 @@
 #define kTabbarHeight 49.0f
 #define kTopbarHeight 64.0f
 
-@interface TPOverlayViewController ()
-
-@end
-
 @implementation TPOverlayViewController
 
 
@@ -46,28 +42,66 @@
 
 #pragma mark -
 
+- (void)openURL:(NSURL *)url
+{
+    if(self.isViewLoaded)
+    {
+        [self handleURL:url];
+    }
+    else
+    {
+        self.urlToOpen = url;
+    }
+}
+
+- (void)handleURL:(NSURL *)url
+{
+    NSString *host = url.host;
+    
+    if([host isEqualToString:@"author"])
+    {
+        [self.tilosTabbarController setSelectedIndex:0];
+        [self.tabbar setSelectedIndex:0];
+        [self.playerViewController closeAnimated:YES];
+    }
+    else if([host isEqualToString:@"episode"])
+    {
+        [self.tilosTabbarController setSelectedIndex:1];
+        [self.tabbar setSelectedIndex:1];
+        [self.playerViewController closeAnimated:YES];
+    }
+    else if([host isEqualToString:@"show"])
+    {
+        [self.tilosTabbarController setSelectedIndex:2];
+        [self.tabbar setSelectedIndex:2];
+        [self.playerViewController closeAnimated:YES];
+    }
+}
+
+#pragma mark -
+
 - (void)tabSelected:(NSNotification *)n
 {
     NSInteger index = [[n.userInfo objectForKey:@"index"] integerValue];
     self.tilosTabbarController.selectedIndex = index;
-    [(TPPlayerViewController*)[self overlayViewController] closeAnimated:YES];
+    [self.playerViewController closeAnimated:YES];
 }
 
 - (void)tabDeselected:(NSNotification *)n
 {
-    [(TPPlayerViewController*)[self overlayViewController] openAnimated:YES];
+    [self.playerViewController openAnimated:YES];
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-    [(TPPlayerViewController*)[self overlayViewController] closeAnimated:YES];
+    [self.playerViewController closeAnimated:YES];
 }
 
 #pragma mark -
 
 - (void)playEpisode:(NSNotification *)n
 {
-    [(TPPlayerViewController*)[self overlayViewController] openAnimated:YES];
+    [self.playerViewController openAnimated:YES];
     [self.tabbar deselectItems];
     [[TPPlayerManager sharedManager] playEpisode:[n.userInfo objectForKey:@"episode"]];
 }
@@ -120,6 +154,12 @@
 {
     [super viewDidAppear:animated];
     [[self tabbar] deselectItems];
+    
+    if(self.urlToOpen)
+    {
+        [self handleURL:self.urlToOpen];
+        self.urlToOpen = nil;
+    }
 }
 
 #pragma mark -
@@ -175,7 +215,7 @@
                     } completion:NULL];
 
     
-    view = [(TPPlayerViewController *)[self overlayViewController] backgroundView];
+    view = [self.playerViewController backgroundView];
     [UIView transitionWithView:view
                       duration:0.3f
                        options:UIViewAnimationOptionTransitionCrossDissolve
@@ -210,6 +250,11 @@
 - (UITabBarController *)tilosTabbarController
 {
     return (UITabBarController *)_rootViewController;
+}
+
+- (TPPlayerViewController *)playerViewController
+{
+    return (TPPlayerViewController *)_overlayViewController;
 }
 
 #pragma mark -
