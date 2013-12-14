@@ -9,6 +9,7 @@
 #import "TPOverlayViewController.h"
 #import "TPPlayerViewController.h"
 #import "TPTabBar.h"
+#import "TPPlayerManager.h"
 
 #define kTabbarHeight 48.0f
 #define kTopbarHeight 64.0f
@@ -32,6 +33,8 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabSelected:) name:@"itemSelected" object:vc.tabBar];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabDeselected:) name:@"itemDeselected" object:vc.tabBar];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playEpisode:) name:@"playEpisode" object:nil];
+        
         self.rootViewController = vc;
         
         TPPlayerViewController *playerViewController = [TPPlayerViewController new];
@@ -40,6 +43,8 @@
     }
     return self;
 }
+
+#pragma mark -
 
 - (void)tabSelected:(NSNotification *)n
 {
@@ -57,6 +62,19 @@
 {
     [(TPPlayerViewController*)[self overlayViewController] closeAnimated:YES];
 }
+
+#pragma mark -
+
+- (void)playEpisode:(NSNotification *)n
+{
+    [(TPPlayerViewController*)[self overlayViewController] openAnimated:YES];
+    UITabBarController *tabbarController = (UITabBarController *)_rootViewController;
+    [(TPTabBar *)tabbarController.tabBar deselectItems];
+
+    [[TPPlayerManager sharedManager] playEpisode:[n.userInfo objectForKey:@"episode"]];
+}
+
+#pragma mark -
 
 
 - (id)initWithRootViewController:(UIViewController *)viewController

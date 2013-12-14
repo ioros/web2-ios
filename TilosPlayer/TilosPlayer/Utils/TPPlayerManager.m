@@ -41,6 +41,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     }
 }
 
+- (void)cueEpisode:(NSDictionary *)episode
+{
+    self.currentEpisode = episode;
+    if(_playing)
+    {
+        [self playEpisode:self.currentEpisode];
+    }
+}
+
 - (void)playEpisode:(NSDictionary *)episode
 {
     [self playEpisode:episode atSeconds:0];
@@ -60,12 +69,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     [[TPAudioPlayer sharedPlayer] cueUrl:url atPosition:0];
     
     self.playing = YES;
-}
-
-- (void)playAtTime:(NSTimeInterval)time
-{
-//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
-//    NSString *url = [TPPlayerManager urlForArchiveSegmentAtDate:date];
 }
 
 #pragma mark -
@@ -88,7 +91,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 }
 
 #pragma mark -
-
 
 - (NSString *)urlForArchiveSegmentAtDate:(NSDate *)date
 {

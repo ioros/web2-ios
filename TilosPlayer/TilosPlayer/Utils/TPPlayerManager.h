@@ -19,10 +19,9 @@
 
 + (TPPlayerManager *)sharedManager;
 
+- (void)cueEpisode:(NSDictionary *)episode;
 - (void)playEpisode:(NSDictionary *)episode;
 - (void)playEpisode:(NSDictionary *)episode atSeconds:(NSTimeInterval)seconds;
-
-- (void)playAtTime:(NSTimeInterval)time;
 
 - (void)togglePlay;
 

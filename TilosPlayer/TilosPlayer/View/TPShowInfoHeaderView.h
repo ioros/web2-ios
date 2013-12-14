@@ -11,7 +11,6 @@
 @interface TPShowInfoHeaderView : UIView
 
 @property (nonatomic, retain) UIImageView *imageView;
-@property (nonatomic, retain) UILabel *textLabel;
 @property (nonatomic, retain) UITextView *detailTextView;
 
 @end

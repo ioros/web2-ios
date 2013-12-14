@@ -412,8 +412,7 @@ static int kPlayingContext;
 
     NSDictionary *episode = [self.model dataForIndexPath:[self.collectionView indexPathForCell:cell]];
     
-    /// play the episode
-    [[TPPlayerManager sharedManager] playEpisode:episode];
+    [[TPPlayerManager sharedManager] cueEpisode:episode];
     
     [self updateAmbience];
 }
@@ -427,7 +426,7 @@ static int kPlayingContext;
     
     NSTimeInterval time = self.startTime + (horizontalOffset / 30.0f) * 60.0f;
 
-    [[TPPlayerManager sharedManager] playAtTime:time];
+//    [[TPPlayerManager sharedManager] playAtTime:time];
 }
 
 #pragma mark - collection view

@@ -17,4 +17,6 @@
 @property (nonatomic, retain) id data;
 @property (nonatomic, readonly) TPShowInfoHeaderView *headerView;
 
+@property (nonatomic, readonly) UILabel *titleLabel;
+
 @end

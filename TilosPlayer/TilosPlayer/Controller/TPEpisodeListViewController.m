@@ -155,6 +155,14 @@ static const int DAY_SECONDS = 60 * 60 * 24;
     episodeCell.timeLabel.attributedText = [data episodeStartTime];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSDictionary *episode = [self.model dataForIndexPath:indexPath];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"playEpisode" object:self userInfo:@{@"episode":episode}];
+}
+
 #pragma mark -
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
@@ -171,6 +179,8 @@ static const int DAY_SECONDS = 60 * 60 * 24;
         [self nextDay];
     }
 }
+
+#pragma mark -
 
 - (void)prevDay
 {
