@@ -43,6 +43,7 @@
     UIImageView *imageView;
     imageView = [[UIImageView alloc] initWithFrame:self.bounds];
     imageView.clipsToBounds = YES;
+    imageView.backgroundColor = [UIColor blackColor];
     imageView.contentMode = UIViewContentModeTop;
     imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [super addSubview:imageView];

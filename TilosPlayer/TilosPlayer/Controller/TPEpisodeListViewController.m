@@ -108,7 +108,10 @@ static const int DAY_SECONDS = 60 * 60 * 24;
     }
     else
     {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        if([self.model numberOfSections] > 0 && [self.model numberOfRowsInSection:0] > 0)
+        {
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        }
     }
 }
 - (void)listModel:(TPListModel *)listModel didFailWithError:(NSError *)error

@@ -9,29 +9,101 @@
 #import "TPPlayerManager.h"
 
 #import "SynthesizeSingleton.h"
+#import "TPAudioPlayer.h"
 
 @implementation TPPlayerManager
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 
-- (void)playShow:(NSDictionary *)show
+
+- (id)init
 {
-    [self playShow:show atSeconds:0];
+    self = [super init];
+    if (self) {
+        self.cachedDays = [NSMutableDictionary dictionary];
+        self.playerLoading = NO;
+        
+        [[TPAudioPlayer sharedPlayer] addObserver:self forKeyPath:@"currentTime" options:NSKeyValueObservingOptionNew context:nil];
+    }
+    return self;
 }
-- (void)playShow:(NSDictionary *)show atSeconds:(NSTimeInterval)seconds
+
+#pragma mark -
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    if([keyPath isEqualToString:@"currentTime"])
+    {
+//        NSLog(@"time %@", change);
+        NSDate *date = [self.currentEpisode episodePlannedFromDate];
+        date = [date dateByAddingTimeInterval:[TPAudioPlayer sharedPlayer].currentTime];
+        self.globalTime = [date timeIntervalSince1970];
+    }
+}
+
+- (void)playEpisode:(NSDictionary *)episode
+{
+    [self playEpisode:episode atSeconds:0];
+}
+- (void)playEpisode:(NSDictionary *)episode atSeconds:(NSTimeInterval)seconds
+{
+    // TODO: handle seconds
     
+    NSDate *startDate = [episode episodePlannedFromDate];
+    //NSDate *dayDate = [startDate dayDate];
+    //NSDate *segmentDate = [startDate archiveSegmentStartDate];
+    
+    self.currentEpisode = episode;
+    
+    NSString *url = [self urlForArchiveSegmentAtDate:startDate];
+    
+    [[TPAudioPlayer sharedPlayer] cueUrl:url atPosition:0];
+    
+    self.playing = YES;
 }
 
 - (void)playAtTime:(NSTimeInterval)time
 {
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
-    NSString *url = [TPTilosUtils urlForArchiveSegmentAtDate:date];
-  
-    NSLog(@"url %@", url);
-//    NSInteger partIndex = (NSInteger)floorf((minuteOffset / 30.0f));
-//    NSInteger secondOffset = (minuteOffset - 30 * partIndex) * 60;
+//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
+//    NSString *url = [TPPlayerManager urlForArchiveSegmentAtDate:date];
 }
 
+#pragma mark -
+
+- (void)togglePlay
+{
+    if(_playing)
+    {
+        self.playing = NO;
+        [[TPAudioPlayer sharedPlayer] pause];
+    }
+    else
+    {
+        if(self.currentEpisode)
+        {
+            self.playing = YES;
+            [self playEpisode:self.currentEpisode];
+        }
+    }
+}
+
+#pragma mark -
+
+
+- (NSString *)urlForArchiveSegmentAtDate:(NSDate *)date
+{
+    // http://archive.tilos.hu/online/2013/12/11/tilosradio-20131211-0000.mp3
+    
+    NSDate *segmentStartDate = [date archiveSegmentStartDate];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:segmentStartDate];
+    NSInteger year = components.year;
+    NSInteger month = components.month;
+    NSInteger day = components.day;
+    NSInteger hour = components.hour;
+    NSInteger minutes = components.minute;
+    NSString *url = [NSString stringWithFormat:@"http://archive.tilos.hu/online/%04d/%02d/%02d/tilosradio-%04d%02d%02d-%02d%02d.mp3", year, month, day, year, month, day, hour, minutes];
+    
+    return url;
+}
 
 @end

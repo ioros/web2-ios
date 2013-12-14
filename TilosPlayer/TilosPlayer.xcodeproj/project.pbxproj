@@ -12,7 +12,6 @@
 		A5628CB9185917F4007CA45C /* TPTapeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */; };
 		A5DD0FFB1859FE42009D1A1A /* TPTapeCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD0FFA1859FE42009D1A1A /* TPTapeCollectionLayout.m */; };
 		A5DD0FFE185A100F009D1A1A /* TPOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD0FFD185A100F009D1A1A /* TPOverlayViewController.m */; };
-		A5DD1001185A1708009D1A1A /* TPTilosUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1000185A1708009D1A1A /* TPTilosUtils.m */; };
 		A5DD1004185A1C02009D1A1A /* TPAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD1003185A1C02009D1A1A /* TPAudioPlayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A5DD100B185A53CC009D1A1A /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD100A185A53CC009D1A1A /* UIColor+Additions.m */; };
 		A5DD100D185A5963009D1A1A /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5DD100C185A5963009D1A1A /* CoreText.framework */; };
@@ -65,8 +64,6 @@
 		A5DD0FFA1859FE42009D1A1A /* TPTapeCollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTapeCollectionLayout.m; sourceTree = "<group>"; };
 		A5DD0FFC185A100F009D1A1A /* TPOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPOverlayViewController.h; sourceTree = "<group>"; };
 		A5DD0FFD185A100F009D1A1A /* TPOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPOverlayViewController.m; sourceTree = "<group>"; };
-		A5DD0FFF185A1708009D1A1A /* TPTilosUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTilosUtils.h; sourceTree = "<group>"; };
-		A5DD1000185A1708009D1A1A /* TPTilosUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTilosUtils.m; sourceTree = "<group>"; };
 		A5DD1002185A1C02009D1A1A /* TPAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAudioPlayer.h; sourceTree = "<group>"; };
 		A5DD1003185A1C02009D1A1A /* TPAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAudioPlayer.m; sourceTree = "<group>"; };
 		A5DD1005185A1C71009D1A1A /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
@@ -312,8 +309,6 @@
 				A5FEC02F185901CA0084B4C5 /* NSArray+TPIndexedSorting.m */,
 				A5DD0FF91859FE42009D1A1A /* TPTapeCollectionLayout.h */,
 				A5DD0FFA1859FE42009D1A1A /* TPTapeCollectionLayout.m */,
-				A5DD0FFF185A1708009D1A1A /* TPTilosUtils.h */,
-				A5DD1000185A1708009D1A1A /* TPTilosUtils.m */,
 				A5DD1002185A1C02009D1A1A /* TPAudioPlayer.h */,
 				A5DD1003185A1C02009D1A1A /* TPAudioPlayer.m */,
 				A5DD1023185A9725009D1A1A /* NSDate+TPAdditions.h */,
@@ -508,7 +503,6 @@
 				A5FEC0091858B6350084B4C5 /* TPAuthorListModel.m in Sources */,
 				A5DD0FFE185A100F009D1A1A /* TPOverlayViewController.m in Sources */,
 				A5FEC0001858B2AB0084B4C5 /* TPAppDelegate.m in Sources */,
-				A5DD1001185A1708009D1A1A /* TPTilosUtils.m in Sources */,
 				A5DD1028185A9D83009D1A1A /* TPTabBar.m in Sources */,
 				A5DD1025185A9725009D1A1A /* NSDate+TPAdditions.m in Sources */,
 				A5FEC030185901CA0084B4C5 /* NSArray+TPIndexedSorting.m in Sources */,

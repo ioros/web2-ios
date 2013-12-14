@@ -18,4 +18,19 @@
     return dayName;
 }
 
+- (NSDate *)archiveSegmentStartDate
+{
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:self];
+    // round minutes to 0 or 30
+    components.minute = (NSInteger)floorf(((float)components.minute / 30.0f)) * 30;
+    return [[NSCalendar currentCalendar] dateFromComponents:components];
+}
+
+- (NSDate *)dayDate
+{
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit) fromDate:self];
+    return [[NSCalendar currentCalendar] dateFromComponents:components];
+}
+
+
 @end

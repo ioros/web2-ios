@@ -28,7 +28,10 @@
 @implementation TPPlayerViewController
 
 #define kAnimationDuration 0.7f
-#define kTapeArchiveSectionCount 1000
+#define kTapeArchiveSectionCount 5000
+
+static int kGlobalTimeContext;
+static int kPlayingContext;
 
 - (void)loadView
 {
@@ -58,7 +61,7 @@
     self.middleView = middleView;
 
     UIImageView *backgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 170, 320, 230)];
-    backgroundView.backgroundColor = [UIColor whiteColor];
+    backgroundView.backgroundColor = [UIColor blackColor];
     backgroundView.contentMode = UIViewContentModeTop;
     backgroundView.clipsToBounds = YES;
     backgroundView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
@@ -105,7 +108,7 @@
     [self.view addSubview:button];
     self.playButton = button;
     
-    [self.playButton addTarget:self action:@selector(play:) forControlEvents:UIControlEventTouchUpInside];
+    [self.playButton addTarget:self action:@selector(togglePlay:) forControlEvents:UIControlEventTouchUpInside];
 
     /////////////
     
@@ -120,9 +123,17 @@
     self.logoButton = button;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"globalTime" options:NSKeyValueObservingOptionNew context:&kGlobalTimeContext];
+    [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"playing" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:&kPlayingContext];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     
     // initialize the layout
     [self doOpen:NO];
@@ -140,14 +151,63 @@
     
     // TODO: handle this thing properly
     
-    // setup the starttime, we cheat for now and place the startTime to 20 weeks in the past
+    // setup the starttime, we cheat for now and place the startTime to 10 days in the past
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit fromDate:[NSDate date]];
     NSDate *pastDate = [[NSCalendar currentCalendar] dateFromComponents:components];
-    pastDate = [pastDate dateByAddingTimeInterval:-20 * 7 * 24 * 60 * 60];
+    pastDate = [pastDate dateByAddingTimeInterval:-10 * 24 * 60 * 60];
     self.startTime = [pastDate timeIntervalSince1970];
     
     // seek to something reasonable
     [self.tapeCollectionView setContentOffset:CGPointMake(kTapeArchiveSectionCount / 2 * 150.0f, 0)];
+    NSLog(@"initial tape offset %f", self.tapeCollectionView.contentOffset.x);
+    
+    // initialize ambience
+    [self updateAmbience];
+}
+
+#pragma mark -
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if(context == &kGlobalTimeContext)
+    {
+        NSTimeInterval globalTime = [TPPlayerManager sharedManager].globalTime;
+        NSTimeInterval timeDiff = globalTime - self.startTime;
+        float timeDiffMinutes = timeDiff / 60.0f;
+        CGFloat offset = timeDiffMinutes * 30.0f;
+        
+        [self.tapeCollectionView setContentOffset:CGPointMake(offset, 0)];
+//        NSLog(@"offset %f %f %f", offset, globalTime, self.startTime);
+    }
+    else if(context == &kPlayingContext)
+    {
+        [self updatePlayButton];
+    }
+}
+
+- (void)updatePlayButton
+{
+    BOOL playing = [[TPPlayerManager sharedManager] playing];
+    if(playing)
+    {
+        [self.playButton setImage:[UIImage imageNamed:@"PauseButton.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.playButton setImage:[UIImage imageNamed:@"PlayButton.png"] forState:UIControlStateNormal];
+    }
+}
+
+- (void)updateAmbience
+{
+    NSArray *visibleCells = self.collectionView.visibleCells;
+    if(visibleCells.count == 0) return;
+    
+    TPEpisodeCollectionCell *cell = [visibleCells objectAtIndex:0];
+    if(cell.imageView.image)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateAmbience" object:self userInfo:@{@"image":cell.imageView.image}];
+    }
 }
 
 #pragma mark -
@@ -157,8 +217,6 @@
     [self.collectionView reloadData];
     [self.tapeCollectionView reloadData];
 }
-
-#pragma mark -
 
 #pragma mark - actions
 
@@ -185,8 +243,9 @@
     }
 }
 
-- (IBAction)play:(id)sender
+- (IBAction)togglePlay:(id)sender
 {
+    [[TPPlayerManager sharedManager] togglePlay];
 }
 
 - (void)closeAnimated:(BOOL)animated
@@ -350,10 +409,13 @@
     if(visibleCells.count == 0) return;
 
     TPEpisodeCollectionCell *cell = [visibleCells objectAtIndex:0];
-    if(cell.imageView.image)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateAmbience" object:self userInfo:@{@"image":cell.imageView.image}];
-    }
+
+    NSDictionary *episode = [self.model dataForIndexPath:[self.collectionView indexPathForCell:cell]];
+    
+    /// play the episode
+    [[TPPlayerManager sharedManager] playEpisode:episode];
+    
+    [self updateAmbience];
 }
 
 - (void)finishTapeScrolling

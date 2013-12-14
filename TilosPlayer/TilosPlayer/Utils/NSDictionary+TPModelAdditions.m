@@ -34,6 +34,15 @@
     return string;
 }
 
+- (NSInteger)episodeNumberOfParts
+{
+    NSDate *startDate = [self episodePlannedFromDate];
+    NSDate *endDate = [self episodePlannedToDate];
+    
+    NSTimeInterval diff = [endDate timeIntervalSinceDate:startDate];
+    return diff / (30 * 60 * 60);
+}
+
 - (NSString *)episodeName
 {
     return [[self objectForKey:@"show"] showName];
@@ -50,6 +59,11 @@
 - (NSDate *)episodePlannedFromDate
 {
     NSTimeInterval interval = [[self objectForKey:@"plannedFrom"] integerValue];
+    return [NSDate dateWithTimeIntervalSince1970:interval];
+}
+- (NSDate *)episodePlannedToDate
+{
+    NSTimeInterval interval = [[self objectForKey:@"plannedTo"] integerValue];
     return [NSDate dateWithTimeIntervalSince1970:interval];
 }
 

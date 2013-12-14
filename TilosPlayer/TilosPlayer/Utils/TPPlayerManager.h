@@ -10,11 +10,20 @@
 
 @interface TPPlayerManager : NSObject
 
+@property (nonatomic, retain) NSDictionary *currentEpisode;
+@property (nonatomic, assign) NSTimeInterval globalTime;
+@property (nonatomic, assign) BOOL playerLoading;
+@property (nonatomic, assign) BOOL playing;
+
+@property (nonatomic, retain) NSMutableDictionary *cachedDays;
+
 + (TPPlayerManager *)sharedManager;
 
-- (void)playShow:(NSDictionary *)show;
-- (void)playShow:(NSDictionary *)show atSeconds:(NSTimeInterval)seconds;
+- (void)playEpisode:(NSDictionary *)episode;
+- (void)playEpisode:(NSDictionary *)episode atSeconds:(NSTimeInterval)seconds;
 
 - (void)playAtTime:(NSTimeInterval)time;
+
+- (void)togglePlay;
 
 @end

@@ -14,9 +14,9 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import "NSDictionary+TPAdditions.h"
-    #import "TPTilosUtils.h"
     #import "NSDictionary+TPModelAdditions.h"
     #import "AFNetworking.h"
+    #import "NSDate+TPAdditions.h"
     #import "UIImage+ImageEffects.h"
 #endif
 

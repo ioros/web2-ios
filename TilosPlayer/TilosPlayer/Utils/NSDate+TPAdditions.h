@@ -11,5 +11,8 @@
 @interface NSDate (TPAdditions)
 
 - (NSString *)dayName;
+- (NSDate *)archiveSegmentStartDate;
+- (NSDate *)dayDate;
+
 
 @end
