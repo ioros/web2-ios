@@ -31,6 +31,8 @@
 - (void)setup
 {
     self.textLabel.font = kListFont;
+    self.imageView.layer.cornerRadius = 20.0f;
+    self.imageView.clipsToBounds = YES;
 }
 
 - (void)layoutSubviews
@@ -39,10 +41,10 @@
     
     CGRect b = self.bounds;
     
-    CGFloat imageWidth = b.size.height;
+    CGFloat imageWidth = b.size.height - 10;
     CGFloat textWidth = b.size.width - imageWidth - 25;
     
-    self.imageView.frame = CGRectMake(0, 0, imageWidth, imageWidth);
+    self.imageView.frame = CGRectMake(5, 5, imageWidth, imageWidth);
     self.textLabel.frame = CGRectMake(imageWidth + 10, (b.size.height - 17)/2, textWidth, 20);
     //self.detailTextLabel.frame = CGRectMake(60, 27, b.size.width - 80, 20);
 }
