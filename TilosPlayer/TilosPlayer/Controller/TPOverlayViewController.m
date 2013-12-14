@@ -126,13 +126,11 @@
 
 - (void)updateAmbience:(NSNotification *)n
 {
-    ///
-    
     UIImage *image = [n.userInfo objectForKey:@"image"];
     UIColor *tintColor = [UIColor colorWithWhite:0.0 alpha:0.5];
     image = [image applyBlurWithRadius:7 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
     
-    CGSize size = CGSizeMake(320.0f, 568.0f);
+    CGSize size = self.view.frame.size;
     CGFloat scale = MAX(size.width / image.size.width, size.height / image.size.height);
     CGSize scaledSize = CGSizeMake(image.size.width * scale, image.size.height * scale);
     

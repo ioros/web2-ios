@@ -9,9 +9,8 @@
             <objects>
                 <navigationController title="Authors" definesPresentationContext="YES" id="ak0-7k-rFp" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" image="EmptyDot" id="CWs-Cn-iNq"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="WcO-dV-WEV">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WcO-dV-WEV">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="CZ4-MO-1fc" kind="relationship" relationship="rootViewController" id="8VU-H4-Orj"/>
@@ -26,7 +25,7 @@
             <objects>
                 <viewController title="First" id="CZ4-MO-1fc" customClass="TPAuthorListViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Lpt-bV-y0g">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -86,9 +85,8 @@
             <objects>
                 <navigationController definesPresentationContext="YES" id="o6Q-8w-fsK" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="EmptyDot" id="oti-hi-f0n"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="73E-XI-OlD">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="73E-XI-OlD">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="QUy-BD-bpt" kind="relationship" relationship="rootViewController" id="kgS-Ek-56b"/>
@@ -103,7 +101,7 @@
             <objects>
                 <viewController title="Second" id="QUy-BD-bpt" customClass="TPShowListViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="EXy-Dh-QCZ">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -140,7 +138,7 @@
             <objects>
                 <viewController id="4UW-zr-eiy" customClass="TPShowInfoViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="2Od-vf-9Pp">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -174,7 +172,7 @@
             <objects>
                 <viewController id="wWe-lj-QEL" customClass="TPAuthorInfoViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5hq-bm-vCf">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
