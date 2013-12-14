@@ -9,6 +9,7 @@
 #import "TPEpisodeCollectionCell.h"
 #import "AFNetworking.h"
 #import "UIImage+ImageEffects.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation TPEpisodeCollectionCell
 
@@ -72,8 +73,7 @@
     self.textLabel.text = [data episodeName];
     self.detailTextView.text = [data episodeDefinition];
     
-    
-//    [self.imageView setImageWithURL:[data episodeBannerUrl]];
+    [self.imageView setImageWithURL:[data episodeBannerUrl]];
     
     [self setNeedsLayout];
 }

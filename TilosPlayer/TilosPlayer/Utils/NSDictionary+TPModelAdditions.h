@@ -21,4 +21,8 @@
 - (NSURL *)showBannerUrl;
 - (NSString *)showDefinition;
 
+- (NSString *)authorName;
+- (NSString *)authorNick;
+- (NSURL *)authorAvatar;
+
 @end

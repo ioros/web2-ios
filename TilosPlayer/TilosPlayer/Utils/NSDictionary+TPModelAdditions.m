@@ -78,5 +78,24 @@
     return [NSURL URLWithString:[self objectForKeyOrNil:@"banner"]];
 }
 
+#pragma mark -
+
+- (NSString *)authorName
+{
+    return [self objectForKeyOrNil:@"name"];
+}
+
+- (NSString *)authorNick
+{
+    return [self objectForKeyOrNil:@"nick"];
+}
+- (NSURL *)authorAvatar
+{
+    NSString *url = [self objectForKeyOrNil:@"avatar"];
+    if(url) return [NSURL URLWithString:url];
+    return nil;
+}
+
+
 
 @end

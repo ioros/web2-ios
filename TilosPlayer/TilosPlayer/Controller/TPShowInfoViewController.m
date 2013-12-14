@@ -10,6 +10,7 @@
 
 #import "TPShowInfoModel.h"
 #import "TPShowInfoHeaderView.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 static const CGFloat titleWidth = 200.0f;
 
@@ -60,8 +61,8 @@ static const CGFloat titleWidth = 200.0f;
 - (void)listModelDidFinish:(TPListModel *)listModel
 {
     [super listModelDidFinish:listModel];
-    //TPShowInfoModel *model = (TPShowInfoModel *)self.model;
-   // [self.headerView.imageView setImageWithURL:[model.show showBannerUrl]];
+    TPShowInfoModel *model = (TPShowInfoModel *)self.model;
+    [self.headerView.imageView setImageWithURL:[model.show showBannerUrl]];
 }
 
 

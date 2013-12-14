@@ -7,7 +7,8 @@
 //
 
 #import "TPAuthorListViewController.h"
-#import "AFNetworking.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
 
 @implementation TPAuthorListViewController
 
@@ -37,10 +38,9 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *data = [self.model dataForIndexPath:indexPath];
-    cell.textLabel.text = [data objectForKey:@"name"];
+    cell.textLabel.text = [data authorName];
     
-    NSString *avatarUrl = [data objectForKeyOrNil:@"avatar"];
-  //  [cell.imageView setImageWithURL:[NSURL URLWithString:avatarUrl] placeholderImage:[UIImage imageNamed:@"AuthorAvatarPlaceholder.png"]];
+    [cell.imageView setImageWithURL:[data authorAvatar] placeholderImage:[UIImage imageNamed:@"AuthorAvatarPlaceholder.png"]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString*)title atIndex:(NSInteger)index
