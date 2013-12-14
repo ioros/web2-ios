@@ -35,7 +35,6 @@
 		A5FEBFC41858AF390084B4C5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FEBFC21858AF390084B4C5 /* InfoPlist.strings */; };
 		A5FEBFC61858AF390084B4C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEBFC51858AF390084B4C5 /* main.m */; };
 		A5FEBFCD1858AF390084B4C5 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5FEBFCB1858AF390084B4C5 /* Main_iPhone.storyboard */; };
-		A5FEBFD01858AF390084B4C5 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5FEBFCE1858AF390084B4C5 /* Main_iPad.storyboard */; };
 		A5FEBFD81858AF390084B4C5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5FEBFD71858AF390084B4C5 /* Images.xcassets */; };
 		A5FEBFFB1858B2940084B4C5 /* TPAuthorListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEBFF61858B2940084B4C5 /* TPAuthorListViewController.m */; };
 		A5FEBFFC1858B2940084B4C5 /* TPShowListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEBFF81858B2940084B4C5 /* TPShowListViewController.m */; };
@@ -107,7 +106,6 @@
 		A5FEBFC51858AF390084B4C5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A5FEBFC71858AF390084B4C5 /* TilosPlayer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TilosPlayer-Prefix.pch"; sourceTree = "<group>"; };
 		A5FEBFCC1858AF390084B4C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		A5FEBFCF1858AF390084B4C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		A5FEBFD71858AF390084B4C5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A5FEBFDE1858AF390084B4C5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		A5FEBFF51858B2940084B4C5 /* TPAuthorListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAuthorListViewController.h; sourceTree = "<group>"; };
@@ -213,7 +211,6 @@
 				A5FEBFFA1858B2940084B4C5 /* View */,
 				A5FEC00A1858BA0B0084B4C5 /* Utils */,
 				A5FEBFCB1858AF390084B4C5 /* Main_iPhone.storyboard */,
-				A5FEBFCE1858AF390084B4C5 /* Main_iPad.storyboard */,
 				A5FEBFD71858AF390084B4C5 /* Images.xcassets */,
 				A5FEBFC01858AF390084B4C5 /* Supporting Files */,
 			);
@@ -445,7 +442,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5FEBFD01858AF390084B4C5 /* Main_iPad.storyboard in Resources */,
 				A5FEBFD81858AF390084B4C5 /* Images.xcassets in Resources */,
 				A5FEBFCD1858AF390084B4C5 /* Main_iPhone.storyboard in Resources */,
 				A5FEBFC41858AF390084B4C5 /* InfoPlist.strings in Resources */,
@@ -549,14 +545,6 @@
 			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
 		};
-		A5FEBFCE1858AF390084B4C5 /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A5FEBFCF1858AF390084B4C5 /* Base */,
-			);
-			name = Main_iPad.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -644,6 +632,7 @@
 				GCC_PREFIX_HEADER = "TilosPlayer/TilosPlayer-Prefix.pch";
 				INFOPLIST_FILE = "TilosPlayer/TilosPlayer-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -658,6 +647,7 @@
 				GCC_PREFIX_HEADER = "TilosPlayer/TilosPlayer-Prefix.pch";
 				INFOPLIST_FILE = "TilosPlayer/TilosPlayer-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
