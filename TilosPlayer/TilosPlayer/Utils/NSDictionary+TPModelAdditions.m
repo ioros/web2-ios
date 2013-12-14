@@ -8,8 +8,6 @@
 
 #import "NSDictionary+TPModelAdditions.h"
 
-#import <CoreText/CoreText.h>
-
 @implementation NSDictionary (TPModelAdditions)
 
 - (NSArray *)episodeContributorNicknames
@@ -20,18 +18,10 @@
     return nicks;
 }
 
-- (NSAttributedString *)episodeStartTime
+- (NSInteger)episodeStartSeconds
 {
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[self objectForKey:@"plannedFrom"] integerValue]];
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
-    
-    NSString *timeLabel = [NSString stringWithFormat:@"%d%02d", components.hour, components.minute];
-    
-    NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:timeLabel];
-    [string addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:24] range:NSMakeRange(0,timeLabel.length-2)];
-    [string addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(timeLabel.length-2,2)];
-    [string addAttribute:(NSString*)kCTSuperscriptAttributeName value:@"1" range:NSMakeRange(timeLabel.length-2,2)];
-    return string;
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:[self episodePlannedFromDate]];
+    return (components.hour * 60 * 60 + components.minute * 60 + components.second);
 }
 
 - (NSInteger)episodeNumberOfParts

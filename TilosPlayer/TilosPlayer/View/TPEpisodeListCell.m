@@ -8,10 +8,12 @@
 
 #import "TPEpisodeListCell.h"
 
-#define kTextGap 6.0f
-#define kTitleGap 6.0f
-#define kBottomGap 9.0f
-#define kTopGap 9.0f
+#import "TPTimestampView.h"
+
+static const CGFloat kTextGap = 6.0f;
+static const CGFloat kTitleGap = 6.0f;
+static const CGFloat kTopGap = 10.0f;
+static const CGFloat kBottomGap = 9.0f;
 
 @implementation TPEpisodeListCell
 
@@ -43,11 +45,6 @@
     self.detailTextLabel.font = kDescFont;
     self.detailTextLabel.lineBreakMode = NSLineBreakByTruncatingTail | NSLineBreakByWordWrapping;
 
-    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    self.timeLabel.backgroundColor = [UIColor whiteColor];
-    self.timeLabel.textAlignment = NSTextAlignmentRight;
-    //[self.contentView addSubview:self.timeLabel];
-
     self.authorLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     self.authorLabel.lineBreakMode = NSLineBreakByTruncatingTail | NSLineBreakByWordWrapping;
     self.authorLabel.backgroundColor = [UIColor whiteColor];
@@ -55,9 +52,8 @@
     self.authorLabel.font = kSubFont;
     [self.contentView addSubview:self.authorLabel];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimeTest.png"]];
-    imageView.frame = CGRectMake(7, 0, imageView.bounds.size.width, imageView.bounds.size.height);
-    [self.contentView addSubview:imageView];
+    self.timestampView = [[TPTimestampView alloc] initWithFrame:CGRectMake(7, 0, 50, 50)];
+    [self.contentView addSubview:self.timestampView];
 }
 
 - (void)layoutSubviews
@@ -69,9 +65,6 @@
     CGSize s;
     CGFloat textWidth = b.size.width - 80;
     
-    s = [self.timeLabel sizeThatFits:CGSizeMake(55, 100)];
-    self.timeLabel.frame = CGRectMake(0, kTopGap -3, 55, s.height);
-
     s = [self.textLabel sizeThatFits:CGSizeMake(textWidth, 100)];
     self.textLabel.frame = CGRectMake(60, offset, textWidth, s.height);
     offset += ceilf(s.height);

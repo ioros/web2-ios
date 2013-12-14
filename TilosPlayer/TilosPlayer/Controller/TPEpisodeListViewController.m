@@ -12,6 +12,7 @@
 #import "TPEpisodeListModel.h"
 #import "TPFlipLabelView.h"
 #import "NSDate+TPAdditions.h"
+#import "TPTimestampView.h"
 
 @interface TPEpisodeListViewController ()
 
@@ -152,7 +153,7 @@ static const int DAY_SECONDS = 60 * 60 * 24;
     episodeCell.textLabel.text = [data episodeName];
     episodeCell.authorLabel.text = [[data episodeContributorNicknames] componentsJoinedByString:@", "];
     episodeCell.detailTextLabel.text = [data episodeDefinition];
-    episodeCell.timeLabel.attributedText = [data episodeStartTime];
+    episodeCell.timestampView.seconds = [data episodeStartSeconds];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

@@ -11,7 +11,7 @@
 @interface NSDictionary (TPModelAdditions)
 
 - (NSArray *)episodeContributorNicknames;
-- (NSAttributedString *)episodeStartTime;
+- (NSInteger)episodeStartSeconds;
 - (NSString *)episodeName;
 - (NSString *)episodeDefinition;
 - (NSURL *)episodeBannerUrl;

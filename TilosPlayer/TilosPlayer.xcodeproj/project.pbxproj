@@ -10,6 +10,7 @@
 		3EEC304AD91C45138A3AF475 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ED5DDE7360B4497AE32A859 /* libPods.a */; };
 		A51B1FDB185BA678009FA46D /* TPPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A51B1FDA185BA678009FA46D /* TPPlayerManager.m */; };
 		A51B1FDE185CA5E1009FA46D /* TPShowEpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A51B1FDD185CA5E1009FA46D /* TPShowEpisodeCell.m */; };
+		A51B1FE1185CAE80009FA46D /* TPTimestampView.m in Sources */ = {isa = PBXBuildFile; fileRef = A51B1FE0185CAE80009FA46D /* TPTimestampView.m */; };
 		A5628CB9185917F4007CA45C /* TPTapeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */; };
 		A5DD0FFB1859FE42009D1A1A /* TPTapeCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD0FFA1859FE42009D1A1A /* TPTapeCollectionLayout.m */; };
 		A5DD0FFE185A100F009D1A1A /* TPOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD0FFD185A100F009D1A1A /* TPOverlayViewController.m */; };
@@ -61,6 +62,8 @@
 		A51B1FDA185BA678009FA46D /* TPPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPPlayerManager.m; sourceTree = "<group>"; };
 		A51B1FDC185CA5E1009FA46D /* TPShowEpisodeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPShowEpisodeCell.h; sourceTree = "<group>"; };
 		A51B1FDD185CA5E1009FA46D /* TPShowEpisodeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPShowEpisodeCell.m; sourceTree = "<group>"; };
+		A51B1FDF185CAE80009FA46D /* TPTimestampView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTimestampView.h; sourceTree = "<group>"; };
+		A51B1FE0185CAE80009FA46D /* TPTimestampView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTimestampView.m; sourceTree = "<group>"; };
 		A5628CB7185917F4007CA45C /* TPTapeCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTapeCollectionCell.h; sourceTree = "<group>"; };
 		A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTapeCollectionCell.m; sourceTree = "<group>"; };
 		A5DD0FF91859FE42009D1A1A /* TPTapeCollectionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTapeCollectionLayout.h; sourceTree = "<group>"; };
@@ -283,6 +286,8 @@
 				A5DD102D185AEE16009D1A1A /* TPShowListCell.m */,
 				A51B1FDC185CA5E1009FA46D /* TPShowEpisodeCell.h */,
 				A51B1FDD185CA5E1009FA46D /* TPShowEpisodeCell.m */,
+				A51B1FDF185CAE80009FA46D /* TPTimestampView.h */,
+				A51B1FE0185CAE80009FA46D /* TPTimestampView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -502,6 +507,7 @@
 				A5DD1010185A5BEC009D1A1A /* NSDictionary+TPModelAdditions.m in Sources */,
 				A5FEC0031858B2C40084B4C5 /* TPListModel.m in Sources */,
 				A5DD1004185A1C02009D1A1A /* TPAudioPlayer.m in Sources */,
+				A51B1FE1185CAE80009FA46D /* TPTimestampView.m in Sources */,
 				A5FEC02A1858C9F20084B4C5 /* TPEpisodeListCell.m in Sources */,
 				A5FEC0101858BA340084B4C5 /* NSDictionary+TPAdditions.m in Sources */,
 				A5FEC0241858C3A30084B4C5 /* TPEpisodeListViewController.m in Sources */,

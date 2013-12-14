@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class TPTimestampView;
+
 @interface TPEpisodeListCell : UITableViewCell
 
-@property (nonatomic, retain) UILabel *timeLabel;
 @property (nonatomic, retain) UILabel *authorLabel;
+@property (nonatomic, retain) TPTimestampView *timestampView;
 
 + (CGFloat)estimatedHeightWithTitle:(NSString *)title
                         description:(NSString *)description
