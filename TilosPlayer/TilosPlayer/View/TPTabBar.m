@@ -81,11 +81,15 @@
     CGFloat part = self.bounds.size.width / items.count;
     
     int counter = 0;
+    
+    NSArray *images = @[[UIImage imageNamed:@"ClockTab.png"], [UIImage imageNamed:@"ProfileTab.png"], [UIImage imageNamed:@"ShowTab.png"]];
+    NSArray *imagesSelected = @[[UIImage imageNamed:@"ClockTabSelected.png"], [UIImage imageNamed:@"ProfileTabSelected.png"], [UIImage imageNamed:@"ShowTabSelected.png"]];
+    
     for(UITabBarItem *item in items)
     {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setImage:[UIImage imageNamed:@"ClockTab.png"] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"ClockTabSelected.png"] forState:UIControlStateSelected];
+        [button setImage:[images objectAtIndex:counter] forState:UIControlStateNormal];
+        [button setImage:[imagesSelected objectAtIndex:counter] forState:UIControlStateSelected];
         //[button setTitle:item.title forState:UIControlStateNormal];
         //button.backgroundColor = [UIColor whiteColor];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
