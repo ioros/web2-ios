@@ -8,9 +8,13 @@
 
 #import "TPAuthorListViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "TPAuthorInfoModel.h"
+#import "TPAuthorInfoViewController.h"
 
 
-@implementation TPAuthorListViewController
+@implementation TPAuthorListViewController{
+    
+}
 
 - (void)viewDidLoad
 {
@@ -55,11 +59,10 @@
     
     id data = [self.model dataForIndexPath:indexPath];
     
-    UIViewController *destination = segue.destinationViewController;
-    if([destination respondsToSelector:@selector(setData:)])
-    {
-        [destination performSelector:@selector(setData:) withObject:data];
-    }
+    TPAuthorInfoViewController *destination = segue.destinationViewController;
+    destination.authorBasicInfo = data;
 }
+
+
 
 @end

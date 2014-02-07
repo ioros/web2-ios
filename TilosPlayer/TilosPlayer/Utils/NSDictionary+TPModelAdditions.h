@@ -24,5 +24,8 @@
 - (NSString *)authorName;
 - (NSString *)authorNick;
 - (NSURL *)authorAvatar;
+- (NSURL *)authorPhoto;
+- (NSString *)authorAlias;
+- (NSString*)authorIntroduction;
 
 @end

@@ -13,5 +13,6 @@
 @property (nonatomic, retain) AFHTTPRequestOperation *operation;
 
 @property (nonatomic, retain) NSDictionary *show;
+@property (nonatomic, retain) NSString *htmlString;
 
 @end

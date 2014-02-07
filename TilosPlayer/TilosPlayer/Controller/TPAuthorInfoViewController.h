@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TPTableViewController.h"
 
-@interface TPAuthorInfoViewController : UIViewController
+@class TPAuthorInfoModel;
+
+@interface TPAuthorInfoViewController : TPTableViewController
+
+@property (nonatomic, strong) NSDictionary *authorBasicInfo;
+@property (nonatomic, strong) TPAuthorInfoModel *authorModel;
 
 @end

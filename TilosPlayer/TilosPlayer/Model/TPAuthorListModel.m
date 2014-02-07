@@ -56,6 +56,9 @@
 
 - (void)parseContent:(id)JSON
 {
+    
+    NSLog(@"%@", JSON);
+    
     NSDictionary *indexes = [(NSArray *)JSON indexesWithSortingKey:@"name" ascending:YES];
     NSArray *sortedKeys = [indexes.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     

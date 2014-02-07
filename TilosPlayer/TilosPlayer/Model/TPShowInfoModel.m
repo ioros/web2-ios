@@ -58,6 +58,11 @@
 - (void)parseContent:(id)JSON
 {
     self.show = JSON;
+    
+    if ([[self.show objectForKey:@"description"] length] > 0) {
+        self.htmlString = [NSString stringWithFormat:@"<html><head></head><body><div id = \"content\" style=\"font-family:Avenir-Light; font-size:15px\">%@</div></body></html>",  [self.show objectForKey:@"description"]];
+    }
+    
 
     NSArray *episodes = [self.show objectForKeyOrNil:@"episodes"];
     self.sections = @[[TPListSection sectionWithTitle:nil items:episodes]];
