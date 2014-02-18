@@ -56,7 +56,28 @@
 
 - (void)parseContent:(id)JSON
 {
-    NSDictionary *indexes = [(NSArray *)JSON indexesWithSortingKey:@"name" ascending:YES];
+    NSArray *authors = JSON;
+    
+    
+    // get all nick objects and add the name to each
+    NSMutableArray *nicks = [NSMutableArray array];
+    for (NSDictionary *author in authors)
+    {
+        NSArray *contributions = [author objectForKey:@"contributions"];
+        
+        for(NSDictionary *contribution in contributions)
+        {
+            NSDictionary *item = [contribution mutableCopy];
+            [item setValue:[author objectForKey:@"name"] forKey:@"name"];
+            [item setValue:[author objectForKey:@"avatar"] forKey:@"avatar"];
+            [item setValue:[author objectForKey:@"photo"] forKey:@"photo"];
+            [item setValue:[author objectForKey:@"id"] forKey:@"id"];
+            
+            [nicks addObject:item];
+        }
+    }
+    
+    NSDictionary *indexes = [nicks indexesWithSortingKey:@"nick" ascending:YES];
     NSArray *sortedKeys = [indexes.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     
     NSMutableArray *sections = [NSMutableArray array];

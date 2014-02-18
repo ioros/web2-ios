@@ -96,6 +96,13 @@
     return nil;
 }
 
+- (NSURL *)authorPhoto
+{
+    NSString *url = [self objectForKeyOrNil:@"photo"];
+    if(url) return [NSURL URLWithString:url];
+    return nil;
+}
+
 
 
 @end

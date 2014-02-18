@@ -205,6 +205,7 @@
 		A5FEBFBF1858AF390084B4C5 /* TilosPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				A5630A4B187DD69F00BD6A2C /* Resources */,
 				A5FEBFFD1858B2AB0084B4C5 /* Application */,
 				A5FEBFF41858B2940084B4C5 /* Controller */,
 				A5FEBFF91858B2940084B4C5 /* Model */,

@@ -45,7 +45,7 @@
     CGFloat textWidth = b.size.width - imageWidth - 25;
     
     self.imageView.frame = CGRectMake(5, 5, imageWidth, imageWidth);
-    self.textLabel.frame = CGRectMake(imageWidth + 10, (b.size.height - 17)/2, textWidth, 20);
-    //self.detailTextLabel.frame = CGRectMake(60, 27, b.size.width - 80, 20);
+    self.textLabel.frame = CGRectMake(imageWidth + 10, 7, textWidth, 20);
+    self.detailTextLabel.frame = CGRectMake(imageWidth + 10, 26, textWidth, 20);
 }
 @end

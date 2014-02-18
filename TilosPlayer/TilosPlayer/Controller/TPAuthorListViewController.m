@@ -38,7 +38,8 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *data = [self.model dataForIndexPath:indexPath];
-    cell.textLabel.text = [data authorName];
+    cell.textLabel.text = [data objectForKey:@"nick"];
+    cell.detailTextLabel.text = [data objectForKey:@"name"];
     
     [cell.imageView setImageWithURL:[data authorAvatar] placeholderImage:[UIImage imageNamed:@"AuthorAvatarPlaceholder.png"]];
 }
