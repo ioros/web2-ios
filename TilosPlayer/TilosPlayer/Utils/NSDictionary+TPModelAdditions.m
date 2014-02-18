@@ -95,12 +95,18 @@
     if(url) return [NSURL URLWithString:url];
     return nil;
 }
-
 - (NSURL *)authorPhoto
 {
     NSString *url = [self objectForKeyOrNil:@"photo"];
     if(url) return [NSURL URLWithString:url];
     return nil;
+}
+- (NSString *)authorAlias{
+    return [self objectForKeyOrNil:@"alias"];
+}
+
+-(NSString*)authorIntroduction{
+    return [self objectForKey:@"introduction"];
 }
 
 

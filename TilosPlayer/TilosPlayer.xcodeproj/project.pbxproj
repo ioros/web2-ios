@@ -52,6 +52,8 @@
 		A5FEC02A1858C9F20084B4C5 /* TPEpisodeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0291858C9F20084B4C5 /* TPEpisodeListCell.m */; };
 		A5FEC02D1858DDC60084B4C5 /* TPPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC02C1858DDC60084B4C5 /* TPPlayerViewController.m */; };
 		A5FEC030185901CA0084B4C5 /* NSArray+TPIndexedSorting.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC02F185901CA0084B4C5 /* NSArray+TPIndexedSorting.m */; };
+		EA4716A8185CF2BA00466D87 /* TPAuthorInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4716A7185CF2BA00466D87 /* TPAuthorInfoModel.m */; };
+		EAC5642118984F1800A3D439 /* TPWebIntroductionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC5642018984F1800A3D439 /* TPWebIntroductionCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,6 +142,10 @@
 		A5FEC02C1858DDC60084B4C5 /* TPPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPPlayerViewController.m; sourceTree = "<group>"; };
 		A5FEC02E185901CA0084B4C5 /* NSArray+TPIndexedSorting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+TPIndexedSorting.h"; sourceTree = "<group>"; };
 		A5FEC02F185901CA0084B4C5 /* NSArray+TPIndexedSorting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+TPIndexedSorting.m"; sourceTree = "<group>"; };
+		EA4716A6185CF2BA00466D87 /* TPAuthorInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAuthorInfoModel.h; sourceTree = "<group>"; };
+		EA4716A7185CF2BA00466D87 /* TPAuthorInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAuthorInfoModel.m; sourceTree = "<group>"; };
+		EAC5641F18984F1800A3D439 /* TPWebIntroductionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPWebIntroductionCell.h; sourceTree = "<group>"; };
+		EAC5642018984F1800A3D439 /* TPWebIntroductionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPWebIntroductionCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +265,8 @@
 				A5FEC0261858C3BC0084B4C5 /* TPEpisodeListModel.m */,
 				A5DD1014185A7634009D1A1A /* TPShowInfoModel.h */,
 				A5DD1015185A7634009D1A1A /* TPShowInfoModel.m */,
+				EA4716A6185CF2BA00466D87 /* TPAuthorInfoModel.h */,
+				EA4716A7185CF2BA00466D87 /* TPAuthorInfoModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -286,6 +294,8 @@
 				A51B1FDD185CA5E1009FA46D /* TPShowEpisodeCell.m */,
 				A51B1FDF185CAE80009FA46D /* TPTimestampView.h */,
 				A51B1FE0185CAE80009FA46D /* TPTimestampView.m */,
+				EAC5641F18984F1800A3D439 /* TPWebIntroductionCell.h */,
+				EAC5642018984F1800A3D439 /* TPWebIntroductionCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -495,6 +505,7 @@
 				A5FEC01F1858C1520084B4C5 /* TPShowInfoViewController.m in Sources */,
 				A5628CB9185917F4007CA45C /* TPTapeCollectionCell.m in Sources */,
 				A5FEC01C1858C1440084B4C5 /* TPAuthorInfoViewController.m in Sources */,
+				EA4716A8185CF2BA00466D87 /* TPAuthorInfoModel.m in Sources */,
 				A5DD1022185A8F0E009D1A1A /* TPFlipLabelView.m in Sources */,
 				A5E2479418590C1A006391AF /* TPEpisodeCollectionCell.m in Sources */,
 				A5DD100B185A53CC009D1A1A /* UIColor+Additions.m in Sources */,
@@ -514,6 +525,7 @@
 				A5FEC0001858B2AB0084B4C5 /* TPAppDelegate.m in Sources */,
 				A5DD1028185A9D83009D1A1A /* TPTabBar.m in Sources */,
 				A5DD1025185A9725009D1A1A /* NSDate+TPAdditions.m in Sources */,
+				EAC5642118984F1800A3D439 /* TPWebIntroductionCell.m in Sources */,
 				A5FEC030185901CA0084B4C5 /* NSArray+TPIndexedSorting.m in Sources */,
 				A5FEC0131858BE170084B4C5 /* TPAuthorListCell.m in Sources */,
 				A5DD1016185A7634009D1A1A /* TPShowInfoModel.m in Sources */,
