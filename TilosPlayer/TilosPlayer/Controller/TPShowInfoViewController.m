@@ -8,10 +8,13 @@
 
 #import "TPShowInfoViewController.h"
 
+#import <SDWebImage/UIImageView+WebCache.h>
+
 #import "TPShowInfoModel.h"
 #import "TPShowInfoHeaderView.h"
-#import <SDWebImage/UIImageView+WebCache.h>
 #import "TPWebIntroductionCell.h"
+#import "TPEpisodeData.h"
+#import "TPShowData.h"
 
 static const CGFloat titleWidth = 200.0f;
 
@@ -81,10 +84,9 @@ typedef NS_ENUM(NSInteger, ShownInfoType){
 {
     [super viewWillAppear:animated];
 
-    
     /// try to size that label a little
     
-    NSString *showName = [self.data showName];
+    NSString *showName = self.data.name;
     UIFont *font = kTitleFont;
     CGSize s = [showName sizeWithFont:font];
     if(s.width > titleWidth){
@@ -95,13 +97,13 @@ typedef NS_ENUM(NSInteger, ShownInfoType){
     
     /////////////////////////////////////
     
-    self.headerView.detailTextView.text = [self.data showDefinition];
+    self.headerView.detailTextView.text = self.data.definition;
     [self.headerView sizeToFit];
     self.tableView.tableHeaderView = self.headerView;
 
     if(self.data && self.model == nil)
     {
-        self.model = [[TPShowInfoModel alloc] initWithParameters:[self.data objectForKeyOrNil:@"id"]];
+        self.model = [[TPShowInfoModel alloc] initWithParameters:self.data.identifier];
         self.model.delegate = self;
     }
     
@@ -112,7 +114,7 @@ typedef NS_ENUM(NSInteger, ShownInfoType){
 {
     [super listModelDidFinish:listModel];
     _model = (TPShowInfoModel *)self.model;
-    [self.headerView.imageView setImageWithURL:[_model.show showBannerUrl]];
+    [self.headerView.imageView setImageWithURL:[NSURL URLWithString:_model.show.bannerURL]];
     
     if(_model.htmlString) {
         [_infoWebView loadHTMLString:_model.htmlString baseURL:nil];
@@ -139,11 +141,11 @@ typedef NS_ENUM(NSInteger, ShownInfoType){
     }
     else{
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:showCellId forIndexPath:indexPath];
-        NSDictionary *episode = [self.model dataForIndexPath:indexPath];
+        TPEpisodeData *episode = [self.model dataForIndexPath:indexPath];
         
         NSDateFormatter *formatter = [NSDateFormatter new];
         formatter.dateStyle = NSDateFormatterMediumStyle;
-        cell.textLabel.text = [formatter stringFromDate:[episode episodePlannedFromDate]];
+        cell.textLabel.text = [formatter stringFromDate:episode.plannedFrom];
         return cell;
     }
     

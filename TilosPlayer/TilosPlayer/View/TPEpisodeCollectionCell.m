@@ -9,6 +9,8 @@
 #import "TPEpisodeCollectionCell.h"
 #import "AFNetworking.h"
 #import "UIImage+ImageEffects.h"
+#import "TPEpisodeData.h"
+
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation TPEpisodeCollectionCell
@@ -66,14 +68,14 @@
 
 #pragma mark -
 
-- (void)setData:(NSDictionary *)data
+- (void)setEpisode:(TPEpisodeData *)episode
 {
-    _data = data;
+    _episode = episode;
     
-    self.textLabel.text = [data episodeName];
-    self.detailTextView.text = [data episodeDefinition];
+    self.textLabel.text = episode.name;
+    self.detailTextView.text = episode.definition;
     
-    [self.imageView setImageWithURL:[data episodeBannerUrl]];
+    [self.imageView setImageWithURL:[NSURL URLWithString:episode.bannerURL]];
     
     [self setNeedsLayout];
 }

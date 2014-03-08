@@ -8,6 +8,7 @@
 
 #import "TPEpisodeListModel.h"
 #import "AFNetworking.h"
+#import "TPEpisodeData.h"
 
 @implementation TPEpisodeListModel
 
@@ -85,7 +86,8 @@
 
 - (void)parseContent:(id)JSON
 {
-    self.sections = @[[TPListSection sectionWithTitle:nil items:(NSArray *)JSON]];
+    NSArray *episodes = [TPEpisodeData parseWithObjects:JSON];
+    self.sections = @[[TPListSection sectionWithTitle:nil items:episodes]];
     [self sendFinished];
 }
 

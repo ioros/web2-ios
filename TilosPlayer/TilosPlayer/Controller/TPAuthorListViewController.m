@@ -11,6 +11,9 @@
 #import "TPAuthorInfoModel.h"
 #import "TPAuthorInfoViewController.h"
 
+#import "TPAuthorListCell.h"
+
+#import "TPAuthorData.h"
 
 @implementation TPAuthorListViewController{
     
@@ -41,11 +44,11 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *data = [self.model dataForIndexPath:indexPath];
-    cell.textLabel.text = [data objectForKey:@"nick"];
-    cell.detailTextLabel.text = [data objectForKey:@"name"];
+    NSDictionary *item = [self.model dataForIndexPath:indexPath];
+    cell.textLabel.text = [item objectForKey:@"nick"];
+    cell.detailTextLabel.text = [item objectForKey:@"name"];
     
-    [cell.imageView setImageWithURL:[data authorAvatar] placeholderImage:[UIImage imageNamed:@"AuthorAvatarPlaceholder.png"]];
+    [cell.imageView setImageWithURL:[NSURL URLWithString:[item objectForKey:@"avatarURL"]] placeholderImage:[UIImage imageNamed:@"AuthorAvatarPlaceholder.png"]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString*)title atIndex:(NSInteger)index
@@ -61,7 +64,7 @@
     id data = [self.model dataForIndexPath:indexPath];
     
     TPAuthorInfoViewController *destination = segue.destinationViewController;
-    destination.authorBasicInfo = data;
+    destination.author = [data objectForKey:@"author"];
 }
 
 

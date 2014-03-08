@@ -9,12 +9,13 @@
 #import "TPPlayerViewController.h"
 
 #import "TPListModel.h"
-#import "TPEpisodeListModel.h"
 #import "TPEpisodeCollectionCell.h"
 #import "TPTapeCollectionCell.h"
 #import "TPTapeCollectionLayout.h"
 #import "UIImage+ImageEffects.h"
 #import "TPPlayerManager.h"
+
+#import "TPContinuousProgramModel.h"
 
 @interface TPPlayerViewController ()
 
@@ -146,13 +147,13 @@ static int kPlayingContext;
     
     if(self.model == nil)
     {
-        self.model = [[TPEpisodeListModel alloc] initWithParameters:[NSDate date]];
+        self.model = [[TPContinuousProgramModel alloc] init];
         self.model.delegate = self;
     }
     
     if(self.model)
     {
-        [self.model loadForced:NO];
+        [self.model jumpToDate:[NSDate date]];
     }
     
     // TODO: handle this thing properly
@@ -421,9 +422,9 @@ static int kPlayingContext;
 
     TPEpisodeCollectionCell *cell = [visibleCells objectAtIndex:0];
 
-    NSDictionary *episode = [self.model dataForIndexPath:[self.collectionView indexPathForCell:cell]];
+    //NSDictionary *episode = [self.model dataForIndexPath:[self.collectionView indexPathForCell:cell]];
     
-    [[TPPlayerManager sharedManager] cueEpisode:episode];
+    //[[TPPlayerManager sharedManager] cueEpisode:episode];
     
     [self updateAmbience];
 }
@@ -446,7 +447,7 @@ static int kPlayingContext;
 {
     if(collectionView == self.collectionView)
     {
-        return [self.model numberOfSections];
+        return 0;
     }
     else
     {
@@ -458,7 +459,7 @@ static int kPlayingContext;
 {
     if(collectionView == self.collectionView)
     {
-        return [self.model numberOfRowsInSection:section];
+        return 0;
     }
     else
     {
@@ -473,7 +474,7 @@ static int kPlayingContext;
         static NSString *cellIdentifier = @"EpisodeCollectionCell";
         TPEpisodeCollectionCell *cell = (TPEpisodeCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
         
-        cell.data = [self.model dataForIndexPath:indexPath];
+//        cell.data = [self.model dataForIndexPath:indexPath];
         return cell;
     }
     else

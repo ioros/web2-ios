@@ -10,10 +10,11 @@
 #import "TPTableViewController.h"
 
 @class TPAuthorInfoModel;
+@class TPAuthorData;
 
 @interface TPAuthorInfoViewController : TPTableViewController
 
-@property (nonatomic, strong) NSDictionary *authorBasicInfo;
+@property (nonatomic, strong) TPAuthorData *author;
 @property (nonatomic, strong) TPAuthorInfoModel *authorModel;
 
 @end

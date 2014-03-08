@@ -21,7 +21,7 @@
     
     for(NSDictionary *author in authors)
     {
-        NSString *name = [[author objectForKey:key] uppercaseString];
+        NSString *name = [[author valueForKey:key] uppercaseString];
         NSString *firstLetter = name.length > 0 ? [name substringToIndex:1] : @"-";
         if(![lastLabel isEqualToString:firstLetter])
         {

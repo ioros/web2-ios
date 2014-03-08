@@ -8,11 +8,14 @@
 
 #import "TPListModel.h"
 
+@class TPShowData;
+
 @interface TPShowInfoModel : TPListModel
+
 
 @property (nonatomic, retain) AFHTTPRequestOperation *operation;
 
-@property (nonatomic, retain) NSDictionary *show;
+@property (nonatomic, retain) TPShowData *show;
 @property (nonatomic, retain) NSString *htmlString;
 
 @end

@@ -13,6 +13,7 @@
 #import "TPFlipLabelView.h"
 #import "NSDate+TPAdditions.h"
 #import "TPTimestampView.h"
+#import "TPEpisodeData.h"
 
 @interface TPEpisodeListViewController ()
 
@@ -133,8 +134,8 @@ static const int DAY_SECONDS = 60 * 60 * 24;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *data = [self.model dataForIndexPath:indexPath];
-    CGFloat height = [TPEpisodeListCell estimatedHeightWithTitle:[data episodeName] description:[data episodeDefinition] authors:[[data episodeContributorNicknames] componentsJoinedByString:@", "] forWidth:320];
+    TPEpisodeData *episode = [self.model dataForIndexPath:indexPath];
+    CGFloat height = [TPEpisodeListCell estimatedHeightWithTitle:episode.name description:episode.definition authors:[episode.contributorNicknames componentsJoinedByString:@", "] forWidth:320];
     
     return height;
 }
@@ -149,11 +150,11 @@ static const int DAY_SECONDS = 60 * 60 * 24;
 {
     TPEpisodeListCell *episodeCell = (TPEpisodeListCell *)cell;
     
-    NSDictionary *data = [self.model dataForIndexPath:indexPath];
-    episodeCell.textLabel.text = [data episodeName];
-    episodeCell.authorLabel.text = [[data episodeContributorNicknames] componentsJoinedByString:@", "];
-    episodeCell.detailTextLabel.text = [data episodeDefinition];
-    episodeCell.timestampView.seconds = [data episodeStartSeconds];
+    TPEpisodeData *episode = [self.model dataForIndexPath:indexPath];
+    episodeCell.textLabel.text = episode.name;
+    episodeCell.authorLabel.text = [episode.contributorNicknames componentsJoinedByString:@", "];
+    episodeCell.detailTextLabel.text = episode.definition;
+    episodeCell.timestampView.seconds = episode.startSeconds;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

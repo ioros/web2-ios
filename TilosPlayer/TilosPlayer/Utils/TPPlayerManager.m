@@ -10,6 +10,7 @@
 
 #import "SynthesizeSingleton.h"
 #import "TPAudioPlayer.h"
+#import "TPEpisodeData.h"
 
 @implementation TPPlayerManager
 
@@ -35,13 +36,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     if([keyPath isEqualToString:@"currentTime"])
     {
 //        NSLog(@"time %@", change);
-        NSDate *date = [self.currentEpisode episodePlannedFromDate];
+        NSDate *date = self.currentEpisode.plannedFrom;
         date = [date dateByAddingTimeInterval:[TPAudioPlayer sharedPlayer].currentTime];
         self.globalTime = [date timeIntervalSince1970];
     }
 }
 
-- (void)cueEpisode:(NSDictionary *)episode
+- (void)cueEpisode:(TPEpisodeData *)episode
 {
     self.currentEpisode = episode;
     if(_playing)
@@ -50,15 +51,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     }
 }
 
-- (void)playEpisode:(NSDictionary *)episode
+- (void)playEpisode:(TPEpisodeData *)episode
 {
     [self playEpisode:episode atSeconds:0];
 }
-- (void)playEpisode:(NSDictionary *)episode atSeconds:(NSTimeInterval)seconds
+- (void)playEpisode:(TPEpisodeData *)episode atSeconds:(NSTimeInterval)seconds
 {
     // TODO: handle seconds
     
-    NSDate *startDate = [episode episodePlannedFromDate];
+    NSDate *startDate = episode.plannedFrom;
     //NSDate *dayDate = [startDate dayDate];
     //NSDate *segmentDate = [startDate archiveSegmentStartDate];
     

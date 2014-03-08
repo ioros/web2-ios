@@ -10,6 +10,8 @@
 
 #import "AFNetworking.h"
 #import "NSArray+TPIndexedSorting.h"
+#import "TPAuthorData.h"
+#import "TPContributionData.h"
 
 @implementation TPAuthorListModel
 
@@ -56,22 +58,27 @@
 
 - (void)parseContent:(id)JSON
 {
-    NSArray *authors = JSON;
+    NSArray *authors = [TPAuthorData parseWithObjects:JSON];
     
+    //self.sections = @[ [TPListSection sectionWithTitle:nil items:authors] ];
+    //[self sendFinished];
+    //return;
     
     // get all nick objects and add the name to each
     NSMutableArray *nicks = [NSMutableArray array];
-    for (NSDictionary *author in authors)
+    for (TPAuthorData *author in authors)
     {
-        NSArray *contributions = [author objectForKey:@"contributions"];
+        NSArray *contributions = author.contributions;
         
-        for(NSDictionary *contribution in contributions)
+        for(TPContributionData *contribution in contributions)
         {
-            NSDictionary *item = [contribution mutableCopy];
-            [item setValue:[author objectForKey:@"name"] forKey:@"name"];
-            [item setValue:[author objectForKey:@"avatar"] forKey:@"avatar"];
-            [item setValue:[author objectForKey:@"photo"] forKey:@"photo"];
-            [item setValue:[author objectForKey:@"id"] forKey:@"id"];
+            NSMutableDictionary *item = [NSMutableDictionary dictionary];
+            [item setValue:author.name forKey:@"name"];
+            [item setValue:author.avatarURL forKey:@"avatarURL"];
+            [item setValue:author.photoURL forKey:@"photoURL"];
+            [item setValue:author.identifier forKey:@"id"];
+            [item setValue:contribution.nick forKey:@"nick"];
+            [item setValue:author forKey:@"author"];
             
             [nicks addObject:item];
         }

@@ -11,6 +11,7 @@
 #import "TPListModel.h"
 
 @class TPPlayerViewController;
+@class TPContinuousProgramModel;
 
 @protocol TPPlayerViewControllerDelegate <NSObject>
 
@@ -26,7 +27,6 @@
 
 @property (nonatomic, retain) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, retain) IBOutlet UICollectionView *tapeCollectionView;
-@property (nonatomic, retain) TPListModel *model;
 
 @property (nonatomic, retain) UIButton *logoButton;
 @property (nonatomic, retain) IBOutlet UIButton *playButton;
@@ -36,6 +36,8 @@
 @property (nonatomic, retain) UIImageView *backgroundView;
 
 @property (nonatomic, retain) UIView *fadeView;
+
+@property (nonatomic, retain) TPContinuousProgramModel *model;
 
 
 @property (nonatomic, assign) id<TPPlayerViewControllerDelegate> delegate;

@@ -14,6 +14,9 @@
 #import "TPWebIntroductionCell.h"
 #import "TPAuthorListCell.h"
 #import "TPShowListCell.h"
+#import "TPAuthorData.h"
+#import "TPContributionData.h"
+#import "TPShowData.h"
 
 
 @interface TPAuthorInfoViewController () <TPListModelDelegate, UITableViewDelegate, UIWebViewDelegate>
@@ -30,18 +33,19 @@
     NSMutableAttributedString *_nickString;
 }
 
--(void)viewDidLoad{
+-(void)viewDidLoad
+{
     [super viewDidLoad];
         
-    self.navigationItem.title = [self.authorBasicInfo authorName];
+    self.navigationItem.title = self.author.name;
     
-    self.authorModel = [[TPAuthorInfoModel alloc] initWithParameters:[self.authorBasicInfo objectForKeyOrNil:@"id"]];
+    self.authorModel = [[TPAuthorInfoModel alloc] initWithParameters:self.author.identifier];
     self.authorModel.delegate = self;
     _authorInfoWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 2.0f)];
     _authorInfoWebView.scrollView.scrollEnabled = NO;
     _authorInfoWebView.delegate = self;
     
-    _nickString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"Alias %@", [self.authorBasicInfo objectForKey:@"alias"]]];
+    _nickString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"Alias %@", self.author.alias]];
     
     _boldAttributes = @{NSFontAttributeName : kBoldFont};
     _normalAttributes = @{NSFontAttributeName : kListFont};
@@ -140,7 +144,8 @@
         case 0:{
             
             TPAuthorListCell *cell = [tableView dequeueReusableCellWithIdentifier:authorCellIdentifier];
-            [cell.imageView setImageWithURL:[self.authorBasicInfo objectForKey:@"avatar"] placeholderImage:[UIImage imageNamed:@"AuthorAvatarPlaceholder.png"]];
+            [cell.imageView setImageWithURL:[NSURL URLWithString:self.author.avatarURL]
+                           placeholderImage:[UIImage imageNamed:@"AuthorAvatarPlaceholder.png"]];
             
 
             cell.textLabel.attributedText = _nickString;
@@ -157,8 +162,6 @@
                 iCell.introductionWebView.scrollView.bounces = NO;
                 iCell.introductionWebView.delegate = self;
                 
-                NSLog(@"%@",[_infoModel.author objectForKey:@"introduction"]);
-                
                 return iCell;
                 break;
             }
@@ -166,11 +169,11 @@
                 
                 TPShowListCell *cell = (TPShowListCell *) [tableView dequeueReusableCellWithIdentifier:showCellIdentifier];
                 
-                NSDictionary *contribution = self.authorModel.contributions[indexPath.row];
-                NSDictionary *show = [contribution objectForKey:@"show"];
+                TPContributionData *contribution = [self.authorModel.contributions objectAtIndex:indexPath.row];
+                TPShowData *show = [contribution show];
                 
-                cell.textLabel.text = [show objectForKey:@"name"];
-                cell.detailTextLabel.text = [show objectForKey:@"definition"];
+                cell.textLabel.text = show.name;
+                cell.detailTextLabel.text = show.definition;
                 return cell;
                 break;
             }
@@ -247,13 +250,13 @@
     UITableViewCell *cell = (UITableViewCell*)sender;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     
-    NSDictionary *contribution = self.authorModel.contributions[indexPath.row];
-    id data = [contribution objectForKey:@"show"];
+    TPContributionData *contribution = [self.authorModel.contributions objectAtIndex: indexPath.row];
+    TPShowData *show = [contribution show];
     
     UIViewController *destination = segue.destinationViewController;
     if([destination respondsToSelector:@selector(setData:)])
     {
-        [destination performSelector:@selector(setData:) withObject:data];
+        [destination performSelector:@selector(setData:) withObject:show];
     }
 }
 

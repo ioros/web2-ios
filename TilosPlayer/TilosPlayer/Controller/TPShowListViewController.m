@@ -9,6 +9,7 @@
 #import "TPShowListViewController.h"
 
 #import "TPShowListModel.h"
+#import "TPShowData.h"
 
 #pragma mark -
 
@@ -52,9 +53,9 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *data = [self.model dataForIndexPath:indexPath];
-    cell.textLabel.text = [data objectForKey:@"name"];
-    cell.detailTextLabel.text = [data objectForKey:@"definition"];
+    TPShowData *data = [self.model dataForIndexPath:indexPath];
+    cell.textLabel.text = data.name;
+    cell.detailTextLabel.text = data.definition;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

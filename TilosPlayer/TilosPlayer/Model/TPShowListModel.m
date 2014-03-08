@@ -10,6 +10,7 @@
 
 #import "AFNetworking.h"
 #import "NSArray+TPIndexedSorting.h"
+#import "TPShowData.h"
 
 @implementation TPShowListModel
 
@@ -73,7 +74,7 @@
 
 - (void)parseContent:(id)JSON
 {
-    self.data = JSON;
+    self.data = [TPShowData parseWithObjects:JSON];
     [self updateWithFilter:self.filter];
     [self sendFinished];
 }

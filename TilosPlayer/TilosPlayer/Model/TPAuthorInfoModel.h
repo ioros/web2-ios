@@ -19,11 +19,13 @@ typedef NS_ENUM(NSInteger, AwailableInfoType){
     kNoInfoAwailable
 };
 
+@class TPAuthorData;
+
 @interface TPAuthorInfoModel : TPListModel
 
 @property (nonatomic, strong) AFHTTPRequestOperation *operation;
 
-@property (nonatomic, strong) NSDictionary *author;
+@property (nonatomic, strong) TPAuthorData *author;
 @property (nonatomic, strong) NSArray *contributions;
 @property (nonatomic, strong) NSString *htmlString;
 

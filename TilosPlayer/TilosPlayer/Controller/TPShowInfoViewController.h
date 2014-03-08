@@ -10,13 +10,15 @@
 #import "TPTableViewController.h"
 
 
+@class TPEpisodeData;
 @class TPShowInfoHeaderView;
+@class TPShowData;
 
 @interface TPShowInfoViewController : TPTableViewController
 
-@property (nonatomic, retain) id data;
-@property (nonatomic, readonly) TPShowInfoHeaderView *headerView;
+@property (nonatomic, retain) TPShowData *data;
 
+@property (nonatomic, readonly) TPShowInfoHeaderView *headerView;
 @property (nonatomic, readonly) UILabel *titleLabel;
 
 @end

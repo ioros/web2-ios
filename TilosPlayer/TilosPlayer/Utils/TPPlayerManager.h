@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class TPEpisodeData;
+
 @interface TPPlayerManager : NSObject
 
-@property (nonatomic, retain) NSDictionary *currentEpisode;
+@property (nonatomic, retain) TPEpisodeData *currentEpisode;
 @property (nonatomic, assign) NSTimeInterval globalTime;
 @property (nonatomic, assign) BOOL playerLoading;
 @property (nonatomic, assign) BOOL playing;
@@ -19,9 +21,9 @@
 
 + (TPPlayerManager *)sharedManager;
 
-- (void)cueEpisode:(NSDictionary *)episode;
-- (void)playEpisode:(NSDictionary *)episode;
-- (void)playEpisode:(NSDictionary *)episode atSeconds:(NSTimeInterval)seconds;
+- (void)cueEpisode:(TPEpisodeData *)episode;
+- (void)playEpisode:(TPEpisodeData *)episode;
+- (void)playEpisode:(TPEpisodeData *)episode atSeconds:(NSTimeInterval)seconds;
 
 - (void)togglePlay;
 

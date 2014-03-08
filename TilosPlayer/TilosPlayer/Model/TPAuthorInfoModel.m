@@ -8,6 +8,8 @@
 
 #import "TPAuthorInfoModel.h"
 
+#import "TPAuthorData.h"
+
 @implementation TPAuthorInfoModel
 
 - (void)dealloc
@@ -55,9 +57,9 @@
 
 - (void)parseContent:(id)JSON
 {
-    self.author = JSON;
+    self.author = [TPAuthorData parseWithObject:JSON];
     
-    self.contributions = [self.author objectForKeyOrNil:@"contributions"];
+    self.contributions = self.author.contributions;
     
     [self sendFinished];
 }
@@ -65,7 +67,7 @@
 -(AwailableInfoType)awailableInfo{
     
     //NSLog(@"%@", [self.author objectForKey:@"introduction"]);
-    NSString *introductionString = [self.author objectForKey:@"introduction"];
+    NSString *introductionString = self.author.introduction;
     
     if (self.contributions.count > 0 && introductionString.length>0) {
         return kContributionsAndIntroduction;
@@ -79,10 +81,11 @@
     else return kNoInfoAwailable;
 }
 
--(void)setAuthor:(NSDictionary *)author{
+-(void)setAuthor:(TPAuthorData *)author
+{
     _author = author;
     
-    self.htmlString = [NSString stringWithFormat:@"<html><head></head><body><div id = \"content\" style=\"font-family:Avenir-Light; font-size:15px\">%@</div></body></html>", [author objectForKey:@"introduction"]];
+    self.htmlString = [NSString stringWithFormat:@"<html><head></head><body><div id = \"content\" style=\"font-family:Avenir-Light; font-size:15px\">%@</div></body></html>", author.introduction];
 }
 
 @end
