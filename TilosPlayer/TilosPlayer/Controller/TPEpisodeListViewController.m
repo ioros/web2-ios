@@ -161,7 +161,7 @@ static const int DAY_SECONDS = 60 * 60 * 24;
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSDictionary *episode = [self.model dataForIndexPath:indexPath];
+    TPEpisodeData *episode = [self.model dataForIndexPath:indexPath];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"playEpisode" object:self userInfo:@{@"episode":episode}];
 }
 
