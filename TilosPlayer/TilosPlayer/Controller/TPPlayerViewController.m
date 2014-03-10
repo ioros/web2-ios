@@ -28,11 +28,15 @@
 @property (nonatomic, assign) NSTimeInterval startTime;
 @property (nonatomic, assign) NSInteger tapeCollectionRowCount;
 
+@property (nonatomic, assign) BOOL tapeScrollAnimating;
+
 @property (nonatomic, retain) UIView *redDotView;
 @property (nonatomic, assign) BOOL redDotVisible;
 
 // we jump here after the load has been completed
 @property (nonatomic, retain) NSDate *jumpDate;
+
+@property (nonatomic, assign) CGFloat scrollAdjustment;
 
 @end
 
@@ -41,10 +45,11 @@
 @implementation TPPlayerViewController
 
 #define kAnimationDuration 0.7f
-#define kTapeArchiveSectionCount 5000
 
 static int kGlobalTimeContext;
 static int kPlayingContext;
+
+#pragma mark -
 
 - (id)init
 {
@@ -58,6 +63,8 @@ static int kPlayingContext;
 - (void)loadView
 {
     self.opened = YES;
+    self.scrollAdjustment = 160.0f;
+    self.tapeScrollAnimating = NO;
     
     CGRect frame = CGRectMake(0, 0, 320, 480);
     UIView *v = [[UIView alloc] initWithFrame:frame];
@@ -156,6 +163,20 @@ static int kPlayingContext;
 
     [self.view addSubview:button];
     self.logoButton = button;
+    
+    
+    ///////// setup initial value
+    NSDate *now = [NSDate date];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit fromDate:now];
+    NSDate *pastDate = [[NSCalendar currentCalendar] dateFromComponents:components];
+    pastDate = [pastDate dateByAddingTimeInterval: -4 * 3600 * 24];
+    self.startTime = [pastDate timeIntervalSince1970];
+    
+    NSTimeInterval difference = [now timeIntervalSinceDate:pastDate];
+    self.tapeCollectionRowCount = floorf( difference / (5 * 60) );
+    
+    [self.tapeCollectionView reloadData];
+    [self.tapeCollectionView setContentOffset:CGPointMake(self.tapeCollectionRowCount * 150.0f, 0)];
 }
 
 - (void)viewDidLoad
@@ -191,12 +212,17 @@ static int kPlayingContext;
 {
     if(context == &kGlobalTimeContext)
     {
-        NSTimeInterval globalTime = [TPPlayerManager sharedManager].globalTime;
-        NSTimeInterval timeDiff = globalTime - self.startTime;
-        float timeDiffMinutes = timeDiff / 60.0f;
-        CGFloat offset = timeDiffMinutes * 30.0f;
-        
-        [self.tapeCollectionView setContentOffset:CGPointMake(offset, 0)];
+        if(!_tapeScrollAnimating)
+        {
+            NSLog(@"UPDATING BY PLAYER POSITION");
+            
+            NSTimeInterval globalTime = [TPPlayerManager sharedManager].globalTime;
+            NSTimeInterval timeDiff = globalTime - self.startTime;
+            float timeDiffMinutes = timeDiff / 60.0f;
+            CGFloat offset = timeDiffMinutes * 30.0f;
+            
+            [self.tapeCollectionView setContentOffset:CGPointMake(offset - _scrollAdjustment, 0)];
+        }
 //        NSLog(@"offset %f %f %f", offset, globalTime, self.startTime);
     }
     else if(context == &kPlayingContext)
@@ -274,15 +300,12 @@ static int kPlayingContext;
     if(contentWidth == 0) return;
 
     CGFloat threshold = 300.0f;
-
     if(offsetX < threshold)
     {
-        NSLog(@"loadhead");
         [self.model loadHead];
     }
     if(offsetX > (contentWidth - threshold - collectionWidth))
     {
-        NSLog(@"loadtail");
         [self.model loadTail];
     }
 }
@@ -293,18 +316,6 @@ static int kPlayingContext;
 {
     self.jumpDate = date;
     [self.model jumpToDate:date];
-    
-    NSDate *now = [NSDate date];
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit fromDate:now];
-    NSDate *pastDate = [[NSCalendar currentCalendar] dateFromComponents:components];
-    [pastDate dateByAddingTimeInterval:-20 * 3600 * 24];
-    self.startTime = [pastDate timeIntervalSince1970];
-    
-    NSTimeInterval difference = [now timeIntervalSinceDate:pastDate];
-    self.tapeCollectionRowCount = difference / (5 * 60);
-    
-    [self.tapeCollectionView reloadData];
-    [self.tapeCollectionView setContentOffset:CGPointMake(self.tapeCollectionRowCount * 150.0f, 0)];
 }
 
 #pragma mark - actions
@@ -334,7 +345,20 @@ static int kPlayingContext;
 
 - (IBAction)togglePlay:(id)sender
 {
-    [[TPPlayerManager sharedManager] togglePlay];
+    if([[TPPlayerManager sharedManager] playing])
+    {
+        [[TPPlayerManager sharedManager] pause];
+    }
+    else
+    {
+        NSArray *visibleCells = [self.collectionView visibleCells];
+        if(visibleCells.count > 0)
+        {
+            TPEpisodeCollectionCell *cell = (TPEpisodeCollectionCell *)[visibleCells firstObject];
+            TPEpisodeData *episode = cell.episode;
+            [[TPPlayerManager sharedManager] playEpisode:episode];
+        }
+    }
 }
 
 - (void)closeAnimated:(BOOL)animated
@@ -473,6 +497,16 @@ static int kPlayingContext;
 
 #pragma mark -
 
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    if(scrollView == self.tapeCollectionView)
+    {
+        self.tapeScrollAnimating = NO;
+    }
+    //self.scrollAnimating = NO;
+    NSLog(@"SCROLL ANIMATION FINISH");
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat offsetX = self.tapeCollectionView.contentOffset.x;
@@ -527,12 +561,12 @@ static int kPlayingContext;
 
     TPEpisodeData *episode = [self.model dataForIndexPath:[self.collectionView indexPathForCell:cell]];
 
-    CGFloat offsetAdjustment = -160.0f;
-    
     if([episode isCurrentEpisode])
     {
         CGFloat offsetX = (self.tapeCollectionRowCount-1) * 150.0f;
         offsetX -= 160 - 75;
+
+        self.tapeScrollAnimating = YES;
         [self.tapeCollectionView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
     }
     else
@@ -541,9 +575,11 @@ static int kPlayingContext;
         NSTimeInterval difference = plannedFrom.timeIntervalSince1970 - self.startTime;
         
         CGFloat offsetX = difference / (5 * 60) * 150.0f;
-        [self.tapeCollectionView setContentOffset:CGPointMake(offsetX + offsetAdjustment, 0) animated:YES];
+        self.tapeScrollAnimating = YES;
+        [self.tapeCollectionView setContentOffset:CGPointMake(offsetX - _scrollAdjustment, 0) animated:YES];
     }
-    //[[TPPlayerManager sharedManager] cueEpisode:episode];
+    
+    [[TPPlayerManager sharedManager] cueEpisode:episode];
     
     [self updateAmbience];
 }
@@ -601,7 +637,6 @@ static int kPlayingContext;
         NSDate *date = [NSDate new];
         NSTimeInterval timeDifference = date.timeIntervalSince1970 - self.startTime;
         NSInteger slots = timeDifference / (5 * 60); // 5 minutes per slot
-        NSLog(@"SLOT %d - %d", slots, indexPath.row);
         
         BOOL isEnd = (indexPath.row == self.tapeCollectionRowCount-1);
         if(!isEnd)

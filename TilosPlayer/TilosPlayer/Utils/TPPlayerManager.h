@@ -24,6 +24,7 @@
 - (void)cueEpisode:(TPEpisodeData *)episode;
 - (void)playEpisode:(TPEpisodeData *)episode;
 - (void)playEpisode:(TPEpisodeData *)episode atSeconds:(NSTimeInterval)seconds;
+- (void)pause;
 
 - (void)togglePlay;
 

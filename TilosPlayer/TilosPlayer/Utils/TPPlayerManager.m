@@ -91,6 +91,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     }
 }
 
+- (void)pause
+{
+    if(self.playing)
+    {
+        self.playing = NO;
+        [[TPAudioPlayer sharedPlayer] pause];
+    }
+}
+
 #pragma mark -
 
 - (NSString *)urlForArchiveSegmentAtDate:(NSDate *)date

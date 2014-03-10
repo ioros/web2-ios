@@ -34,6 +34,19 @@
 {
     __block TPContinuousProgramModel *weakSelf = self;
     
+    if(self.episodes.count > 0)
+    {
+        TPEpisodeData *firstEpisode = [self.episodes firstObject];
+        TPEpisodeData *lastEpisode = [self.episodes lastObject];
+        if(date.timeIntervalSince1970 >= firstEpisode.plannedFrom.timeIntervalSince1970 && date.timeIntervalSince1970 < lastEpisode.plannedTo.timeIntervalSince1970)
+        {
+            // we already have the data
+            NSLog(@"no need to load episodes.");
+            return;
+        }
+    }
+    
+    
     NSDate *startOfDay = [date dayDate];
     NSDate *endOfDay = [startOfDay dateByAddingTimeInterval:24 * 60 * 60];
     
@@ -149,7 +162,7 @@
         
         self.initialOperation = nil;
         
-        [self sendItilialLoaded];
+        [self sendFinished];
     }
     else if(operation == self.tailOperation)
     {
@@ -220,7 +233,7 @@
 
 #pragma mark -
 
-- (void)sendItilialLoaded
+- (void)sendFinished
 {
     if([_delegate respondsToSelector:@selector(continuousProgramModelDidFinish:)])
     {
