@@ -9,18 +9,29 @@
 #import "TPPlayerViewController.h"
 
 #import "TPListModel.h"
+#import "TPContinuousProgramModel.h"
+
 #import "TPEpisodeCollectionCell.h"
 #import "TPTapeCollectionCell.h"
+#import "TPTapeCollectionLiveCell.h"
+
 #import "TPTapeCollectionLayout.h"
 #import "UIImage+ImageEffects.h"
 #import "TPPlayerManager.h"
 
-#import "TPContinuousProgramModel.h"
 
 @interface TPPlayerViewController ()
 
 @property (nonatomic, assign) BOOL opened;
+
 @property (nonatomic, assign) NSTimeInterval startTime;
+@property (nonatomic, assign) NSInteger tapeCollectionRowCount;
+
+@property (nonatomic, retain) UIView *redDotView;
+@property (nonatomic, assign) BOOL redDotVisible;
+
+// we jump here after the load has been completed
+@property (nonatomic, retain) NSDate *jumpDate;
 
 @end
 
@@ -33,6 +44,15 @@
 
 static int kGlobalTimeContext;
 static int kPlayingContext;
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.jumpDate = [NSDate new];
+    }
+    return self;
+}
 
 - (void)loadView
 {
@@ -80,14 +100,21 @@ static int kPlayingContext;
     self.tapeCollectionView.delegate = self;
     self.tapeCollectionView.showsHorizontalScrollIndicator = NO;
     self.tapeCollectionView.dataSource = self;
+    self.tapeCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 85);
     self.tapeCollectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     [self.tapeCollectionView registerClass:[TPTapeCollectionCell class] forCellWithReuseIdentifier:@"TapeCollectionCell"];
+    [self.tapeCollectionView registerClass:[TPTapeCollectionLiveCell class] forCellWithReuseIdentifier:@"TapeCollectionLiveCell"];
     [self.topView addSubview:self.tapeCollectionView];
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedDot.png"]];
     imageView.center = CGPointMake(160, 125 + 22);
     imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     [self.topView addSubview:imageView];
+    self.redDotView = imageView;
+
+    // init red dot
+    self.redDotView.alpha = 0.0f;
+    self.redDotVisible = NO;
     
     
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 15, 320, 220) collectionViewLayout:[[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(320, 220)]];
@@ -141,7 +168,6 @@ static int kPlayingContext;
 {
     [super viewWillAppear:animated];
     
-    
     // initialize the layout
     [self doOpen:NO];
     
@@ -151,22 +177,8 @@ static int kPlayingContext;
         self.model.delegate = self;
     }
     
-    if(self.model)
-    {
-        [self.model jumpToDate:[NSDate date]];
-    }
     
-    // TODO: handle this thing properly
-    
-    // setup the starttime, we cheat for now and place the startTime to 10 days in the past
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit fromDate:[NSDate date]];
-    NSDate *pastDate = [[NSCalendar currentCalendar] dateFromComponents:components];
-    pastDate = [pastDate dateByAddingTimeInterval:-10 * 24 * 60 * 60];
-    self.startTime = [pastDate timeIntervalSince1970];
-    
-    // seek to something reasonable
-    [self.tapeCollectionView setContentOffset:CGPointMake(kTapeArchiveSectionCount / 2 * 150.0f, 0)];
-    NSLog(@"initial tape offset %f", self.tapeCollectionView.contentOffset.x);
+    [self jumpToDate:[NSDate date]];
     
     // initialize ambience
     [self updateAmbience];
@@ -219,12 +231,19 @@ static int kPlayingContext;
 
 #pragma mark -
 
-- (void)continuousProgramModelDidLoadInitial:(TPContinuousProgramModel *)continuousProgramModel
+- (void)continuousProgramModelDidFinish:(TPContinuousProgramModel *)continuousProgramModel
 {
     [self.collectionView reloadData];
     [self.tapeCollectionView reloadData];
     
     [self checkLoadMore];
+    
+    if(self.jumpDate)
+    {
+        NSIndexPath *indexPath = [self.model indexPathForDate:self.jumpDate];
+        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+        self.jumpDate = nil;
+    }
 }
 - (void)continuousProgramModel:(TPContinuousProgramModel *)continuousProgramModel didInsertDataAtIndexPaths:(NSArray *)indexPaths atEnd:(BOOL)atEnd
 {
@@ -265,6 +284,26 @@ static int kPlayingContext;
         NSLog(@"loadtail");
         [self.model loadTail];
     }
+}
+
+#pragma mark -
+
+- (void)jumpToDate:(NSDate *)date
+{
+    self.jumpDate = date;
+    [self.model jumpToDate:date];
+    
+    NSDate *now = [NSDate date];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit fromDate:now];
+    NSDate *pastDate = [[NSCalendar currentCalendar] dateFromComponents:components];
+    [pastDate dateByAddingTimeInterval:-20 * 3600 * 24];
+    self.startTime = [pastDate timeIntervalSince1970];
+    
+    NSTimeInterval difference = [now timeIntervalSinceDate:pastDate];
+    self.tapeCollectionRowCount = difference / (5 * 60);
+    
+    [self.tapeCollectionView reloadData];
+    [self.tapeCollectionView setContentOffset:CGPointMake(self.tapeCollectionRowCount * 150.0f, 0)];
 }
 
 #pragma mark - actions
@@ -435,6 +474,22 @@ static int kPlayingContext;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    CGFloat offsetX = self.tapeCollectionView.contentOffset.x;
+    CGFloat contentWidth = self.tapeCollectionRowCount * 150;
+    
+    CGFloat diff = contentWidth - offsetX;
+    BOOL shouldRedDotBeVisible = diff > 310;
+    
+    if(shouldRedDotBeVisible != self.redDotVisible)
+    {
+        self.redDotVisible = shouldRedDotBeVisible;
+
+        [UIView animateWithDuration:0.3 animations:^{
+            self.redDotView.alpha = shouldRedDotBeVisible ? 1.0f : 0.0f;
+        }];
+    }
+    
+    // check the model loading
     [self checkLoadMore];
 }
 
@@ -510,7 +565,7 @@ static int kPlayingContext;
     }
     else
     {
-        return kTapeArchiveSectionCount;
+        return self.tapeCollectionRowCount;
     }
 }
 
@@ -526,9 +581,22 @@ static int kPlayingContext;
     }
     else
     {
-        static NSString *tapeCellIdentifier = @"TapeCollectionCell";
-        TPTapeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:tapeCellIdentifier forIndexPath:indexPath];
-        return cell;
+        NSDate *date = [NSDate new];
+        NSTimeInterval timeDifference = date.timeIntervalSince1970 - self.startTime;
+        NSInteger slots = timeDifference / (5 * 60); // 5 minutes per slot
+        NSLog(@"SLOT %d - %d", slots, indexPath.row);
+        
+        BOOL isEnd = (indexPath.row == self.tapeCollectionRowCount-1);
+        if(!isEnd)
+        {
+            TPTapeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TapeCollectionCell" forIndexPath:indexPath];
+            return cell;
+        }
+        else
+        {
+            TPTapeCollectionLiveCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TapeCollectionLiveCell" forIndexPath:indexPath];
+            return cell;
+        }
     }
 }
 

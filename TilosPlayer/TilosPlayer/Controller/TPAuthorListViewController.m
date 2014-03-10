@@ -47,6 +47,7 @@
     NSDictionary *item = [self.model dataForIndexPath:indexPath];
     cell.textLabel.text = [item objectForKey:@"nick"];
     cell.detailTextLabel.text = [item objectForKey:@"name"];
+    cell.accessoryType = UITableViewCellAccessoryNone;
     
     [cell.imageView setImageWithURL:[NSURL URLWithString:[item objectForKey:@"avatarURL"]] placeholderImage:[UIImage imageNamed:@"AuthorAvatarPlaceholder.png"]];
 }

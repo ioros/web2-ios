@@ -10,6 +10,7 @@
 #import "TPPlayerViewController.h"
 #import "TPTabBar.h"
 #import "TPPlayerManager.h"
+#import "TPEpisodeData.h"
 
 #define kTabbarHeight 49.0f
 #define kTopbarHeight 64.0f
@@ -101,9 +102,13 @@
 
 - (void)playEpisode:(NSNotification *)n
 {
+    TPEpisodeData *episode = [n.userInfo objectForKey:@"episode"];
+    
     [self.playerViewController openAnimated:YES];
+    [self.playerViewController jumpToDate:episode.plannedFrom];
     [self.tabbar deselectItems];
-    [[TPPlayerManager sharedManager] playEpisode:[n.userInfo objectForKey:@"episode"]];
+    
+    [[TPPlayerManager sharedManager] playEpisode:episode];
 }
 
 #pragma mark -

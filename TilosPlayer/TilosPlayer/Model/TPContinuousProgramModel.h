@@ -13,7 +13,7 @@
 @protocol TPContinuousProgramModelDelegate <NSObject>
 
 @optional
-- (void)continuousProgramModelDidLoadInitial:(TPContinuousProgramModel *)continuousProgramModel;
+- (void)continuousProgramModelDidFinish:(TPContinuousProgramModel *)continuousProgramModel;
 - (void)continuousProgramModel:(TPContinuousProgramModel *)continuousProgramModel didInsertDataAtIndexPaths:(NSArray *)indexPaths atEnd:(BOOL)atEnd;
 
 @end
@@ -22,6 +22,8 @@
 
 @property (nonatomic, retain) NSMutableArray *episodes;
 @property (nonatomic, assign) id<TPContinuousProgramModelDelegate> delegate;
+
+- (NSIndexPath *)indexPathForDate:(NSDate *)date;
 
 - (void)loadTail;
 - (void)loadHead;

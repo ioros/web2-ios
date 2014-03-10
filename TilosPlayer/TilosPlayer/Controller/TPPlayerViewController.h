@@ -41,7 +41,6 @@
 
 @property (nonatomic, retain) TPContinuousProgramModel *model;
 
-
 @property (nonatomic, assign) id<TPPlayerViewControllerDelegate> delegate;
 
 - (IBAction)close:(id)sender;
@@ -49,5 +48,7 @@
 - (void)closeAnimated:(BOOL)animated;
 - (void)openAnimated:(BOOL)animated;
 - (void)toggleAnimated:(BOOL)animated;
+
+- (void)jumpToDate:(NSDate *)date;
 
 @end

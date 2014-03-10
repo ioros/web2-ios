@@ -15,8 +15,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setup];
-        
-        self.opaque = NO;
     }
     return self;
 }
@@ -33,6 +31,7 @@
 
 - (void)setup
 {
+    self.opaque = NO;
 }
 
 - (void)drawRect:(CGRect)rect

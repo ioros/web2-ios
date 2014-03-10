@@ -142,7 +142,7 @@
 {
     if(operation == self.initialOperation)
     {
-        NSLog(@"data %@", JSON);
+        //NSLog(@"data %@", JSON);
         
         NSArray *episodes = [TPEpisodeData parseWithObjects:JSON];
         self.episodes = [episodes mutableCopy];
@@ -154,7 +154,7 @@
     else if(operation == self.tailOperation)
     {
         NSArray *episodes = [TPEpisodeData parseWithObjects:JSON];
-        NSInteger startIndex = episodes.count;
+        NSInteger startIndex = self.episodes.count;
         NSInteger count = episodes.count;
         self.episodes = [[self.episodes arrayByAddingObjectsFromArray:episodes] mutableCopy];
         self.tailOperation = nil;
@@ -222,9 +222,9 @@
 
 - (void)sendItilialLoaded
 {
-    if([_delegate respondsToSelector:@selector(continuousProgramModelDidLoadInitial:)])
+    if([_delegate respondsToSelector:@selector(continuousProgramModelDidFinish:)])
     {
-        [_delegate performSelector:@selector(continuousProgramModelDidLoadInitial:) withObject:self];
+        [_delegate performSelector:@selector(continuousProgramModelDidFinish:) withObject:self];
     }
 }
 
@@ -234,6 +234,23 @@
     {
         [_delegate continuousProgramModel:self didInsertDataAtIndexPaths:indexPaths atEnd:atEnd];
     }
+}
+
+#pragma mark -
+
+- (NSIndexPath *)indexPathForDate:(NSDate *)date
+{
+    int counter = 0;
+    for(TPEpisodeData *episode in self.episodes)
+    {
+        if(episode.plannedFrom.timeIntervalSince1970 <= date.timeIntervalSince1970 && date.timeIntervalSince1970 < episode.plannedTo.timeIntervalSince1970)
+        {
+            return [NSIndexPath indexPathForRow:counter inSection:0];
+            break;
+        }
+        counter++;
+    }
+    return nil;
 }
 
 @end
