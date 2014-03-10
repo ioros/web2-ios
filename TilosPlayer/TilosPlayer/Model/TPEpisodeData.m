@@ -63,4 +63,14 @@
     return self.show.definition;
 }
 
+#pragma mark -
+
+- (NSString *)description
+{
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    formatter.dateFormat = @"yyyy.MM.dd. HH:mm:ss";
+    
+    return [NSString stringWithFormat:@"%@ %@ %@", [super description], [formatter stringFromDate:self.plannedFrom], [formatter stringFromDate:self.plannedTo]];
+}
+
 @end
