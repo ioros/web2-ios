@@ -63,6 +63,11 @@
     return self.show.definition;
 }
 
+- (NSDate *)dayDate
+{
+    return [self.plannedFrom dayDate];
+}
+
 #pragma mark -
 
 - (NSString *)description

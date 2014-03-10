@@ -34,9 +34,7 @@
 {
     __block TPContinuousProgramModel *weakSelf = self;
     
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit) fromDate:date];
-    NSDate *startOfDay = [calendar dateFromComponents:components];
+    NSDate *startOfDay = [date dayDate];
     NSDate *endOfDay = [startOfDay dateByAddingTimeInterval:24 * 60 * 60];
     
     NSString *queryString = [NSString stringWithFormat:@"start=%d&end=%d", (int)[startOfDay timeIntervalSince1970], (int)[endOfDay timeIntervalSince1970]];
@@ -73,9 +71,7 @@
     NSDate *date = [plannedTo dateByAddingTimeInterval:3600];
     
     // get the day boundings
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit) fromDate:date];
-    NSDate *startOfDay = [calendar dateFromComponents:components];
+    NSDate *startOfDay = [date dayDate];
     NSDate *endOfDay = [startOfDay dateByAddingTimeInterval:24 * 60 * 60];
     
     NSString *queryString = [NSString stringWithFormat:@"start=%d&end=%d", (int)[startOfDay timeIntervalSince1970], (int)[endOfDay timeIntervalSince1970]];
@@ -113,9 +109,7 @@
     NSDate *date = [plannedFrom dateByAddingTimeInterval:-3600];
     
     // get the day boundings
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit) fromDate:date];
-    NSDate *startOfDay = [calendar dateFromComponents:components];
+    NSDate *startOfDay = [date dayDate];
     NSDate *endOfDay = [startOfDay dateByAddingTimeInterval:24 * 60 * 60];
     
     NSString *queryString = [NSString stringWithFormat:@"start=%d&end=%d", (int)[startOfDay timeIntervalSince1970], (int)[endOfDay timeIntervalSince1970]];

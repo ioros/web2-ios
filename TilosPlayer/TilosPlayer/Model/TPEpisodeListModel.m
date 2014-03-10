@@ -56,9 +56,7 @@
     [self.operation cancel];
     self.operation = nil;
     
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit) fromDate:self.date];
-    NSDate *startOfDay = [calendar dateFromComponents:components];
+    NSDate *startOfDay = [self.date dayDate];
     NSDate *endOfDay = [startOfDay dateByAddingTimeInterval:24 * 60 * 60];
     
     NSString *queryString = [NSString stringWithFormat:@"start=%d&end=%d", (int)[startOfDay timeIntervalSince1970], (int)[endOfDay timeIntervalSince1970]];

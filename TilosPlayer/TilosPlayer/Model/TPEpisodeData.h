@@ -26,4 +26,6 @@
 @property (nonatomic, readonly) NSArray *contributorNicknames;
 @property (nonatomic, readonly) NSInteger startSeconds;
 
+@property (nonatomic, readonly) NSDate *dayDate;
+
 @end
