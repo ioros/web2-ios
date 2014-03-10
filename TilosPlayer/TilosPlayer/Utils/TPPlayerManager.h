@@ -13,6 +13,8 @@
 @interface TPPlayerManager : NSObject
 
 @property (nonatomic, retain) TPEpisodeData *currentEpisode;
+@property (nonatomic, retain) NSDate *segmentStartDate;
+
 @property (nonatomic, assign) NSTimeInterval globalTime;
 @property (nonatomic, assign) BOOL playerLoading;
 @property (nonatomic, assign) BOOL playing;
