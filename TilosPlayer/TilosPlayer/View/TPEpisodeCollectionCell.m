@@ -84,7 +84,7 @@
 {
     [super layoutSubviews];
     
-    self.contentView.frame = CGRectInset(self.bounds, 40, 0);
+    self.contentView.frame = CGRectInset(self.bounds, 20, 0);
 
     CGRect b = self.contentView.bounds;
     CGFloat w = b.size.width;

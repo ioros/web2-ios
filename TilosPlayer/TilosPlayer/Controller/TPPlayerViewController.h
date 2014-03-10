@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "TPListModel.h"
+#import "TPContinuousProgramModel.h"
 
 @class TPPlayerViewController;
 @class TPContinuousProgramModel;
@@ -22,8 +23,9 @@
 
 @end
 
+#pragma mark -
 
-@interface TPPlayerViewController : UIViewController <TPListModelDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface TPPlayerViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, TPContinuousProgramModelDelegate>
 
 @property (nonatomic, retain) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, retain) IBOutlet UICollectionView *tapeCollectionView;

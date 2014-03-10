@@ -8,15 +8,28 @@
 
 #import <Foundation/Foundation.h>
 
+@class TPContinuousProgramModel;
+
+@protocol TPContinuousProgramModelDelegate <NSObject>
+
+@optional
+- (void)continuousProgramModelDidLoadInitial:(TPContinuousProgramModel *)continuousProgramModel;
+- (void)continuousProgramModel:(TPContinuousProgramModel *)continuousProgramModel didInsertDataAtIndexPaths:(NSArray *)indexPaths atEnd:(BOOL)atEnd;
+
+@end
+
 @interface TPContinuousProgramModel : NSObject
 
 @property (nonatomic, retain) NSMutableArray *episodes;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TPContinuousProgramModelDelegate> delegate;
 
 - (void)loadTail;
 - (void)loadHead;
-
 - (void)jumpToDate:(NSDate *)date;
 
+- (NSInteger)numberOfSections;
+- (NSInteger)numberOfItemsInSection:(NSInteger)section;
+- (id)dataForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (id)dataForRow:(NSInteger)row section:(NSInteger)section;
 
 @end

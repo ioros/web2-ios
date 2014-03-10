@@ -219,10 +219,52 @@ static int kPlayingContext;
 
 #pragma mark -
 
-- (void)listModelDidFinish:(TPListModel *)listModel
+- (void)continuousProgramModelDidLoadInitial:(TPContinuousProgramModel *)continuousProgramModel
 {
     [self.collectionView reloadData];
     [self.tapeCollectionView reloadData];
+    
+    [self checkLoadMore];
+}
+- (void)continuousProgramModel:(TPContinuousProgramModel *)continuousProgramModel didInsertDataAtIndexPaths:(NSArray *)indexPaths atEnd:(BOOL)atEnd
+{
+    CGFloat offsetX = self.collectionView.contentOffset.x;
+    
+    [UIView setAnimationsEnabled:NO];
+    [self.collectionView insertItemsAtIndexPaths:indexPaths];
+    [UIView setAnimationsEnabled:YES];
+    
+    if(!atEnd)
+    {
+        CGFloat diff = atEnd ? 0 : indexPaths.count * self.collectionView.bounds.size.width;
+        self.collectionView.contentOffset = CGPointMake(offsetX + diff, 0);
+    }
+}
+
+#pragma mark -
+
+- (void)checkLoadMore
+{
+    if([self.model numberOfSections] == 0 || [self.model numberOfItemsInSection:0] == 0) return;
+    
+    CGFloat offsetX = self.collectionView.contentOffset.x;
+    CGFloat collectionWidth = self.collectionView.bounds.size.width;
+    CGFloat contentWidth = [self.model numberOfItemsInSection:0] * collectionWidth;
+    
+    if(contentWidth == 0) return;
+
+    CGFloat threshold = 300.0f;
+
+    if(offsetX < threshold)
+    {
+        NSLog(@"loadhead");
+        [self.model loadHead];
+    }
+    if(offsetX > (contentWidth - threshold - collectionWidth))
+    {
+        NSLog(@"loadtail");
+        [self.model loadTail];
+    }
 }
 
 #pragma mark - actions
@@ -391,6 +433,11 @@ static int kPlayingContext;
 
 #pragma mark -
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self checkLoadMore];
+}
+
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if(self.tapeCollectionView == scrollView)
@@ -447,7 +494,7 @@ static int kPlayingContext;
 {
     if(collectionView == self.collectionView)
     {
-        return 0;
+        return [self.model numberOfSections];
     }
     else
     {
@@ -459,7 +506,7 @@ static int kPlayingContext;
 {
     if(collectionView == self.collectionView)
     {
-        return 0;
+        return [self.model numberOfItemsInSection:section];
     }
     else
     {
@@ -474,7 +521,7 @@ static int kPlayingContext;
         static NSString *cellIdentifier = @"EpisodeCollectionCell";
         TPEpisodeCollectionCell *cell = (TPEpisodeCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
         
-//        cell.data = [self.model dataForIndexPath:indexPath];
+        cell.episode = (TPEpisodeData *)[self.model dataForRowAtIndexPath:indexPath];
         return cell;
     }
     else
