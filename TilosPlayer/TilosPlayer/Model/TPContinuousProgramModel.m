@@ -209,7 +209,7 @@
     return _episodes.count;
 }
 
-- (id)dataForRowAtIndexPath:(NSIndexPath *)indexPath
+- (id)dataForIndexPath:(NSIndexPath *)indexPath
 {
     return [self dataForRow:indexPath.row section:indexPath.section];
 }

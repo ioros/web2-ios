@@ -68,6 +68,13 @@
     return [self.plannedFrom dayDate];
 }
 
+- (BOOL)isCurrentEpisode
+{
+    NSDate *now = [NSDate date];
+    return (now.timeIntervalSince1970 >= self.plannedFrom.timeIntervalSince1970 && now.timeIntervalSince1970 < self.plannedTo.timeIntervalSince1970);
+}
+
+
 #pragma mark -
 
 - (NSString *)description
@@ -75,7 +82,9 @@
     NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"yyyy.MM.dd. HH:mm:ss";
     
-    return [NSString stringWithFormat:@"%@ %@ %@", [super description], [formatter stringFromDate:self.plannedFrom], [formatter stringFromDate:self.plannedTo]];
+    return [NSString stringWithFormat:@"%@ %@ %@ %@", [super description], self.name, [formatter stringFromDate:self.plannedFrom], [formatter stringFromDate:self.plannedTo]];
 }
+
+
 
 @end

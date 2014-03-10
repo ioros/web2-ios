@@ -31,7 +31,7 @@
 
 - (NSInteger)numberOfSections;
 - (NSInteger)numberOfItemsInSection:(NSInteger)section;
-- (id)dataForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (id)dataForIndexPath:(NSIndexPath *)indexPath;
 - (id)dataForRow:(NSInteger)row section:(NSInteger)section;
 
 @end

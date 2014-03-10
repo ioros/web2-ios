@@ -19,6 +19,7 @@
 #import "UIImage+ImageEffects.h"
 #import "TPPlayerManager.h"
 
+#import "TPEpisodeData.h"
 
 @interface TPPlayerViewController ()
 
@@ -524,8 +525,24 @@ static int kPlayingContext;
 
     TPEpisodeCollectionCell *cell = [visibleCells objectAtIndex:0];
 
-    //NSDictionary *episode = [self.model dataForIndexPath:[self.collectionView indexPathForCell:cell]];
+    TPEpisodeData *episode = [self.model dataForIndexPath:[self.collectionView indexPathForCell:cell]];
+
+    CGFloat offsetAdjustment = -160.0f;
     
+    if([episode isCurrentEpisode])
+    {
+        CGFloat offsetX = (self.tapeCollectionRowCount-1) * 150.0f;
+        offsetX -= 160 - 75;
+        [self.tapeCollectionView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+    }
+    else
+    {
+        NSDate *plannedFrom = episode.plannedFrom;
+        NSTimeInterval difference = plannedFrom.timeIntervalSince1970 - self.startTime;
+        
+        CGFloat offsetX = difference / (5 * 60) * 150.0f;
+        [self.tapeCollectionView setContentOffset:CGPointMake(offsetX + offsetAdjustment, 0) animated:YES];
+    }
     //[[TPPlayerManager sharedManager] cueEpisode:episode];
     
     [self updateAmbience];
@@ -576,7 +593,7 @@ static int kPlayingContext;
         static NSString *cellIdentifier = @"EpisodeCollectionCell";
         TPEpisodeCollectionCell *cell = (TPEpisodeCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
         
-        cell.episode = (TPEpisodeData *)[self.model dataForRowAtIndexPath:indexPath];
+        cell.episode = (TPEpisodeData *)[self.model dataForIndexPath:indexPath];
         return cell;
     }
     else

@@ -45,8 +45,9 @@
     [[UIColor clearColor] set];
     CGContextFillRect(ctx, rect);
     
-    [[UIColor redColor] set];
+    [[UIColor whiteColor] set];
     CGContextFillRect(ctx, CGRectMake(0, floorf(rect.size.height/2), 100, 0.5));
+    [[UIColor redColor] set];
     CGContextFillRect(ctx, CGRectMake(50, 0, 50, rect.size.height));
 
     [[UIColor whiteColor] set];
