@@ -64,10 +64,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     //NSDate *segmentDate = [startDate archiveSegmentStartDate];
     
     self.currentEpisode = episode;
+
+    NSDate *date = [startDate dateByAddingTimeInterval:seconds];
+    NSDate *archiveSegmentStartDate = [date archiveSegmentStartDate];
+    NSString *url = [self urlForArchiveSegmentAtDate:date];
     
-    NSString *url = [self urlForArchiveSegmentAtDate:startDate];
-    
-    [[TPAudioPlayer sharedPlayer] cueUrl:url atPosition:0];
+    NSTimeInterval segmentSeconds = [date timeIntervalSinceDate:archiveSegmentStartDate];
+    [[TPAudioPlayer sharedPlayer] cueUrl:url atPosition:seconds];
     
     self.playing = YES;
 }

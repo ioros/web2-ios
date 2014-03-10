@@ -28,6 +28,6 @@
 
 @property (nonatomic, readonly) NSDate *dayDate;
 
-- (BOOL)isCurrentEpisode;
+- (BOOL)isRunningEpisode;
 
 @end

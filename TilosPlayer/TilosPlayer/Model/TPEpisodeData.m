@@ -68,7 +68,7 @@
     return [self.plannedFrom dayDate];
 }
 
-- (BOOL)isCurrentEpisode
+- (BOOL)isRunningEpisode
 {
     NSDate *now = [NSDate date];
     return (now.timeIntervalSince1970 >= self.plannedFrom.timeIntervalSince1970 && now.timeIntervalSince1970 < self.plannedTo.timeIntervalSince1970);

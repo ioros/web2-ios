@@ -21,14 +21,24 @@
 
 #import "TPEpisodeData.h"
 
+
+typedef enum {
+    TPScrollStateNormal,
+    TPScrollStateDragging,
+    TPScrollStateAnimating,
+} TPScrollState;
+
 @interface TPPlayerViewController ()
 
 @property (nonatomic, assign) BOOL opened;
 
-@property (nonatomic, assign) NSTimeInterval startTime;
+@property (nonatomic, assign) NSTimeInterval tapeStartTime;
 @property (nonatomic, assign) NSInteger tapeCollectionRowCount;
 
-@property (nonatomic, assign) BOOL tapeScrollAnimating;
+@property (nonatomic, assign) TPScrollState tapeCollectionState;
+@property (nonatomic, assign) TPScrollState collectionState;
+
+@property (nonatomic, retain) TPEpisodeData *currentEpisode;
 
 @property (nonatomic, retain) UIView *redDotView;
 @property (nonatomic, assign) BOOL redDotVisible;
@@ -36,7 +46,7 @@
 // we jump here after the load has been completed
 @property (nonatomic, retain) NSDate *jumpDate;
 
-@property (nonatomic, assign) CGFloat scrollAdjustment;
+@property (nonatomic, assign) CGFloat tapeScrollAdjustment;
 
 @end
 
@@ -63,9 +73,11 @@ static int kPlayingContext;
 - (void)loadView
 {
     self.opened = YES;
-    self.scrollAdjustment = 160.0f;
-    self.tapeScrollAnimating = NO;
+    self.tapeScrollAdjustment = 160.0f;
     
+    self.collectionState = TPScrollStateNormal;
+    self.tapeCollectionState = TPScrollStateNormal;
+
     CGRect frame = CGRectMake(0, 0, 320, 480);
     UIView *v = [[UIView alloc] initWithFrame:frame];
     v.clipsToBounds = YES;
@@ -170,7 +182,7 @@ static int kPlayingContext;
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit fromDate:now];
     NSDate *pastDate = [[NSCalendar currentCalendar] dateFromComponents:components];
     pastDate = [pastDate dateByAddingTimeInterval: -4 * 3600 * 24];
-    self.startTime = [pastDate timeIntervalSince1970];
+    self.tapeStartTime = [pastDate timeIntervalSince1970];
     
     NSTimeInterval difference = [now timeIntervalSinceDate:pastDate];
     self.tapeCollectionRowCount = floorf( difference / (5 * 60) );
@@ -212,16 +224,16 @@ static int kPlayingContext;
 {
     if(context == &kGlobalTimeContext)
     {
-        if(!_tapeScrollAnimating)
+        if(self.tapeCollectionState == TPScrollStateNormal)
         {
-            NSLog(@"UPDATING BY PLAYER POSITION");
-            
             NSTimeInterval globalTime = [TPPlayerManager sharedManager].globalTime;
-            NSTimeInterval timeDiff = globalTime - self.startTime;
+            NSTimeInterval timeDiff = globalTime - self.tapeStartTime;
             float timeDiffMinutes = timeDiff / 60.0f;
             CGFloat offset = timeDiffMinutes * 30.0f;
-            
-            [self.tapeCollectionView setContentOffset:CGPointMake(offset - _scrollAdjustment, 0)];
+
+            NSLog(@"UPDATING BY PLAYER POSITION %f %f", timeDiff, globalTime);
+
+            [self.tapeCollectionView setContentOffset:CGPointMake(offset - _tapeScrollAdjustment, 0)];
         }
 //        NSLog(@"offset %f %f %f", offset, globalTime, self.startTime);
     }
@@ -246,10 +258,9 @@ static int kPlayingContext;
 
 - (void)updateAmbience
 {
-    NSArray *visibleCells = self.collectionView.visibleCells;
-    if(visibleCells.count == 0) return;
-    
-    TPEpisodeCollectionCell *cell = [visibleCells objectAtIndex:0];
+    NSInteger index = roundf(self.collectionView.contentOffset.x / 320.0f);
+
+    TPEpisodeCollectionCell *cell = (TPEpisodeCollectionCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     if(cell.imageView.image)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"updateAmbience" object:self userInfo:@{@"image":cell.imageView.image}];
@@ -270,6 +281,8 @@ static int kPlayingContext;
         NSIndexPath *indexPath = [self.model indexPathForDate:self.jumpDate];
         [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
         self.jumpDate = nil;
+        
+        self.currentEpisode = [self.model dataForIndexPath:indexPath];
     }
 }
 - (void)continuousProgramModel:(TPContinuousProgramModel *)continuousProgramModel didInsertDataAtIndexPaths:(NSArray *)indexPaths atEnd:(BOOL)atEnd
@@ -310,10 +323,29 @@ static int kPlayingContext;
     }
 }
 
+- (void)updateRedDot
+{
+    CGFloat offsetX = self.tapeCollectionView.contentOffset.x;
+    CGFloat contentWidth = self.tapeCollectionRowCount * 150;
+    
+    CGFloat diff = contentWidth - offsetX;
+    BOOL shouldRedDotBeVisible = diff > 310;
+    
+    if(shouldRedDotBeVisible != self.redDotVisible)
+    {
+        self.redDotVisible = shouldRedDotBeVisible;
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            self.redDotView.alpha = shouldRedDotBeVisible ? 1.0f : 0.0f;
+        }];
+    }
+}
+
 #pragma mark -
 
 - (void)jumpToDate:(NSDate *)date
 {
+    self.currentEpisode = nil;
     self.jumpDate = date;
     [self.model jumpToDate:date];
 }
@@ -351,12 +383,9 @@ static int kPlayingContext;
     }
     else
     {
-        NSArray *visibleCells = [self.collectionView visibleCells];
-        if(visibleCells.count > 0)
+        if(self.currentEpisode)
         {
-            TPEpisodeCollectionCell *cell = (TPEpisodeCollectionCell *)[visibleCells firstObject];
-            TPEpisodeData *episode = cell.episode;
-            [[TPPlayerManager sharedManager] playEpisode:episode];
+            [[TPPlayerManager sharedManager] playEpisode:self.currentEpisode];
         }
     }
 }
@@ -501,42 +530,62 @@ static int kPlayingContext;
 {
     if(scrollView == self.tapeCollectionView)
     {
-        self.tapeScrollAnimating = NO;
+        self.tapeCollectionState = TPScrollStateNormal;
     }
-    //self.scrollAnimating = NO;
-    NSLog(@"SCROLL ANIMATION FINISH");
+    else if(scrollView == self.collectionView)
+    {
+        self.collectionState = TPScrollStateNormal;
+    }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    if(scrollView == self.tapeCollectionView)
+    {
+        self.tapeCollectionState = TPScrollStateDragging;
+    }
+    else if(scrollView == self.collectionView)
+    {
+        self.collectionState = TPScrollStateDragging;
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat offsetX = self.tapeCollectionView.contentOffset.x;
-    CGFloat contentWidth = self.tapeCollectionRowCount * 150;
-    
-    CGFloat diff = contentWidth - offsetX;
-    BOOL shouldRedDotBeVisible = diff > 310;
-    
-    if(shouldRedDotBeVisible != self.redDotVisible)
+    if(scrollView == self.tapeCollectionView)
     {
-        self.redDotVisible = shouldRedDotBeVisible;
-
-        [UIView animateWithDuration:0.3 animations:^{
-            self.redDotView.alpha = shouldRedDotBeVisible ? 1.0f : 0.0f;
-        }];
+        [self updateRedDot];
     }
-    
-    // check the model loading
-    [self checkLoadMore];
+    else if(scrollView == self.collectionView)
+    {
+        // check the model loading
+        [self checkLoadMore];
+    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if(self.tapeCollectionView == scrollView)
     {
-        if(!decelerate) [self finishTapeScrolling];
+        if(decelerate)
+        {
+            self.tapeCollectionState = TPScrollStateAnimating;
+        }
+        else
+        {
+            [self finishTapeScrolling];
+        }
     }
     else if(self.collectionView == scrollView)
     {
-        if(!decelerate) [self finishCollectionScrolling];
+        if(decelerate)
+        {
+            self.collectionState = TPScrollStateAnimating;
+        }
+        else
+        {
+            [self finishCollectionScrolling];
+        }
     }
 }
 
@@ -554,29 +603,31 @@ static int kPlayingContext;
 
 - (void)finishCollectionScrolling
 {
-    NSArray *visibleCells = self.collectionView.visibleCells;
-    if(visibleCells.count == 0) return;
+    self.collectionState = TPScrollStateNormal;
+    
+    NSInteger index = roundf(self.collectionView.contentOffset.x / 320.0f);
+    if(index < 0 || index >= [self.model numberOfItemsInSection:0]) return;
+    
+    TPEpisodeData *episode = [self.model dataForRow:index section:0];
+    self.currentEpisode = episode;
 
-    TPEpisodeCollectionCell *cell = [visibleCells objectAtIndex:0];
-
-    TPEpisodeData *episode = [self.model dataForIndexPath:[self.collectionView indexPathForCell:cell]];
-
-    if([episode isCurrentEpisode])
+    if([episode isRunningEpisode])
     {
         CGFloat offsetX = (self.tapeCollectionRowCount-1) * 150.0f;
         offsetX -= 160 - 75;
 
-        self.tapeScrollAnimating = YES;
+        self.tapeCollectionState = TPScrollStateAnimating;
         [self.tapeCollectionView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
     }
     else
     {
         NSDate *plannedFrom = episode.plannedFrom;
-        NSTimeInterval difference = plannedFrom.timeIntervalSince1970 - self.startTime;
+        NSTimeInterval difference = plannedFrom.timeIntervalSince1970 - self.tapeStartTime;
         
         CGFloat offsetX = difference / (5 * 60) * 150.0f;
-        self.tapeScrollAnimating = YES;
-        [self.tapeCollectionView setContentOffset:CGPointMake(offsetX - _scrollAdjustment, 0) animated:YES];
+        
+        self.tapeCollectionState = TPScrollStateAnimating;
+        [self.tapeCollectionView setContentOffset:CGPointMake(offsetX - _tapeScrollAdjustment, 0) animated:YES];
     }
     
     [[TPPlayerManager sharedManager] cueEpisode:episode];
@@ -586,14 +637,20 @@ static int kPlayingContext;
 
 - (void)finishTapeScrolling
 {
-    CGPoint offset = self.tapeCollectionView.contentOffset;
-
-    // TODO: adjust to the center coordinate
-    CGFloat horizontalOffset = offset.x;
+    self.tapeCollectionState = TPScrollStateNormal;
     
-    NSTimeInterval time = self.startTime + (horizontalOffset / 30.0f) * 60.0f;
+    CGFloat offsetX = self.tapeCollectionView.contentOffset.x + _tapeScrollAdjustment;
 
-//    [[TPPlayerManager sharedManager] playAtTime:time];
+    NSTimeInterval time = self.tapeStartTime + (offsetX / 30.0f) * 60.0f;
+    
+    if(time < self.currentEpisode.plannedFrom.timeIntervalSince1970 || time >= self.currentEpisode.plannedTo.timeIntervalSince1970)
+    {
+        NSIndexPath *indexPath = [self.model indexPathForDate:[NSDate dateWithTimeIntervalSince1970:time]];
+        self.currentEpisode = [self.model dataForIndexPath:indexPath];
+    }
+
+    NSTimeInterval seconds = time - self.currentEpisode.plannedFrom.timeIntervalSince1970;
+    [[TPPlayerManager sharedManager] playEpisode:self.currentEpisode atSeconds:seconds];
 }
 
 #pragma mark - collection view
@@ -635,8 +692,7 @@ static int kPlayingContext;
     else
     {
         NSDate *date = [NSDate new];
-        NSTimeInterval timeDifference = date.timeIntervalSince1970 - self.startTime;
-        NSInteger slots = timeDifference / (5 * 60); // 5 minutes per slot
+        NSTimeInterval timeDifference = date.timeIntervalSince1970 - self.tapeStartTime;
         
         BOOL isEnd = (indexPath.row == self.tapeCollectionRowCount-1);
         if(!isEnd)
