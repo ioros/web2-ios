@@ -14,6 +14,8 @@
 
 + (instancetype)parseWithObject:(NSDictionary *)object
 {
+    if(object == nil) return nil;
+    
     TPAuthorData *data = [TPAuthorData new];
     data.identifier = [object objectForKey:@"id"];
     data.avatarURL = [object objectForKey:@"avatar"];
@@ -21,7 +23,7 @@
     data.name = [object objectForKey:@"name"];
     data.alias = [object objectForKey:@"alias"];
     
-    data.contributions = [TPContributionData parseWithObjects:[object objectForKey:@"contributions"]];
+    data.contributions = [TPContributionData parseWithObjects:[object objectForKeyOrNil:@"contributions"]];
     
     return data;
 }

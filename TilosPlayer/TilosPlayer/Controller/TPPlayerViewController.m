@@ -20,6 +20,7 @@
 #import "TPPlayerManager.h"
 
 #import "TPEpisodeData.h"
+#import "TPPlayButton.h"
 
 
 typedef enum {
@@ -153,14 +154,12 @@ static int kPlayingContext;
 
     /////////////////////
     
-    button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setImage:[UIImage imageNamed:@"PlayButton.png"] forState:UIControlStateNormal];
-    button.frame = CGRectMake(0, 0, 60, 60);
-    button.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
-    button.center = CGPointMake(160, 400);
+    TPPlayButton *playButton = [[TPPlayButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+    playButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
+    playButton.center = CGPointMake(160, 400);
     
-    [self.view addSubview:button];
-    self.playButton = button;
+    [self.view addSubview:playButton];
+    self.playButton = playButton;
     
     [self.playButton addTarget:self action:@selector(togglePlay:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -246,14 +245,9 @@ static int kPlayingContext;
 - (void)updatePlayButton
 {
     BOOL playing = [[TPPlayerManager sharedManager] playing];
-    if(playing)
-    {
-        [self.playButton setImage:[UIImage imageNamed:@"PauseButton.png"] forState:UIControlStateNormal];
-    }
-    else
-    {
-        [self.playButton setImage:[UIImage imageNamed:@"PlayButton.png"] forState:UIControlStateNormal];
-    }
+    
+    self.playButton.playing = playing;
+    self.playButton.loading = playing;
 }
 
 - (void)updateAmbience

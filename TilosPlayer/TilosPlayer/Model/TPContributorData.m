@@ -15,7 +15,7 @@
 + (instancetype)parseWithObject:(NSDictionary *)object
 {
     TPContributorData *data = [TPContributorData new];
-    data.author = [TPAuthorData parseWithObject:[object objectForKey:@"author"]];
+    data.author = [TPAuthorData parseWithObject:[object objectForKeyOrNil:@"author"]];
     data.nick = [object objectForKey:@"nick"];
     
     return data;

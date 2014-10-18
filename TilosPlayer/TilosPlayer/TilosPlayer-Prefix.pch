@@ -29,4 +29,4 @@
 
 #define kBoldFont [UIFont fontWithName:@"Avenir-Medium" size:17]
 
-#define kAPIBase @"http://tilos.anzix.net/api/v0"
+#define kAPIBase @"http://tilos.hu/api/v0"

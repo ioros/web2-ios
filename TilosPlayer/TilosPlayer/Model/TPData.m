@@ -17,10 +17,13 @@
 
 + (NSArray *)parseWithObjects:(NSArray *)objects
 {
+    if(objects == nil) return @[];
+    
     NSMutableArray *datas = [NSMutableArray array];
     for(NSDictionary *object in objects)
     {
-        [datas addObject:[self parseWithObject:object]];
+        id o = [self parseWithObject:object];
+        if(o) [datas addObject:o];
     }
     return datas;
 }

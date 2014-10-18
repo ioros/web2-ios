@@ -15,8 +15,18 @@
 + (instancetype)parseWithObject:(NSDictionary *)object
 {
     TPContributionData *data = [TPContributionData new];
-    data.show = [TPShowData parseWithObject:[object objectForKey:@"show"]];
-    data.nick = [object objectForKey:@"nick"];
+    
+    id s = [object objectForKeyOrNil:@"show"];
+    if([s isKindOfClass:[NSDictionary class]])
+    {
+        data.show = [TPShowData parseWithObject:[object objectForKeyOrNil:@"show"]];
+    }
+    else
+    {
+        data.show = nil;
+    }
+    
+    data.nick = [object objectForKeyOrNil:@"nick"];
     
     return data;
 }

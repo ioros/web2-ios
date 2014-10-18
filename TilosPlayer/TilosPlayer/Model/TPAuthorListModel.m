@@ -29,15 +29,10 @@
 
 - (void)loadForced:(BOOL)forced
 {
-    
     [self.operation cancel];
     self.operation = nil;
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", kAPIBase, @"author"]]];
-    
-    __block TPAuthorListModel *weakSelf = self;
-    
-    
     
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc]
@@ -46,6 +41,7 @@
     
     self.operation = operation;
     
+    __block TPAuthorListModel *weakSelf = self;
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         if(weakSelf == nil) return;
         [self parseContent:responseObject];

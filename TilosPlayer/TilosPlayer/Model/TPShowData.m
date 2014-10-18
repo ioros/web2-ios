@@ -14,22 +14,24 @@
 
 + (instancetype)parseWithObject:(NSDictionary *)object
 {
-    TPShowData *data = [TPShowData new];
-    data.bannerURL = [object objectForKey:@"banner"];
+    if(object == nil) return nil;
     
-    NSString *definition = [object objectForKey:@"definition"];
+    TPShowData *data = [TPShowData new];
+    data.bannerURL = [object objectForKeyOrNil:@"banner"];
+    
+    NSString *definition = [object objectForKeyOrNil:@"definition"];
     // TODO: remove this
-    definition = [definition stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    //definition = [definition stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if([definition isEqualToString:@""]) definition = nil;
 
     data.definition = definition;
-    data.alias = [object objectForKey:@"alias"];
-    data.identifier = [object objectForKey:@"id"];
-    data.name = [object objectForKey:@"name"];
-    data.status = [object objectForKey:@"status"];
-    data.type = [object objectForKey:@"type"];
-    
-    data.contributors = [TPContributorData parseWithObjects:[object objectForKey:@"contributors"]];
+    data.alias = [object objectForKeyOrNil:@"alias"];
+    data.identifier = [object objectForKeyOrNil:@"id"];
+    data.name = [object objectForKeyOrNil:@"name"];
+    data.status = [object objectForKeyOrNil:@"status"];
+    data.type = [object objectForKeyOrNil:@"type"];
+
+    data.contributors = [TPContributorData parseWithObjects:[object objectForKeyOrNil:@"contributors"]];
     
     return data;
 }

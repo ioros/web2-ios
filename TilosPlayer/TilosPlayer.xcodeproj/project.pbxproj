@@ -18,6 +18,7 @@
 		A51B1FDE185CA5E1009FA46D /* TPShowEpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A51B1FDD185CA5E1009FA46D /* TPShowEpisodeCell.m */; };
 		A51B1FE1185CAE80009FA46D /* TPTimestampView.m in Sources */ = {isa = PBXBuildFile; fileRef = A51B1FE0185CAE80009FA46D /* TPTimestampView.m */; };
 		A51F67CB18CDF370001214F3 /* TPTapeCollectionLiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A51F67CA18CDF370001214F3 /* TPTapeCollectionLiveCell.m */; };
+		A560DEF119F27EE60038A48E /* TPPlayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A560DEF019F27EE60038A48E /* TPPlayButton.m */; };
 		A5628CB9185917F4007CA45C /* TPTapeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */; };
 		A5A811F918B3910F0087DF31 /* TPContinuousProgramModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A811F818B3910F0087DF31 /* TPContinuousProgramModel.m */; };
 		A5DD0FFB1859FE42009D1A1A /* TPTapeCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD0FFA1859FE42009D1A1A /* TPTapeCollectionLayout.m */; };
@@ -65,7 +66,8 @@
 
 /* Begin PBXFileReference section */
 		3ED5DDE7360B4497AE32A859 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		950B5CB517C8490BAE5DBB13 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		5FD0CAB373EE2D6C4C83326A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		7AAE1A503F103E2FE028384E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A518618218CA4CD6009D807A /* TPEpisodeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPEpisodeData.h; sourceTree = "<group>"; };
 		A518618318CA4CD6009D807A /* TPEpisodeData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPEpisodeData.m; sourceTree = "<group>"; };
 		A518618518CA4D19009D807A /* TPShowData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPShowData.h; sourceTree = "<group>"; };
@@ -86,6 +88,8 @@
 		A51B1FE0185CAE80009FA46D /* TPTimestampView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTimestampView.m; sourceTree = "<group>"; };
 		A51F67C918CDF370001214F3 /* TPTapeCollectionLiveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTapeCollectionLiveCell.h; sourceTree = "<group>"; };
 		A51F67CA18CDF370001214F3 /* TPTapeCollectionLiveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTapeCollectionLiveCell.m; sourceTree = "<group>"; };
+		A560DEEF19F27EE60038A48E /* TPPlayButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPPlayButton.h; sourceTree = "<group>"; };
+		A560DEF019F27EE60038A48E /* TPPlayButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPPlayButton.m; sourceTree = "<group>"; };
 		A5628CB7185917F4007CA45C /* TPTapeCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTapeCollectionCell.h; sourceTree = "<group>"; };
 		A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTapeCollectionCell.m; sourceTree = "<group>"; };
 		A5A811F718B3910F0087DF31 /* TPContinuousProgramModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPContinuousProgramModel.h; sourceTree = "<group>"; };
@@ -187,6 +191,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		23EC0BE8EB1E706AB6F451B8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5FD0CAB373EE2D6C4C83326A /* Pods.debug.xcconfig */,
+				7AAE1A503F103E2FE028384E /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		A5DD101B185A7F81009D1A1A /* Overlay */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,7 +215,7 @@
 				A5FEBFBF1858AF390084B4C5 /* TilosPlayer */,
 				A5FEBFB81858AF390084B4C5 /* Frameworks */,
 				A5FEBFB71858AF390084B4C5 /* Products */,
-				950B5CB517C8490BAE5DBB13 /* Pods.xcconfig */,
+				23EC0BE8EB1E706AB6F451B8 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -332,6 +345,8 @@
 				A51B1FE0185CAE80009FA46D /* TPTimestampView.m */,
 				EAC5641F18984F1800A3D439 /* TPWebIntroductionCell.h */,
 				EAC5642018984F1800A3D439 /* TPWebIntroductionCell.m */,
+				A560DEEF19F27EE60038A48E /* TPPlayButton.h */,
+				A560DEF019F27EE60038A48E /* TPPlayButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -523,7 +538,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -560,6 +575,7 @@
 				A5DD0FFE185A100F009D1A1A /* TPOverlayViewController.m in Sources */,
 				A5FEC0001858B2AB0084B4C5 /* TPAppDelegate.m in Sources */,
 				A5DD1028185A9D83009D1A1A /* TPTabBar.m in Sources */,
+				A560DEF119F27EE60038A48E /* TPPlayButton.m in Sources */,
 				A5DD1025185A9725009D1A1A /* NSDate+TPAdditions.m in Sources */,
 				A518618418CA4CD6009D807A /* TPEpisodeData.m in Sources */,
 				EAC5642118984F1800A3D439 /* TPWebIntroductionCell.m in Sources */,
@@ -678,7 +694,7 @@
 		};
 		A5FEBFEF1858AF390084B4C5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 950B5CB517C8490BAE5DBB13 /* Pods.xcconfig */;
+			baseConfigurationReference = 5FD0CAB373EE2D6C4C83326A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -693,7 +709,7 @@
 		};
 		A5FEBFF01858AF390084B4C5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 950B5CB517C8490BAE5DBB13 /* Pods.xcconfig */;
+			baseConfigurationReference = 7AAE1A503F103E2FE028384E /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
