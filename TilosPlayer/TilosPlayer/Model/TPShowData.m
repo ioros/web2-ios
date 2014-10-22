@@ -9,6 +9,7 @@
 #import "TPShowData.h"
 
 #import "TPContributorData.h"
+#import "TPEpisodeData.h"
 
 @implementation TPShowData
 
@@ -33,6 +34,7 @@
     data.infoHTML = [object objectForKey:@"description"];
 
     data.contributors = [TPContributorData parseWithObjects:[object objectForKeyOrNil:@"contributors"]];
+    data.episodes = [TPEpisodeData parseWithObjects:[object objectForKeyOrNil:@"episodes"]];
     
     return data;
 }
