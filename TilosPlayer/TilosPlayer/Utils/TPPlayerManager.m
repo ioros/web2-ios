@@ -80,10 +80,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     NSTimeInterval segmentSeconds = [date timeIntervalSinceDate:segmentStartDate];
     [[TPAudioPlayer sharedPlayer] cueUrl:url atPosition:segmentSeconds];
     
-    
+    // TODO
     NSMutableDictionary *nowPlayingInfo = [NSMutableDictionary dictionary];
-    [nowPlayingInfo setObject:episode.name forKey:MPMediaItemPropertyAlbumTitle];
-    [nowPlayingInfo setObject:[episode.show contributors] forKey:MPMediaItemPropertyAlbumArtist];
+    //[nowPlayingInfo setObject:episode.name forKey:MPMediaItemPropertyAlbumTitle];
+    //[nowPlayingInfo setObject:[episode.show contributors] forKey:MPMediaItemPropertyAlbumArtist];
     
     [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:nowPlayingInfo];
     
