@@ -61,7 +61,7 @@
 {
     self.show = [TPShowData parseWithObject:JSON];
     
-    NSString *description = self.show.definition;
+    NSString *description = self.show.infoHTML;
     
     if (description.length > 0)
     {

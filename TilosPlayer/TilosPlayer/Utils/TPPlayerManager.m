@@ -11,6 +11,7 @@
 #import "SynthesizeSingleton.h"
 #import "TPAudioPlayer.h"
 #import "TPEpisodeData.h"
+#import "TPShowData.h"
 
 @implementation TPPlayerManager
 
@@ -78,6 +79,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     
     NSTimeInterval segmentSeconds = [date timeIntervalSinceDate:segmentStartDate];
     [[TPAudioPlayer sharedPlayer] cueUrl:url atPosition:segmentSeconds];
+    
+    
+    NSMutableDictionary *nowPlayingInfo = [NSMutableDictionary dictionary];
+    [nowPlayingInfo setObject:episode.name forKey:MPMediaItemPropertyAlbumTitle];
+    [nowPlayingInfo setObject:[episode.show contributors] forKey:MPMediaItemPropertyAlbumArtist];
+    
+    [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:nowPlayingInfo];
     
     self.playing = YES;
 }

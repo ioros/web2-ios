@@ -11,6 +11,7 @@
 @interface TPPlayButton ()
 
 @property (nonatomic, retain) UIImageView *circleView;
+@property (nonatomic, retain) UIImageView *loadingView;
 @property (nonatomic, retain) UIImageView *buttonView;
 
 @property (nonatomic, assign) BOOL rotating;
@@ -31,7 +32,11 @@
         self.circleView = [[UIImageView alloc] initWithFrame:self.bounds];
         self.circleView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:self.circleView];
-        
+
+        self.loadingView = [[UIImageView alloc] initWithFrame:self.bounds];
+        self.loadingView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self addSubview:self.loadingView];
+
         self.buttonView = [[UIImageView alloc] initWithFrame:self.bounds];
         self.buttonView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:self.buttonView];
@@ -39,6 +44,11 @@
         _playing = NO;
         _loading = NO;
         _rotating = NO;
+        
+        self.circleView.image = [UIImage imageNamed:@"PlayCircle.png"];
+        self.loadingView.image = [UIImage imageNamed:@"PlayLoading.png"];
+        
+        self.loadingView.hidden = YES;
         
         [self updateButton];
     }
@@ -48,11 +58,24 @@
 - (void)updateButton
 {
     self.buttonView.image = _playing ? [UIImage imageNamed:@"PauseButton.png"] : [UIImage imageNamed:@"PlayButton.png"];
-    self.circleView.image = _loading ? [UIImage imageNamed:@"PlayLoading.png"] : [UIImage imageNamed:@"PlayCircle.png"];
     
     if(_loading)
     {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.circleView.alpha = 0.0f;
+            self.loadingView.alpha = 1.0f;
+        }];
+        self.loadingView.hidden = NO;
         [self animateOneRound];
+    }
+    else
+    {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.circleView.alpha = 1.0f;
+            self.loadingView.alpha = 0.0f;
+        } completion:^(BOOL finished) {
+            self.loadingView.hidden = YES;
+        }];
     }
 }
 
@@ -72,7 +95,7 @@
         fullRotation.duration = 1.0f;
         fullRotation.repeatCount = 0;
         fullRotation.delegate = self;
-        [self.circleView.layer addAnimation:fullRotation forKey:@"360"];
+        [self.loadingView.layer addAnimation:fullRotation forKey:@"360"];
     }];
 }
 

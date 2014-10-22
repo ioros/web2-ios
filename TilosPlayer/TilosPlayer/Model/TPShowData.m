@@ -21,7 +21,7 @@
     
     NSString *definition = [object objectForKeyOrNil:@"definition"];
     // TODO: remove this
-    //definition = [definition stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    definition = [definition stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if([definition isEqualToString:@""]) definition = nil;
 
     data.definition = definition;
@@ -30,6 +30,7 @@
     data.name = [object objectForKeyOrNil:@"name"];
     data.status = [object objectForKeyOrNil:@"status"];
     data.type = [object objectForKeyOrNil:@"type"];
+    data.infoHTML = [object objectForKey:@"description"];
 
     data.contributors = [TPContributorData parseWithObjects:[object objectForKeyOrNil:@"contributors"]];
     

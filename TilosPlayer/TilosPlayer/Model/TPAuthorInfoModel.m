@@ -64,8 +64,8 @@
     [self sendFinished];
 }
 
--(AwailableInfoType)awailableInfo{
-    
+- (AvailableInfoType)availableInfo
+{
     //NSLog(@"%@", [self.author objectForKey:@"introduction"]);
     NSString *introductionString = self.author.introduction;
     
@@ -78,7 +78,7 @@
     else if (self.contributions.count == 0 && introductionString.length>0){
         return kIntroductionOnly;
     }
-    else return kNoInfoAwailable;
+    else return kNoInfoAvailable;
 }
 
 -(void)setAuthor:(TPAuthorData *)author

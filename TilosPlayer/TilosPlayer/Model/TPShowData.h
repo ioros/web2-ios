@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSString *alias;
 @property (nonatomic, retain) NSString *bannerURL;
 @property (nonatomic, retain) NSString *definition;
+@property (nonatomic, retain) NSString *infoHTML;
 @property (nonatomic, retain) NSNumber *type;
 @property (nonatomic, retain) NSNumber *status;
 

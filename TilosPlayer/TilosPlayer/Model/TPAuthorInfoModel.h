@@ -12,11 +12,12 @@
  *  Description: Encapsulates
  */
 
-typedef NS_ENUM(NSInteger, AwailableInfoType){
+typedef NS_ENUM(NSInteger, AvailableInfoType)
+{
     kContributionsOnly,
     kContributionsAndIntroduction,
     kIntroductionOnly,
-    kNoInfoAwailable
+    kNoInfoAvailable
 };
 
 @class TPAuthorData;
@@ -29,6 +30,6 @@ typedef NS_ENUM(NSInteger, AwailableInfoType){
 @property (nonatomic, strong) NSArray *contributions;
 @property (nonatomic, strong) NSString *htmlString;
 
--(AwailableInfoType)awailableInfo;
+@property (nonatomic, readonly) AvailableInfoType availableInfo;
 
 @end

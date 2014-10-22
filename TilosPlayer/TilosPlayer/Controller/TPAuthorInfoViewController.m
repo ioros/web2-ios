@@ -61,7 +61,8 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 
-    switch (self.authorModel.awailableInfo) {
+    switch (self.authorModel.availableInfo)
+    {
         case kContributionsAndIntroduction: {
             return 3;
             break;
@@ -74,7 +75,7 @@
             return 2;
             break;
         }
-        case kNoInfoAwailable:{
+        case kNoInfoAvailable:{
             return 1;
             break;
         }
@@ -89,7 +90,7 @@
             break;
         }
         case 1: {
-            if (self.authorModel.awailableInfo == kIntroductionOnly) {
+            if (self.authorModel.availableInfo == kIntroductionOnly) {
                 return 1;;
             }
             else{
@@ -115,7 +116,8 @@
         }
         case 1: {
             
-            if (self.authorModel.awailableInfo == kIntroductionOnly) {
+            if (self.authorModel.availableInfo == kIntroductionOnly)
+            {
                 return NSLocalizedString(@"Bemutatkozás", @"Introduction");
             }
             else{
@@ -155,9 +157,10 @@
         }
         case 1:{
             
-            if (self.authorModel.awailableInfo == kIntroductionOnly) {
+            if (self.authorModel.availableInfo == kIntroductionOnly)
+            {
                 TPWebIntroductionCell *iCell = (TPWebIntroductionCell*)[tableView dequeueReusableCellWithIdentifier:introductionCellIdentifier];
-                [iCell.introductionWebView loadHTMLString:self.authorModel.htmlString  baseURL:nil];
+                [iCell.introductionWebView loadHTMLString:self.authorModel.htmlString  baseURL:[NSURL URLWithString:@"http://tilos.hu/"]];
                 iCell.introductionWebView.scrollView.scrollEnabled = NO;
                 iCell.introductionWebView.scrollView.bounces = NO;
                 iCell.introductionWebView.delegate = self;
@@ -201,10 +204,9 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ((indexPath.section == 1 && self.authorModel.awailableInfo == kIntroductionOnly) || indexPath.section == 2) {
-        
+    if ((indexPath.section == 1 && self.authorModel.availableInfo == kIntroductionOnly) || indexPath.section == 2)
+    {
         CGFloat height = [[_authorInfoWebView stringByEvaluatingJavaScriptFromString:@"document.height"] floatValue];
-
         return height;
     }
 

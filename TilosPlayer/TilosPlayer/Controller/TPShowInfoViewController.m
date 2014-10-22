@@ -117,7 +117,7 @@ typedef NS_ENUM(NSInteger, ShownInfoType){
     [self.headerView.imageView setImageWithURL:[NSURL URLWithString:_model.show.bannerURL]];
     
     if(_model.htmlString) {
-        [_infoWebView loadHTMLString:_model.htmlString baseURL:nil];
+        [_infoWebView loadHTMLString:_model.htmlString baseURL:[NSURL URLWithString:@"http://tilos.hu/"]];
     }
     else{
         _headerView.segmentedControl.enabled = NO;
@@ -134,7 +134,7 @@ typedef NS_ENUM(NSInteger, ShownInfoType){
     if (_shownInfoType == kInfoTypeWeb) {
         TPWebIntroductionCell *cell = [tableView dequeueReusableCellWithIdentifier:webViewCellId forIndexPath:indexPath];
         
-        [cell.introductionWebView loadHTMLString:_model.htmlString baseURL:nil];
+        [cell.introductionWebView loadHTMLString:_model.htmlString baseURL:[NSURL URLWithString:@"http://tilos.hu/"]];
         cell.introductionWebView.scrollView.scrollEnabled = NO;
         
         return cell;

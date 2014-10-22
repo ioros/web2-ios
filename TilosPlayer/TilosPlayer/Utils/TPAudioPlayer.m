@@ -252,7 +252,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Player, TPAudioPlayer);
         AVPlayerStatus playerStatus = [self.player status];
         AVPlayerItemStatus playerItemStatus = [self.playerItem status];
         
-        NSLog(@"STATUSES: %@ %@", [self stringForPlayerStatus:playerStatus], [self stringForPlayerItemStatus:playerItemStatus]);
+        //NSLog(@"STATUSES: %@ %@", [self stringForPlayerStatus:playerStatus], [self stringForPlayerItemStatus:playerItemStatus]);
         
         if(playerStatus == AVPlayerStatusReadyToPlay && playerItemStatus == AVPlayerItemStatusReadyToPlay)
         {
