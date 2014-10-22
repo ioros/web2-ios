@@ -81,6 +81,8 @@ static int kPlayerLoadingContext;
     
     self.collectionState = TPScrollStateNormal;
     self.tapeCollectionState = TPScrollStateNormal;
+    
+    /////////////////////////////////
 
     CGRect frame = CGRectMake(0, 0, 320, 480);
     UIView *v = [[UIView alloc] initWithFrame:frame];
@@ -486,9 +488,6 @@ static int kPlayerLoadingContext;
 
 
         } completion:nil];
-        
-//        [UIView animateWithDuration:kAnimationDuration delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
- //       } completion:nil];
     }
     else
     {
