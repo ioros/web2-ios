@@ -10,17 +10,10 @@
 #import <AVFoundation/AVFoundation.h>
 
 @interface TPAudioPlayer : NSObject
-{
-	AVPlayer *_player;
-	BOOL _playing;
-    
-	AVURLAsset *_asset;
-	AVAudioMix *_avAudioMix;
-	
-    NSString *_url;
-    
-    BOOL validTime;
-}
+
+@property (nonatomic, readonly) BOOL loading;
+@property (nonatomic, readonly) int currentTime;
+@property (nonatomic, readonly) NSUInteger currentPosition;
 
 + (TPAudioPlayer *)sharedPlayer;
 
@@ -30,11 +23,5 @@
 -(void)stop;
 -(void)pause;
 -(void)togglePlayPause;
--(NSUInteger)currentPosition;
-
-@property (nonatomic, retain) id playerObserver;
-@property (nonatomic, retain) AVPlayerItem *playerItem;
-
-@property (nonatomic, readonly) int currentTime;
 
 @end

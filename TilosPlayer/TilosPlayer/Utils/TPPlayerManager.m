@@ -24,6 +24,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
         self.cachedDays = [NSMutableDictionary dictionary];
         self.playerLoading = NO;
         
+        [[TPAudioPlayer sharedPlayer] addObserver:self forKeyPath:@"loading" options:NSKeyValueObservingOptionInitial context:nil];
         [[TPAudioPlayer sharedPlayer] addObserver:self forKeyPath:@"currentTime" options:NSKeyValueObservingOptionNew context:nil];
     }
     return self;
@@ -38,6 +39,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 //        NSLog(@"time %@", change);
         NSDate *date = [self.segmentStartDate dateByAddingTimeInterval:[TPAudioPlayer sharedPlayer].currentTime];
         self.globalTime = [date timeIntervalSince1970];
+    }
+    else if([keyPath isEqualToString:@"loading"])
+    {
+        self.playerLoading = [[TPAudioPlayer sharedPlayer] loading];
     }
 }
 

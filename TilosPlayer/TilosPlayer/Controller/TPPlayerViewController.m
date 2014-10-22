@@ -44,6 +44,8 @@ typedef enum {
 @property (nonatomic, retain) UIView *redDotView;
 @property (nonatomic, assign) BOOL redDotVisible;
 
+@property (nonatomic, assign) NSInteger collectionDragStartIndex;
+
 // we jump here after the load has been completed
 @property (nonatomic, retain) NSDate *jumpDate;
 
@@ -59,6 +61,7 @@ typedef enum {
 
 static int kGlobalTimeContext;
 static int kPlayingContext;
+static int kPlayerLoadingContext;
 
 #pragma mark -
 
@@ -193,8 +196,10 @@ static int kPlayingContext;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"globalTime" options:NSKeyValueObservingOptionNew context:&kGlobalTimeContext];
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"playing" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:&kPlayingContext];
+    [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"playerLoading" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:&kPlayerLoadingContext];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -230,7 +235,7 @@ static int kPlayingContext;
             float timeDiffMinutes = timeDiff / 60.0f;
             CGFloat offset = timeDiffMinutes * 30.0f;
 
-            NSLog(@"UPDATING BY PLAYER POSITION %f %f", timeDiff, globalTime);
+            //NSLog(@"UPDATING BY PLAYER POSITION %f %f", timeDiff, globalTime);
 
             [self.tapeCollectionView setContentOffset:CGPointMake(offset - _tapeScrollAdjustment, 0)];
         }
@@ -240,14 +245,16 @@ static int kPlayingContext;
     {
         [self updatePlayButton];
     }
+    else if(context == &kPlayerLoadingContext)
+    {
+        [self.playButton setLoading:[[TPPlayerManager sharedManager] playerLoading]];
+    }
 }
 
 - (void)updatePlayButton
 {
-    BOOL playing = [[TPPlayerManager sharedManager] playing];
-    
-    self.playButton.playing = playing;
-    self.playButton.loading = playing;
+    self.playButton.playing = [[TPPlayerManager sharedManager] playing];
+    self.playButton.loading = [[TPPlayerManager sharedManager] playerLoading];
 }
 
 - (void)updateAmbience
@@ -540,6 +547,8 @@ static int kPlayingContext;
     }
     else if(scrollView == self.collectionView)
     {
+        NSInteger index = roundf(self.collectionView.contentOffset.x / self.collectionView.bounds.size.width);
+        self.collectionDragStartIndex = index;
         self.collectionState = TPScrollStateDragging;
     }
 }
@@ -599,8 +608,9 @@ static int kPlayingContext;
 {
     self.collectionState = TPScrollStateNormal;
     
-    NSInteger index = roundf(self.collectionView.contentOffset.x / 320.0f);
+    NSInteger index = roundf(self.collectionView.contentOffset.x / self.collectionView.bounds.size.width);
     if(index < 0 || index >= [self.model numberOfItemsInSection:0]) return;
+    if(index == _collectionDragStartIndex) return;
     
     TPEpisodeData *episode = [self.model dataForRow:index section:0];
     self.currentEpisode = episode;

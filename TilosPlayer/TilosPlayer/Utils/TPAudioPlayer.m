@@ -15,76 +15,105 @@
 
 @interface TPAudioPlayer ()
 
-- (void)setCurrentTime:(int)value;
-- (void)addTimeObserver;
+@property (nonatomic, retain) id playerObserver;
 
-- (void)createPlayerWithItem:(AVPlayerItem*)item;
-- (void)destroyPlayer;
+@property (nonatomic, retain) AVPlayerItem *playerItem;
+@property (nonatomic, retain) AVPlayer *player;
+@property (nonatomic, retain) AVURLAsset *asset;
+@property (nonatomic, retain) AVAudioMix *avAudioMix;
+@property (nonatomic, retain) id playerStartObserver;
+
+@property (nonatomic, retain) NSString *url;
+
+@property (nonatomic, assign) BOOL playing;
+@property (nonatomic, assign) BOOL validTime;
+@property (nonatomic, assign) BOOL loading;
+
+- (void)setCurrentTime:(int)value;
 
 @end
+
+
+#pragma mark -
+
+static int kPlayerStatusContext;
+static int kPlayerItemStatusContext;
+static int kPlayerItemPlaybackBufferEmptyContext;
+
 
 @implementation TPAudioPlayer
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(Player, TPAudioPlayer);
-
-@synthesize playerItem;
-@synthesize playerObserver;
-
-@synthesize currentTime = _currentTime;
-
 
 - (id)init
 {
     self = [super init];
     if (self) {
         _playing = NO;
+        _loading = NO;
     }
     return self;
 }
 
 - (void)dealloc
 {
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.player pause];
     self.playerItem = nil;
-    
-    [_asset release]; _asset = nil;
-    [_player pause];
-    [_player release]; _player = nil;
+    self.player = nil;
 	self.playerObserver = nil;
-    [super dealloc];
 }
 
+#pragma mark - time observers
+
+- (void)addPlayerStartObserver
+{
+    __block TPAudioPlayer *weakSelf = self;
+    self.playerStartObserver = [_player addBoundaryTimeObserverForTimes:@[[NSValue valueWithCMTime:CMTimeMake(1, 10)]]
+                                                                  queue:NULL
+                                                             usingBlock:^{
+                                                                 [weakSelf playbackStarted];
+                                                                 [weakSelf removePlayerStartObserver];
+                                                             }];
+}
+
+- (void)removePlayerStartObserver
+{
+    [_player removeTimeObserver:_playerStartObserver];
+}
+
+- (void)addPlayerTimeObserver
+{
+    _validTime = YES;
+    
+    __block TPAudioPlayer *weakSelf = self;
+    
+    self.playerObserver = [_player addPeriodicTimeObserverForInterval:CMTimeMake(100, 100) queue:NULL usingBlock:^(CMTime time){
+        if(weakSelf.validTime)
+        {
+            double interval = time.value / time.timescale;
+            int newTime = (int)interval;
+            weakSelf.currentTime = newTime;
+        }
+    }];
+}
+
+- (void)removePlayerTimeObserver
+{
+    [_player removeTimeObserver:_playerObserver];
+    self.playerObserver = nil;
+    _validTime = NO;
+}
+
+#pragma mark - cue media
 
 -(void)cueUrl:(NSString *)url
 {
     [self cueUrl:url atPosition:0];
 }
 
-- (void)addTimeObserver
-{
-    validTime = YES;
-    self.playerObserver = [_player addPeriodicTimeObserverForInterval:CMTimeMake(100, 100) queue:NULL usingBlock:^(CMTime time){
-        if(validTime)
-        {
-            double interval = time.value / time.timescale;
-            int newTime = (int)interval;
-            self.currentTime = newTime;
-        }
-    }];
-}
-
-- (void)removeTimeObserver
-{
-    [_player removeTimeObserver:playerObserver];
-    self.playerObserver = nil;
-    validTime = NO;
-}
-
 - (void)cueUrl:(NSString *)url atPosition:(NSUInteger)position
 {
-	NSLog(@"========cuemedia at %d, url %@", position, url);
-
     /*
     if([url isEqualToString:_url])
     {
@@ -98,22 +127,24 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Player, TPAudioPlayer);
         return;
     }*/
     
-    [_url release];
-    _url = [url retain];
-    
     self.currentTime = position;
 	_playing = YES;
-    validTime = NO;
-    
-	
-    [_asset release]; _asset = nil;
-	_asset = [[AVURLAsset URLAssetWithURL:[NSURL URLWithString:url] options:nil] retain];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    _validTime = NO;
+
     self.playerItem = nil;
+    self.player = nil;
+
+    ////////////////////////////////
+
+    self.url = url;
+    self.loading = YES;
     
-    [self removeTimeObserver];
-    [self destroyPlayer];
+    AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:[NSURL URLWithString:url]];
+    [self createPlayerWithItem:item];
+    
+    /*
+    
+    self.asset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:url] options:nil];
     
 	NSString *tracksKey = @"tracks";
     [_asset loadValuesAsynchronouslyForKeys:[NSArray arrayWithObject:tracksKey] completionHandler:
@@ -125,13 +156,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Player, TPAudioPlayer);
 							
 							if (status == AVKeyValueStatusLoaded)
 							{
-								self.playerItem = [AVPlayerItem playerItemWithAsset:_asset];
-                                //								[playerItem addObserver:self forKeyPath:@"status" options:0 context:&ItemStatusContext];
-								[[NSNotificationCenter defaultCenter] addObserver:self
-																		 selector:@selector(playerItemDidReachEnd:)
-																			 name:AVPlayerItemDidPlayToEndTimeNotification
-																		   object:playerItem];
-                                
+                                AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:_asset];
+
                                 //								AVMutableAudioMix *audioMix = [AVMutableAudioMix audioMix];
                                 //								AVMutableAudioMixInputParameters *params = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:[[asset tracks] objectAtIndex:0]];
                                 //								[params setVolume:0.0 atTime:CMTimeMake((int)((0)*100), 100)];
@@ -154,52 +180,109 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Player, TPAudioPlayer);
 							}
 						});
      }];
-	
-	//_playing = NO;
+     */
 }
 
-- (void)destroyPlayer
+#pragma mark -
+
+- (void)setPlayerItem:(AVPlayerItem *)playerItem
 {
-    [_player removeObserver:self forKeyPath:@"status"];
-    [_player pause];
-	[_player release]; _player = nil;
+    if(_playerItem)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:_playerItem];
+
+        [_playerItem removeObserver:self forKeyPath:@"playbackBufferEmpty" context:&kPlayerItemPlaybackBufferEmptyContext];
+        [_playerItem removeObserver:self forKeyPath:@"status" context:&kPlayerItemStatusContext];
+    }
+    
+    _playerItem = playerItem;
+    
+    if(_playerItem)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(playerItemDidReachEnd:)
+                                                     name:AVPlayerItemDidPlayToEndTimeNotification
+                                                   object:_playerItem];
+        
+        [_playerItem addObserver:self forKeyPath:@"playbackBufferEmpty" options:0 context:&kPlayerItemPlaybackBufferEmptyContext];
+        [_playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:&kPlayerItemStatusContext];
+    }
+}
+
+- (void)setPlayer:(AVPlayer *)player
+{
+    if(_player)
+    {
+        [self removePlayerTimeObserver];
+        [self removePlayerStartObserver];
+        
+        [_player removeObserver:self forKeyPath:@"status" context:&kPlayerStatusContext];
+        [_player pause];
+    }
+    
+    _player = player;
+    
+    if(_player)
+    {
+        [_player addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:&kPlayerStatusContext];
+        [self addPlayerStartObserver];
+    }
 }
 
 - (void)createPlayerWithItem:(AVPlayerItem*)item
 {
-    _player = [[AVPlayer playerWithPlayerItem:playerItem] retain];
-    [_player addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew |NSKeyValueObservingOptionInitial context:nil];
+    self.playerItem = nil;
+    self.player = nil;
+    
+    /////////////////////////
+    
+    self.playerItem = item;
+    self.player = [AVPlayer playerWithPlayerItem:item];
+}
+
+- (void)playbackStarted
+{
+    self.loading = NO;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if([keyPath isEqualToString:@"status"])
+    if(context == &kPlayerStatusContext || context == &kPlayerItemStatusContext)
     {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            
-            if(_currentTime != 0)
-            {
-                [_player seekToTime:CMTimeMake(_currentTime*100, 100) completionHandler:^(BOOL finished) {
-                    if(finished)
-                    {
-                        [self addTimeObserver];
-                    }
-                }];
-            }
-            else
-            {
-                [self addTimeObserver];
-            }
-            
-            _playing = YES;
-            [_player play];
-            
-        });
-        return;
+        AVPlayerStatus playerStatus = [self.player status];
+        AVPlayerItemStatus playerItemStatus = [self.playerItem status];
+        
+        NSLog(@"STATUSES: %@ %@", [self stringForPlayerStatus:playerStatus], [self stringForPlayerItemStatus:playerItemStatus]);
+        
+        if(playerStatus == AVPlayerStatusReadyToPlay && playerItemStatus == AVPlayerItemStatusReadyToPlay)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if(_currentTime != 0)
+                {
+                    [_player seekToTime:CMTimeMake(_currentTime*100, 100) completionHandler:^(BOOL finished) {
+                        
+                        self.loading = NO;
+                        if(finished)
+                        {
+                            [self addPlayerTimeObserver];
+                        }
+                    }];
+                }
+                else
+                {
+                    [self addPlayerTimeObserver];
+                }
+                
+                _playing = YES;
+                [_player play];
+            });
+        }
     }
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    return;
+    else if(context == &kPlayerItemPlaybackBufferEmptyContext)
+    {
+        NSLog(@"playbackbufferempty");
+    }
 }
 
 - (void)setCurrentTime:(int)value
@@ -207,27 +290,30 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Player, TPAudioPlayer);
     _currentTime = value;
 }
 
--(void)stop
-{}
-
 -(NSUInteger)currentPosition
 {
 	return _currentTime;
 }
 
+#pragma mark -
+
 -(void)setVolume:(float)v atTime:(double)time
 {
-	if(playerItem != nil)
+	if(_playerItem != nil)
 	{
-		NSArray *params = [[playerItem audioMix] inputParameters];
+		NSArray *params = [[_playerItem audioMix] inputParameters];
 		AVMutableAudioMixInputParameters *p = [params objectAtIndex:0];
 		[p setVolume:v atTime:CMTimeMake((int)((time)*100), 100)];
 	}
 }
 
+#pragma mark - playback actions
+
+-(void)stop
+{}
+
 - (void)togglePlayPause
 {
-    NSLog(@"toggle %@", _player);
     if(!_playing)
     {
         [_player play];
@@ -258,18 +344,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Player, TPAudioPlayer);
     }
 }
 
--(BOOL)playing
-{
-	return _playing;
-}
-
 #pragma mark -
 
 - (void)playerItemDidReachEnd:(NSNotification *)notification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ended" object:self userInfo:nil];
 }
-
 
 #pragma mark - remote events
 
@@ -311,6 +391,37 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Player, TPAudioPlayer);
             NSLog(@"prev");
             break;
         default:
+            break;
+    }
+}
+
+#pragma mark -
+
+- (NSString *)stringForPlayerStatus:(AVPlayerStatus)status
+{
+    switch (status) {
+        case AVPlayerStatusUnknown:
+            return @"AVPlayerStatusUnknown";
+            break;
+        case AVPlayerStatusFailed:
+            return @"AVPlayerStatusFailed";
+            break;
+        case AVPlayerStatusReadyToPlay:
+            return @"AVPlayerStatusReadyToPlay";
+            break;
+    }
+}
+- (NSString *)stringForPlayerItemStatus:(AVPlayerItemStatus)status
+{
+    switch (status) {
+        case AVPlayerItemStatusUnknown:
+            return @"AVPlayerItemStatusUnknown";
+            break;
+        case AVPlayerItemStatusFailed:
+            return @"AVPlayerItemStatusFailed";
+            break;
+        case AVPlayerItemStatusReadyToPlay:
+            return @"AVPlayerItemStatusReadyToPlay";
             break;
     }
 }
