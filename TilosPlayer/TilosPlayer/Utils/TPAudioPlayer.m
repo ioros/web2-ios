@@ -80,6 +80,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Player, TPAudioPlayer);
 - (void)removePlayerStartObserver
 {
     [_player removeTimeObserver:_playerStartObserver];
+    self.playerStartObserver = nil;
 }
 
 - (void)addPlayerTimeObserver
@@ -141,46 +142,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Player, TPAudioPlayer);
     
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:[NSURL URLWithString:url]];
     [self createPlayerWithItem:item];
-    
-    /*
-    
-    self.asset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:url] options:nil];
-    
-	NSString *tracksKey = @"tracks";
-    [_asset loadValuesAsynchronouslyForKeys:[NSArray arrayWithObject:tracksKey] completionHandler:
-     ^{
-		 dispatch_async(dispatch_get_main_queue(),
-						^{
-							NSError *error = nil;
-							AVKeyValueStatus status = [_asset statusOfValueForKey:tracksKey error:&error];
-							
-							if (status == AVKeyValueStatusLoaded)
-							{
-                                AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:_asset];
-
-                                //								AVMutableAudioMix *audioMix = [AVMutableAudioMix audioMix];
-                                //								AVMutableAudioMixInputParameters *params = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:[[asset tracks] objectAtIndex:0]];
-                                //								[params setVolume:0.0 atTime:CMTimeMake((int)((0)*100), 100)];
-                                //								[params setVolume:1.0 atTime:CMTimeMake((int)((3)*100), 100)];
-								
-								//NSNumber *number = [mediaItem valueForProperty: MPMediaItemPropertyPlaybackDuration];
-								//NSUInteger duration = floor(number.floatValue);
-                                //								NSUInteger duration = [media duration];
-								
-								//[params setVolume:1.0 atTime:CMTimeMake((int)((duration-5)*100), 100)];
-								//[params setVolume:0.0 atTime:CMTimeMake((int)((duration)*100), 100)];
-								//[audioMix setInputParameters:[NSArray arrayWithObject:params]];
-								//[playerItem setAudioMix:audioMix];
-								
-                                [self createPlayerWithItem:playerItem];
-							}
-							else {
-								// You should deal with the error appropriately.
-								NSLog(@"The asset's tracks were not loaded:\n%@", [error localizedDescription]);
-							}
-						});
-     }];
-     */
 }
 
 #pragma mark -
