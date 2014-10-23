@@ -82,8 +82,16 @@
     
     int counter = 0;
     
-    NSArray *images = @[[UIImage imageNamed:@"ProfileTab.png"], [UIImage imageNamed:@"ClockTab.png"], [UIImage imageNamed:@"ShowTab.png"]];
-    NSArray *imagesSelected = @[[UIImage imageNamed:@"ProfileTabSelected.png"], [UIImage imageNamed:@"ClockTabSelected.png"], [UIImage imageNamed:@"ShowTabSelected.png"]];
+    NSArray *images = @[
+                        [UIImage imageNamed:@"ClockTab.png"],
+                        [UIImage imageNamed:@"ShowTab.png"],
+                        [UIImage imageNamed:@"ProfileTab.png"]
+                        ];
+    NSArray *imagesSelected = @[
+                                [UIImage imageNamed:@"ClockTabSelected.png"],
+                                [UIImage imageNamed:@"ShowTabSelected.png"],
+                                [UIImage imageNamed:@"ProfileTabSelected.png"]
+                                ];
     
     for(UITabBarItem *item in items)
     {
