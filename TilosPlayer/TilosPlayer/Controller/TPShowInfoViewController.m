@@ -15,6 +15,7 @@
 #import "TPEpisodeData.h"
 #import "TPShowData.h"
 #import "TPShowInfoHeaderView.h"
+#import "TPTitleView.h"
 
 
 typedef enum {
@@ -23,12 +24,11 @@ typedef enum {
 } TPShowInfoViewType;
 
 
-static const CGFloat titleWidth = 200.0f;
-
 @interface TPShowInfoViewController ()
 
 @property (nonatomic, retain) TPShowInfoHeaderView *headerView;
 @property (nonatomic, retain) UIWebView *webView;
+@property (nonatomic, retain) TPTitleView *titleView;
 
 @end
 
@@ -45,13 +45,8 @@ static const CGFloat titleWidth = 200.0f;
     [_headerView.segmentedControl addTarget:self action:@selector(headerViewSegmentChanged:) forControlEvents:UIControlEventValueChanged];
     [_headerView.segmentedControl setSelectedSegmentIndex:0];
     
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, titleWidth, 30)];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.lineBreakMode = NSLineBreakByWordWrapping | NSLineBreakByTruncatingTail;
-    label.numberOfLines = 0;
-    label.font = kTitleFont;
-    self.navigationItem.titleView = label;
+    TPTitleView *titleView = [[TPTitleView alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    self.titleView = titleView;
     
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 180, 320.0, 1.0)];
     self.webView.delegate = self;
@@ -62,16 +57,9 @@ static const CGFloat titleWidth = 200.0f;
 {
     [super viewWillAppear:animated];
 
-    /// try to size that label a little
-    
-    NSString *showName = self.data.name;
-    UIFont *font = kTitleFont;
-    CGSize s = [showName sizeWithFont:font];
-    if(s.width > titleWidth){
-        font = kHalfTitleFont;
-    }
-    self.titleLabel.font = font;
-    self.titleLabel.text = showName;
+    self.titleView.text = self.data.name;
+    [self.titleView sizeToFit];
+    self.navigationItem.titleView = self.titleView;
     
     /////////////////////////////////////
     
@@ -180,13 +168,6 @@ static const CGFloat titleWidth = 200.0f;
     return 44;
 }
 
-
-#pragma mark -
-
-- (UILabel *)titleLabel
-{
-    return (UILabel *)[self.navigationItem titleView];
-}
 
 #pragma mark - WebViewDelegate
 

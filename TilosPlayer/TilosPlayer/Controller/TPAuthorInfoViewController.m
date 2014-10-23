@@ -17,6 +17,7 @@
 #import "TPContributionData.h"
 #import "TPShowData.h"
 #import "TPAuthorInfoHeaderView.h"
+#import "TPTitleView.h"
 
 
 typedef enum {
@@ -29,6 +30,7 @@ typedef enum {
 @property (nonatomic, retain) UIWebView *webView;
 @property (nonatomic, retain) TPAuthorInfoHeaderView *headerView;
 @property (nonatomic, readonly) TPAuthorInfoModel *authorInfoModel;
+@property (nonatomic, retain) TPTitleView *titleView;
 
 @end
 
@@ -39,14 +41,15 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
-    self.navigationItem.title = self.data.name;
-    
+
     TPAuthorInfoHeaderView *headerView = [[TPAuthorInfoHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
     headerView.detailTextView.text = [[self.data nickNames] componentsJoinedByString:@", "];
     [headerView.imageView setImageWithURL:[NSURL URLWithString:self.data.avatarURL]];
     [headerView sizeToFit];
     self.headerView = headerView;
+    
+    TPTitleView *titleView = [[TPTitleView alloc] initWithFrame:CGRectMake(0, 0, 240, 30)];
+    self.titleView = titleView;
     
     [headerView.segmentedControl setSelectedSegmentIndex:0];
     [headerView.segmentedControl addTarget:self action:@selector(changed:) forControlEvents:UIControlEventValueChanged];
@@ -63,6 +66,10 @@ typedef enum {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    self.titleView.text = self.data.name;
+    [self.titleView sizeToFit];
+    self.navigationItem.titleView = self.titleView;
     
     if(self.data && self.model == nil)
     {
