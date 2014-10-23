@@ -57,6 +57,7 @@ typedef enum {
 {
     [super viewWillAppear:animated];
 
+    self.title = @"";
     self.titleView.text = self.data.name;
     [self.titleView sizeToFit];
     self.navigationItem.titleView = self.titleView;

@@ -65,7 +65,7 @@
     
     if (description.length > 0)
     {
-        self.htmlString = [NSString stringWithFormat:@"<html><head></head><body><div id = \"content\" style=\"font-family:Avenir-Light; font-size:15px\">%@</div></body></html>", description];
+        self.htmlString = [NSString stringWithFormat:@"<html><head></head><body style=\"margin:0px; padding:15px;\"><div id = \"content\" style=\"font-family:Avenir-Light; font-size:15px\">%@</div></body></html>", description];
     }
     
     NSArray *episodes = self.show.episodes;

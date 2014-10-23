@@ -69,7 +69,7 @@
     
     if(author.introduction)
     {
-        self.htmlString = [NSString stringWithFormat:@"<html><head></head><body><div id = \"content\" style=\"font-family:Avenir-Light; font-size:15px\">%@</div></body></html>", author.introduction];
+        self.htmlString = [NSString stringWithFormat:@"<html><head></head><body style=\"padding:15px; margin:0px;\"><div id = \"content\" style=\"font-family:Avenir-Light; font-size:15px\">%@</div></body></html>", author.introduction];
     }
     else
     {
