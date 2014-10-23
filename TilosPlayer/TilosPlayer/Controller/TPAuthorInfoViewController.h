@@ -12,9 +12,8 @@
 @class TPAuthorInfoModel;
 @class TPAuthorData;
 
-@interface TPAuthorInfoViewController : TPTableViewController
+@interface TPAuthorInfoViewController : TPTableViewController <UIWebViewDelegate>
 
-@property (nonatomic, strong) TPAuthorData *author;
-@property (nonatomic, strong) TPAuthorInfoModel *authorModel;
+@property (nonatomic, strong) TPAuthorData *data;
 
 @end

@@ -38,6 +38,7 @@
 		A5DD102E185AEE16009D1A1A /* TPShowListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD102D185AEE16009D1A1A /* TPShowListCell.m */; };
 		A5E2479418590C1A006391AF /* TPEpisodeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */; };
 		A5F44AB819F8133E00A731CB /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F44AB719F8133E00A731CB /* MediaPlayer.framework */; };
+		A5F44ABB19F82F9900A731CB /* TPAuthorInfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F44ABA19F82F9900A731CB /* TPAuthorInfoHeaderView.m */; };
 		A5FEBFBA1858AF390084B4C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFB91858AF390084B4C5 /* Foundation.framework */; };
 		A5FEBFBC1858AF390084B4C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */; };
 		A5FEBFBE1858AF390084B4C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBD1858AF390084B4C5 /* UIKit.framework */; };
@@ -126,6 +127,8 @@
 		A5E2479218590C1A006391AF /* TPEpisodeCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPEpisodeCollectionCell.h; sourceTree = "<group>"; };
 		A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPEpisodeCollectionCell.m; sourceTree = "<group>"; };
 		A5F44AB719F8133E00A731CB /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		A5F44AB919F82F9900A731CB /* TPAuthorInfoHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAuthorInfoHeaderView.h; sourceTree = "<group>"; };
+		A5F44ABA19F82F9900A731CB /* TPAuthorInfoHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAuthorInfoHeaderView.m; sourceTree = "<group>"; };
 		A5FEBFB61858AF390084B4C5 /* TilosPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TilosPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5FEBFB91858AF390084B4C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -337,6 +340,8 @@
 				A51F67CA18CDF370001214F3 /* TPTapeCollectionLiveCell.m */,
 				A5DD1017185A7F4B009D1A1A /* TPShowInfoHeaderView.h */,
 				A5DD1018185A7F4B009D1A1A /* TPShowInfoHeaderView.m */,
+				A5F44AB919F82F9900A731CB /* TPAuthorInfoHeaderView.h */,
+				A5F44ABA19F82F9900A731CB /* TPAuthorInfoHeaderView.m */,
 				A5DD1020185A8F0E009D1A1A /* TPFlipLabelView.h */,
 				A5DD1021185A8F0E009D1A1A /* TPFlipLabelView.m */,
 				A5DD1026185A9D83009D1A1A /* TPTabBar.h */,
@@ -576,6 +581,7 @@
 				A518619318CA57A7009D807A /* TPContributionData.m in Sources */,
 				A5FEBFC61858AF390084B4C5 /* main.m in Sources */,
 				A5FEC0091858B6350084B4C5 /* TPAuthorListModel.m in Sources */,
+				A5F44ABB19F82F9900A731CB /* TPAuthorInfoHeaderView.m in Sources */,
 				A5DD0FFE185A100F009D1A1A /* TPOverlayViewController.m in Sources */,
 				A5FEC0001858B2AB0084B4C5 /* TPAppDelegate.m in Sources */,
 				A5DD1028185A9D83009D1A1A /* TPTabBar.m in Sources */,

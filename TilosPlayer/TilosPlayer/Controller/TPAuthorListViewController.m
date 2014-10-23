@@ -65,7 +65,7 @@
     id data = [self.model dataForIndexPath:indexPath];
     
     TPAuthorInfoViewController *destination = segue.destinationViewController;
-    destination.author = [data objectForKey:@"author"];
+    destination.data = [data objectForKey:@"author"];
 }
 
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="X5K-m2-mOs">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -18,7 +19,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rDL-aP-bwg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-803" y="-412"/>
+            <point key="canvasLocation" x="-923" y="-2124"/>
         </scene>
         <!--First-->
         <scene sceneID="W3I-pn-N6e">
@@ -71,7 +72,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qh2-T1-AhA" sceneMemberID="firstResponder"/>
                 <customObject id="l0T-2C-nnM" customClass="TPAuthorListModel"/>
             </objects>
-            <point key="canvasLocation" x="-307" y="-418"/>
+            <point key="canvasLocation" x="-315" y="-2146"/>
         </scene>
         <!--Overlay View Controller-->
         <scene sceneID="7j3-8e-sT5">
@@ -174,7 +175,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <webView contentMode="scaleToFill" allowsInlineMediaPlayback="NO" mediaPlaybackRequiresUserAction="NO" mediaPlaybackAllowsAirPlay="NO" suppressesIncrementalRendering="YES" keyboardDisplayRequiresUserAction="NO" id="gGa-MJ-NgM">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                         </webView>
@@ -190,7 +191,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F2G-Y7-yAZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="620" y="-60"/>
+            <point key="canvasLocation" x="1148" y="-196"/>
         </scene>
         <!--Episode List View Controller-->
         <scene sceneID="Nq4-Js-Gyl">
@@ -271,14 +272,14 @@
                         <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="ak0-7k-rFp" kind="relationship" relationship="viewControllers" id="Oiz-80-o1Z"/>
-                        <segue destination="z2x-KY-0wg" kind="relationship" relationship="viewControllers" id="B81-rL-zZd"/>
-                        <segue destination="o6Q-8w-fsK" kind="relationship" relationship="viewControllers" id="OAm-0T-hmN"/>
+                        <segue destination="ak0-7k-rFp" kind="relationship" relationship="viewControllers" id="EHr-QI-QIW"/>
+                        <segue destination="z2x-KY-0wg" kind="relationship" relationship="viewControllers" id="laM-A3-m30"/>
+                        <segue destination="o6Q-8w-fsK" kind="relationship" relationship="viewControllers" id="hJi-Ar-kXF"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1630" y="-412"/>
+            <point key="canvasLocation" x="-2094" y="-2042"/>
         </scene>
         <!--Author Info View Controller-->
         <scene sceneID="5rS-Uw-RBz">
@@ -314,7 +315,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <webView contentMode="scaleToFill" allowsInlineMediaPlayback="NO" mediaPlaybackRequiresUserAction="NO" mediaPlaybackAllowsAirPlay="NO" suppressesIncrementalRendering="YES" keyboardDisplayRequiresUserAction="NO" id="S1Z-aw-OIt">
-                                            <rect key="frame" x="-1" y="-0.5" width="319.5" height="47.5"/>
+                                            <rect key="frame" x="-1" y="-1" width="319" height="48"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                         </webView>
@@ -349,7 +350,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k7b-i9-eSy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="144" y="-418"/>
+            <point key="canvasLocation" x="136" y="-2146"/>
         </scene>
     </scenes>
     <resources>

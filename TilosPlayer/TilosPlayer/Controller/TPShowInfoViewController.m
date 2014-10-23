@@ -16,6 +16,13 @@
 #import "TPShowData.h"
 #import "TPShowInfoHeaderView.h"
 
+
+typedef enum {
+    TPShowInfoViewTypeInfo,
+    TPShowInfoViewTypeEpisodes
+} TPShowInfoViewType;
+
+
 static const CGFloat titleWidth = 200.0f;
 
 @interface TPShowInfoViewController ()
@@ -97,7 +104,13 @@ static const CGFloat titleWidth = 200.0f;
 
 - (void)headerViewSegmentChanged:(UISegmentedControl*)segmentedControl
 {
-    if(segmentedControl.selectedSegmentIndex == 0)
+    [self updateView: segmentedControl.selectedSegmentIndex == 0 ? TPShowInfoViewTypeEpisodes : TPShowInfoViewTypeInfo];
+}
+
+
+- (void)updateView:(TPShowInfoViewType)type
+{
+    if(type == TPShowInfoViewTypeEpisodes)
     {
         self.tableView.scrollEnabled = YES;
         self.tableView.tableHeaderView = self.headerView;

@@ -58,34 +58,24 @@
 - (void)parseContent:(id)JSON
 {
     self.author = [TPAuthorData parseWithObject:JSON];
-    
-    self.contributions = self.author.contributions;
+    self.sections = @[[TPListSection sectionWithTitle:nil items:self.author.contributions]];
     
     [self sendFinished];
-}
-
-- (AvailableInfoType)availableInfo
-{
-    //NSLog(@"%@", [self.author objectForKey:@"introduction"]);
-    NSString *introductionString = self.author.introduction;
-    
-    if (self.contributions.count > 0 && introductionString.length>0) {
-        return kContributionsAndIntroduction;
-    }
-    else if (self.contributions.count > 0 && !(introductionString.length>0)){
-        return kContributionsOnly;
-    }
-    else if (self.contributions.count == 0 && introductionString.length>0){
-        return kIntroductionOnly;
-    }
-    else return kNoInfoAvailable;
 }
 
 -(void)setAuthor:(TPAuthorData *)author
 {
     _author = author;
     
-    self.htmlString = [NSString stringWithFormat:@"<html><head></head><body><div id = \"content\" style=\"font-family:Avenir-Light; font-size:15px\">%@</div></body></html>", author.introduction];
+    if(author.introduction)
+    {
+        self.htmlString = [NSString stringWithFormat:@"<html><head></head><body><div id = \"content\" style=\"font-family:Avenir-Light; font-size:15px\">%@</div></body></html>", author.introduction];
+    }
+    else
+    {
+        self.htmlString = nil;
+    }
+    
 }
 
 @end

@@ -12,14 +12,6 @@
  *  Description: Encapsulates
  */
 
-typedef NS_ENUM(NSInteger, AvailableInfoType)
-{
-    kContributionsOnly,
-    kContributionsAndIntroduction,
-    kIntroductionOnly,
-    kNoInfoAvailable
-};
-
 @class TPAuthorData;
 
 @interface TPAuthorInfoModel : TPListModel
@@ -27,9 +19,6 @@ typedef NS_ENUM(NSInteger, AvailableInfoType)
 @property (nonatomic, strong) AFHTTPRequestOperation *operation;
 
 @property (nonatomic, strong) TPAuthorData *author;
-@property (nonatomic, strong) NSArray *contributions;
 @property (nonatomic, strong) NSString *htmlString;
-
-@property (nonatomic, readonly) AvailableInfoType availableInfo;
 
 @end
