@@ -56,10 +56,12 @@
 		A5E2479418590C1A006391AF /* TPEpisodeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */; };
 		A5F44AB819F8133E00A731CB /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F44AB719F8133E00A731CB /* MediaPlayer.framework */; };
 		A5F44ABB19F82F9900A731CB /* TPAuthorInfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F44ABA19F82F9900A731CB /* TPAuthorInfoHeaderView.m */; };
+		A5FA37BB19F9921500249D51 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37B419F9921500249D51 /* InfoPlist.strings */; };
+		A5FA37BC19F9921500249D51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37B619F9921500249D51 /* Localizable.strings */; };
+		A5FA37BD19F9921500249D51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37B919F9921500249D51 /* Localizable.strings */; };
 		A5FEBFBA1858AF390084B4C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFB91858AF390084B4C5 /* Foundation.framework */; };
 		A5FEBFBC1858AF390084B4C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */; };
 		A5FEBFBE1858AF390084B4C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBD1858AF390084B4C5 /* UIKit.framework */; };
-		A5FEBFC41858AF390084B4C5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FEBFC21858AF390084B4C5 /* InfoPlist.strings */; };
 		A5FEBFC61858AF390084B4C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEBFC51858AF390084B4C5 /* main.m */; };
 		A5FEBFCD1858AF390084B4C5 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5FEBFCB1858AF390084B4C5 /* Main_iPhone.storyboard */; };
 		A5FEBFD81858AF390084B4C5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5FEBFD71858AF390084B4C5 /* Images.xcassets */; };
@@ -180,12 +182,14 @@
 		A5F44AB719F8133E00A731CB /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		A5F44AB919F82F9900A731CB /* TPAuthorInfoHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAuthorInfoHeaderView.h; sourceTree = "<group>"; };
 		A5F44ABA19F82F9900A731CB /* TPAuthorInfoHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAuthorInfoHeaderView.m; sourceTree = "<group>"; };
+		A5FA37B519F9921500249D51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
+		A5FA37B719F9921500249D51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
+		A5FA37BA19F9921500249D51 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = Localizable.strings; sourceTree = "<group>"; };
 		A5FEBFB61858AF390084B4C5 /* TilosPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TilosPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5FEBFB91858AF390084B4C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A5FEBFBD1858AF390084B4C5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A5FEBFC11858AF390084B4C5 /* TilosPlayer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TilosPlayer-Info.plist"; sourceTree = "<group>"; };
-		A5FEBFC31858AF390084B4C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A5FEBFC51858AF390084B4C5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A5FEBFC71858AF390084B4C5 /* TilosPlayer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TilosPlayer-Prefix.pch"; sourceTree = "<group>"; };
 		A5FEBFCC1858AF390084B4C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
@@ -305,6 +309,23 @@
 			name = Overlay;
 			sourceTree = "<group>";
 		};
+		A5FA37B319F9921500249D51 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				A5FA37B419F9921500249D51 /* InfoPlist.strings */,
+				A5FA37B619F9921500249D51 /* Localizable.strings */,
+			);
+			path = en.lproj;
+			sourceTree = "<group>";
+		};
+		A5FA37B819F9921500249D51 /* hu.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				A5FA37B919F9921500249D51 /* Localizable.strings */,
+			);
+			path = hu.lproj;
+			sourceTree = "<group>";
+		};
 		A5FEBFAD1858AF390084B4C5 = {
 			isa = PBXGroup;
 			children = (
@@ -358,8 +379,9 @@
 		A5FEBFC01858AF390084B4C5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A5FA37B319F9921500249D51 /* en.lproj */,
+				A5FA37B819F9921500249D51 /* hu.lproj */,
 				A5FEBFC11858AF390084B4C5 /* TilosPlayer-Info.plist */,
-				A5FEBFC21858AF390084B4C5 /* InfoPlist.strings */,
 				A5FEBFC51858AF390084B4C5 /* main.m */,
 				A5FEBFC71858AF390084B4C5 /* TilosPlayer-Prefix.pch */,
 			);
@@ -586,6 +608,7 @@
 			knownRegions = (
 				en,
 				Base,
+				hu,
 			);
 			mainGroup = A5FEBFAD1858AF390084B4C5;
 			productRefGroup = A5FEBFB71858AF390084B4C5 /* Products */;
@@ -602,9 +625,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5FA37BC19F9921500249D51 /* Localizable.strings in Resources */,
+				A5FA37BD19F9921500249D51 /* Localizable.strings in Resources */,
 				A5FEBFD81858AF390084B4C5 /* Images.xcassets in Resources */,
+				A5FA37BB19F9921500249D51 /* InfoPlist.strings in Resources */,
 				A5FEBFCD1858AF390084B4C5 /* Main_iPhone.storyboard in Resources */,
-				A5FEBFC41858AF390084B4C5 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -716,12 +741,28 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		A5FEBFC21858AF390084B4C5 /* InfoPlist.strings */ = {
+		A5FA37B419F9921500249D51 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A5FEBFC31858AF390084B4C5 /* en */,
+				A5FA37B519F9921500249D51 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A5FA37B619F9921500249D51 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5FA37B719F9921500249D51 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		A5FA37B919F9921500249D51 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5FA37BA19F9921500249D51 /* hu */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		A5FEBFCB1858AF390084B4C5 /* Main_iPhone.storyboard */ = {

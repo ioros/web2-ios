@@ -28,8 +28,9 @@
         self.detailTextView.backgroundColor = [UIColor clearColor];
         [self addSubview:self.detailTextView];
         
-        self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"LatestEpisodes", nil), NSLocalizedString(@"ShowInfo", nil)]];
-        [self.segmentedControl sizeToFit];
+        self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"ShowEpisodes", nil), NSLocalizedString(@"ShowInfo", nil)]];
+        CGSize s = [self.segmentedControl sizeThatFits:CGSizeMake(200, 30)];
+        self.segmentedControl.frame = CGRectMake(0, 0, MAX(200,s.width), s.height);
         [self addSubview:self.segmentedControl];
         
         [self.segmentedControl setSelectedSegmentIndex:1];
