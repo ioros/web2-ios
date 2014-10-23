@@ -8,7 +8,6 @@
 
 #import "TPAuthorInfoViewController.h"
 #import "NSDictionary+TPAdditions.h"
-#import <SDWebImage/UIImageView+WebCache.h>
 #import "TPAuthorInfoModel.h"
 #import "TPListModel.h"
 #import "TPAuthorListCell.h"
@@ -44,7 +43,7 @@ typedef enum {
 
     TPAuthorInfoHeaderView *headerView = [[TPAuthorInfoHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
     headerView.detailTextView.text = [[self.data nickNames] componentsJoinedByString:@", "];
-    [headerView.imageView setImageWithURL:[NSURL URLWithString:self.data.avatarURL]];
+    [headerView.imageView sd_setImageWithURL:[NSURL URLWithString:self.data.avatarURL]];
     [headerView sizeToFit];
     self.headerView = headerView;
     

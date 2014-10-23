@@ -128,7 +128,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Player, TPAudioPlayer);
         return;
     }*/
     
-    self.currentTime = position;
+    self.currentTime = (int)position;
 	_playing = YES;
     _validTime = NO;
 

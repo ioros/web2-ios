@@ -11,8 +11,6 @@
 #import "UIImage+ImageEffects.h"
 #import "TPEpisodeData.h"
 
-#import <SDWebImage/UIImageView+WebCache.h>
-
 @implementation TPEpisodeCollectionCell
 
 - (id)initWithFrame:(CGRect)frame
@@ -78,7 +76,7 @@
     NSString *url = episode.bannerURL;
     if(url != nil)
     {
-        [self.imageView setImageWithURL:[NSURL URLWithString:url]];
+        [self.imageView sd_setImageWithURL:[NSURL URLWithString:url]];
     }
     else {
         [self.imageView setImage:[UIImage imageNamed:@"DefaultBanner.png"]];

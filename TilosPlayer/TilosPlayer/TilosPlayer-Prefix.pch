@@ -14,6 +14,7 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import "NSDictionary+TPAdditions.h"
+    #import "UIImageView+WebCache.h"
     #import "AFNetworking.h"
     #import "NSDate+TPAdditions.h"
     #import "UIImage+ImageEffects.h"

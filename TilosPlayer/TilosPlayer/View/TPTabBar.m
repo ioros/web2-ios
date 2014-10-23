@@ -156,12 +156,12 @@
     if(_selectedIndex == index)
     {
         [self setSelectedButtonIndex:-1];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"itemDeselected" object:self userInfo:@{@"index":[NSNumber numberWithInt:index]}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"itemDeselected" object:self userInfo:@{@"index":[NSNumber numberWithInteger:index]}];
     }
     else
     {
         [self setSelectedButtonIndex:index];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"itemSelected" object:self userInfo:@{@"index":[NSNumber numberWithInt:index]}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"itemSelected" object:self userInfo:@{@"index":[NSNumber numberWithInteger:index]}];
     }
 }
 

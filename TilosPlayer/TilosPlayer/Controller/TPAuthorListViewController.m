@@ -7,7 +7,6 @@
 //
 
 #import "TPAuthorListViewController.h"
-#import <SDWebImage/UIImageView+WebCache.h>
 #import "TPAuthorInfoModel.h"
 #import "TPAuthorInfoViewController.h"
 
@@ -49,7 +48,7 @@
     cell.detailTextLabel.text = [item objectForKey:@"name"];
     cell.accessoryType = UITableViewCellAccessoryNone;
     
-    [cell.imageView setImageWithURL:[NSURL URLWithString:[item objectForKey:@"avatarURL"]] placeholderImage:[UIImage imageNamed:@"AuthorAvatarPlaceholder.png"]];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[item objectForKey:@"avatarURL"]] placeholderImage:[UIImage imageNamed:@"AuthorAvatarPlaceholder.png"]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString*)title atIndex:(NSInteger)index

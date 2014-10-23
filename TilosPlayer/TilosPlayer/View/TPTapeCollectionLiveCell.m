@@ -39,7 +39,7 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
     
-    const CGFloat smallDot = 3.0f;
+    //const CGFloat smallDot = 3.0f;
     const CGFloat bigDot = 5.0f;
     
     [[UIColor clearColor] set];

@@ -8,8 +8,6 @@
 
 #import "TPShowInfoViewController.h"
 
-#import <SDWebImage/UIImageView+WebCache.h>
-
 #import "TPShowInfoModel.h"
 #import "TPShowInfoHeaderView.h"
 #import "TPEpisodeData.h"
@@ -86,7 +84,7 @@ typedef enum {
     NSString *url = model.show.bannerURL;
     if(url)
     {
-        [self.headerView.imageView setImageWithURL:[NSURL URLWithString:url]];
+        [self.headerView.imageView sd_setImageWithURL:[NSURL URLWithString:url]];
     }
     else{
         self.headerView.imageView.image = [UIImage imageNamed:@"DefaultBanner.png"];

@@ -695,7 +695,7 @@ static int kPlayerLoadingContext;
     else
     {
         NSDate *date = [NSDate new];
-        NSTimeInterval timeDifference = date.timeIntervalSince1970 - self.tapeStartTime;
+        //NSTimeInterval timeDifference = date.timeIntervalSince1970 - self.tapeStartTime;
         
         BOOL isEnd = (indexPath.row == self.tapeCollectionRowCount-1);
         if(!isEnd)
