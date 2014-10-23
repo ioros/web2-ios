@@ -121,7 +121,7 @@
     
     CGSize titleSize = [self.textLabel sizeThatFits:CGSizeMake(w - 40, 1000)];
     CGSize authorSize = [self.authorLabel sizeThatFits:CGSizeMake(w-20, 20)];
-    CGSize detailSize = [self.detailTextView sizeThatFits:CGSizeMake(w-40, 1000)];
+    CGSize detailSize = [self.detailTextView sizeThatFits:CGSizeMake(w-20, 1000)];
     
     // we dont allow too much height or 3 rows for the title either
     CGFloat addedHeight = (detailSize.height + titleSize.height);
@@ -138,9 +138,17 @@
     if(downSizeTitle) offset -= 2;
     
     self.authorLabel.frame = CGRectMake(10, offset, w-20, authorSize.height);
-    offset += authorSize.height;
+    offset += authorSize.height + 5;
     
-    CGFloat topAdjustment = ((b.size.height - offset) - detailSize.height) > 20 ? 10 : 0;
+    CGFloat remainingSize = (b.size.height - offset);
+    CGFloat paddingSum = (remainingSize - detailSize.height);
+    CGFloat topAdjustment = 0.0f;
+    if(paddingSum < 30)
+    {
+        // center
+        topAdjustment = (remainingSize - detailSize.height) / 2.0f;
+    }
+
     CGFloat h = MIN(b.size.height-offset, detailSize.height);
     self.detailTextView.frame = CGRectMake(7, offset + topAdjustment, w-14, h);
 }
