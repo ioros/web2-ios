@@ -30,5 +30,14 @@
 
 #pragma mark -
 
+- (NSArray *)nickNames
+{
+    NSMutableArray *nickNames = [NSMutableArray array];
+    for(TPContributionData *contribution in self.contributions)
+    {
+        [nickNames addObject:contribution.nick];
+    }
+    return nickNames;
+}
 
 @end

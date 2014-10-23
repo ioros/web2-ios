@@ -75,7 +75,14 @@
     self.textLabel.text = episode.name;
     self.detailTextView.text = episode.definition;
     
-    [self.imageView setImageWithURL:[NSURL URLWithString:episode.bannerURL]];
+    NSString *url = episode.bannerURL;
+    if(url != nil)
+    {
+        [self.imageView setImageWithURL:[NSURL URLWithString:url]];
+    }
+    else {
+        [self.imageView setImage:[UIImage imageNamed:@"DefaultBanner.png"]];
+    }
     
     [self setNeedsLayout];
 }

@@ -11,7 +11,6 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "TPAuthorInfoModel.h"
 #import "TPListModel.h"
-#import "TPWebIntroductionCell.h"
 #import "TPAuthorListCell.h"
 #import "TPShowListCell.h"
 #import "TPAuthorData.h"
@@ -44,7 +43,7 @@ typedef enum {
     self.navigationItem.title = self.data.name;
     
     TPAuthorInfoHeaderView *headerView = [[TPAuthorInfoHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
-    headerView.detailTextView.text = self.data.name;
+    headerView.detailTextView.text = [[self.data nickNames] componentsJoinedByString:@", "];
     [headerView.imageView setImageWithURL:[NSURL URLWithString:self.data.avatarURL]];
     [headerView sizeToFit];
     self.headerView = headerView;
@@ -55,6 +54,7 @@ typedef enum {
 
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 2.0f)];
     webView.delegate = self;
+    webView.backgroundColor = [UIColor whiteColor];
     self.webView = webView;
     
     self.tableView.tableHeaderView = self.headerView;
@@ -80,10 +80,12 @@ typedef enum {
 
 - (void)updateView:(TPAuthorInfoViewType)type
 {
+    CGFloat topInset = self.topLayoutGuide.length;
+    
     if(type == TPAuthorInfoViewInfo)
     {
         self.tableView.scrollEnabled = NO;
-        self.tableView.contentOffset = CGPointZero;
+        self.tableView.contentOffset = CGPointMake(0, -topInset);
         self.tableView.tableHeaderView = nil;
         
         CGFloat headerHeight = self.headerView.bounds.size.height;
@@ -94,11 +96,11 @@ typedef enum {
         headerRect.origin.y = -headerHeight;
         self.headerView.frame = headerRect;
         
-        self.webView.scrollView.contentInset = UIEdgeInsetsMake(headerHeight + self.topLayoutGuide.length, 0, 0, 0);
-        self.webView.scrollView.contentOffset = CGPointMake(0, -headerHeight - self.topLayoutGuide.length);
         [self.webView.scrollView addSubview:self.headerView];
         self.webView.frame = self.tableView.bounds;
         [self.tableView addSubview:self.webView];
+        self.webView.scrollView.contentInset = UIEdgeInsetsMake(headerHeight + topInset, 0, 0, 0);
+        self.webView.scrollView.contentOffset = CGPointMake(0, -headerHeight - topInset);
     }
     else
     {

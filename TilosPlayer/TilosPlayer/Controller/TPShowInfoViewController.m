@@ -55,6 +55,7 @@ static const CGFloat titleWidth = 200.0f;
     
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 180, 320.0, 1.0)];
     self.webView.delegate = self;
+    self.webView.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -92,7 +93,15 @@ static const CGFloat titleWidth = 200.0f;
     [super listModelDidFinish:listModel];
 
     TPShowInfoModel *model = (TPShowInfoModel *)self.model;
-    [self.headerView.imageView setImageWithURL:[NSURL URLWithString:model.show.bannerURL]];
+    
+    NSString *url = model.show.bannerURL;
+    if(url)
+    {
+        [self.headerView.imageView setImageWithURL:[NSURL URLWithString:url]];
+    }
+    else{
+        self.headerView.imageView.image = [UIImage imageNamed:@"DefaultBanner.png"];
+    }
     
     if(model.htmlString)
     {
@@ -110,16 +119,19 @@ static const CGFloat titleWidth = 200.0f;
 
 - (void)updateView:(TPShowInfoViewType)type
 {
+    CGFloat topInset = self.topLayoutGuide.length;
+
     if(type == TPShowInfoViewTypeEpisodes)
     {
         self.tableView.scrollEnabled = YES;
         self.tableView.tableHeaderView = self.headerView;
+        self.tableView.contentOffset = CGPointMake(0, -topInset);
         [self.webView removeFromSuperview];
     }
     else
     {
         self.tableView.scrollEnabled = NO;
-        self.tableView.contentOffset = CGPointZero;
+        self.tableView.contentOffset = CGPointMake(0, -topInset);
         self.tableView.tableHeaderView = nil;
         
         CGFloat headerHeight = self.headerView.bounds.size.height;
@@ -130,11 +142,12 @@ static const CGFloat titleWidth = 200.0f;
         headerRect.origin.y = -headerHeight;
         self.headerView.frame = headerRect;
         
-        self.webView.scrollView.contentInset = UIEdgeInsetsMake(headerHeight + self.topLayoutGuide.length, 0, 0, 0);
-        self.webView.scrollView.contentOffset = CGPointMake(0, -headerHeight - self.topLayoutGuide.length);
-        [self.webView.scrollView addSubview:self.headerView];
         self.webView.frame = self.tableView.bounds;
+        [self.webView.scrollView addSubview:self.headerView];
+        self.webView.scrollView.contentInset = UIEdgeInsetsMake(headerHeight + topInset, 0, 0, 0);
         [self.tableView addSubview:self.webView];
+
+        self.webView.scrollView.contentOffset = CGPointMake(0, -headerHeight - topInset);
     }
 }
 

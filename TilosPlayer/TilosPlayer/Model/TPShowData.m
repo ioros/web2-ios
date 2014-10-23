@@ -20,6 +20,12 @@
     TPShowData *data = [TPShowData new];
     data.bannerURL = [object objectForKeyOrNil:@"banner"];
     
+    // TODO: remove this when server is fixed
+    if(data.bannerURL == nil || [data.bannerURL isEqualToString:@"http://tilos.hu/upload/"])
+    {
+        data.bannerURL = nil;
+    }
+    
     NSString *definition = [object objectForKeyOrNil:@"definition"];
     // TODO: remove this
     definition = [definition stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];

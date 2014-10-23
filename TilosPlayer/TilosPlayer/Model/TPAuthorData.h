@@ -20,4 +20,6 @@
 @property (nonatomic, retain) NSString *introduction;
 @property (nonatomic, retain) NSArray *contributions;
 
+@property (nonatomic, readonly) NSArray *nickNames;
+
 @end

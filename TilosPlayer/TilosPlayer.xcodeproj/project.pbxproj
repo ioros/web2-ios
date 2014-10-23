@@ -63,7 +63,6 @@
 		A5FEC02D1858DDC60084B4C5 /* TPPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC02C1858DDC60084B4C5 /* TPPlayerViewController.m */; };
 		A5FEC030185901CA0084B4C5 /* NSArray+TPIndexedSorting.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC02F185901CA0084B4C5 /* NSArray+TPIndexedSorting.m */; };
 		EA4716A8185CF2BA00466D87 /* TPAuthorInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4716A7185CF2BA00466D87 /* TPAuthorInfoModel.m */; };
-		EAC5642118984F1800A3D439 /* TPWebIntroductionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC5642018984F1800A3D439 /* TPWebIntroductionCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -174,8 +173,6 @@
 		A5FEC02F185901CA0084B4C5 /* NSArray+TPIndexedSorting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+TPIndexedSorting.m"; sourceTree = "<group>"; };
 		EA4716A6185CF2BA00466D87 /* TPAuthorInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAuthorInfoModel.h; sourceTree = "<group>"; };
 		EA4716A7185CF2BA00466D87 /* TPAuthorInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAuthorInfoModel.m; sourceTree = "<group>"; };
-		EAC5641F18984F1800A3D439 /* TPWebIntroductionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPWebIntroductionCell.h; sourceTree = "<group>"; };
-		EAC5642018984F1800A3D439 /* TPWebIntroductionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPWebIntroductionCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,8 +349,6 @@
 				A51B1FDD185CA5E1009FA46D /* TPShowEpisodeCell.m */,
 				A51B1FDF185CAE80009FA46D /* TPTimestampView.h */,
 				A51B1FE0185CAE80009FA46D /* TPTimestampView.m */,
-				EAC5641F18984F1800A3D439 /* TPWebIntroductionCell.h */,
-				EAC5642018984F1800A3D439 /* TPWebIntroductionCell.m */,
 				A560DEEF19F27EE60038A48E /* TPPlayButton.h */,
 				A560DEF019F27EE60038A48E /* TPPlayButton.m */,
 			);
@@ -588,7 +583,6 @@
 				A560DEF119F27EE60038A48E /* TPPlayButton.m in Sources */,
 				A5DD1025185A9725009D1A1A /* NSDate+TPAdditions.m in Sources */,
 				A518618418CA4CD6009D807A /* TPEpisodeData.m in Sources */,
-				EAC5642118984F1800A3D439 /* TPWebIntroductionCell.m in Sources */,
 				A5A811F918B3910F0087DF31 /* TPContinuousProgramModel.m in Sources */,
 				A5FEC030185901CA0084B4C5 /* NSArray+TPIndexedSorting.m in Sources */,
 				A518619018CA4FD7009D807A /* TPContributorData.m in Sources */,
