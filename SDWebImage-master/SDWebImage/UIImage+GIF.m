@@ -44,7 +44,10 @@
             duration = (1.0f / 10.0f) * count;
         }
 
-        animatedImage = [UIImage animatedImageWithImages:images duration:duration];
+        // TODO: this is hacked to stop gif behaviour, let's see if we have another way later
+
+        //animatedImage = [UIImage animatedImageWithImages:images duration:duration];
+        animatedImage = [images firstObject];
     }
 
     CFRelease(source);
