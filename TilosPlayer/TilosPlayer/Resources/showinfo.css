@@ -1,0 +1,12 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    
+    font-family:Avenir-Light;
+    font-size:15px;
+    text-align:center;
+}
+body div {
+    margin:50px;
+}
+

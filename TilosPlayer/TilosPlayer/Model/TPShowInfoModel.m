@@ -65,7 +65,13 @@
     
     if (description.length > 0)
     {
-        self.htmlString = [NSString stringWithFormat:@"<html><head></head><body style=\"margin:0px; padding:15px;\"><div id = \"content\" style=\"font-family:Avenir-Light; font-size:15px\">%@</div></body></html>", description];
+        NSString *file = [[NSBundle mainBundle] pathForResource:@"showinfo" ofType:@"html"];
+        NSString *html = [NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil];
+        
+        if(html)
+        {
+            self.htmlString = [NSString stringWithFormat:html, description];
+        }
     }
     
     NSArray *episodes = self.show.episodes;
