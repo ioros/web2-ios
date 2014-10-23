@@ -7,19 +7,20 @@
 //
 
 #import "TPAppDelegate.h"
+#import "TPPlayerManager.h"
 
 @implementation TPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self setupAudio];
     [self setupAppearance];
     
     if([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey])
     {
         [self handleURL:[launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]];
     }
-    
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+
     return YES;
 }
 
@@ -49,22 +50,9 @@
     [[UISegmentedControl appearance] setTintColor:[UIColor darkGrayColor]];
 }
 
-- (void)setupAudio
+- (void)remoteControlReceivedWithEvent:(UIEvent *)receivedEvent
 {
-    /////////// setup audio ////////////////////
-    
-    NSError *sessionError = nil;
-    [[AVAudioSession sharedInstance] setDelegate:self];
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&sessionError];
-    
-    /* Pick any one of them */
-    // 1. Overriding the output audio route
-    //UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
-    //AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(audioRouteOverride), &audioRouteOverride);
-    
-    // 2. Changing the default output audio route
-    UInt32 doChangeDefaultRoute = 1;
-    AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryDefaultToSpeaker, sizeof(doChangeDefaultRoute), &doChangeDefaultRoute);
+    [[TPPlayerManager sharedManager] remoteControlReceivedWithEvent:receivedEvent];
 }
-							
+
 @end
