@@ -28,6 +28,8 @@
 
 @property (nonatomic, readonly) NSDate *dayDate;
 
+@property (nonatomic, readonly) NSUInteger duration;
+
 - (BOOL)isRunningEpisode;
 
 @end

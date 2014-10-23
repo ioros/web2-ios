@@ -25,4 +25,6 @@
 @property (nonatomic, retain) NSArray *contributors;
 @property (nonatomic, retain) NSArray *episodes;
 
+@property (nonatomic, readonly) NSArray *contributorNicknames;
+
 @end

@@ -74,6 +74,11 @@
     return (now.timeIntervalSince1970 >= self.plannedFrom.timeIntervalSince1970 && now.timeIntervalSince1970 < self.plannedTo.timeIntervalSince1970);
 }
 
+- (NSUInteger)duration
+{
+    return (NSUInteger)[self.plannedTo timeIntervalSinceDate:self.plannedFrom];
+}
+
 
 #pragma mark -
 
