@@ -47,7 +47,7 @@
         // TODO: this is hacked to stop gif behaviour, let's see if we have another way later
 
         //animatedImage = [UIImage animatedImageWithImages:images duration:duration];
-        animatedImage = [images firstObject];
+        animatedImage = [images lastObject];
     }
 
     CFRelease(source);
