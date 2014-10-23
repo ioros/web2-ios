@@ -61,26 +61,31 @@
     //return;
     
     // get all nick objects and add the name to each
-    NSMutableArray *nicks = [NSMutableArray array];
+//    NSMutableArray *nicks = [NSMutableArray array];
+    NSMutableDictionary *nicksDictionary = [NSMutableDictionary dictionary];
+    
     for (TPAuthorData *author in authors)
     {
         NSArray *contributions = author.contributions;
         
         for(TPContributionData *contribution in contributions)
         {
+            NSString *nick = contribution.nick;
+            NSString *name = author.name;
+            
             NSMutableDictionary *item = [NSMutableDictionary dictionary];
-            [item setValue:author.name forKey:@"name"];
+            [item setValue:name forKey:@"name"];
             [item setValue:author.avatarURL forKey:@"avatarURL"];
             [item setValue:author.photoURL forKey:@"photoURL"];
             [item setValue:author.identifier forKey:@"id"];
-            [item setValue:contribution.nick forKey:@"nick"];
+            [item setValue:nick forKey:@"nick"];
             [item setValue:author forKey:@"author"];
             
-            [nicks addObject:item];
+            [nicksDictionary setObject:item forKey:[NSString stringWithFormat:@"%@-%@", nick, name]];
         }
     }
     
-    NSDictionary *indexes = [nicks indexesWithSortingKey:@"nick" ascending:YES];
+    NSDictionary *indexes = [nicksDictionary.allValues indexesWithSortingKey:@"nick" ascending:YES];
     NSArray *sortedKeys = [indexes.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     
     NSMutableArray *sections = [NSMutableArray array];

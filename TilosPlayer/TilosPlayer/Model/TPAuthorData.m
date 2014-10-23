@@ -16,11 +16,15 @@
 {
     if(object == nil) return nil;
     
+    // TODO: remove this if server is fixed
+    NSString *name = [object objectForKeyOrNil:@"name"];
+    name = [name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
     TPAuthorData *data = [TPAuthorData new];
+    data.name = name;
     data.identifier = [object objectForKey:@"id"];
     data.avatarURL = [object objectForKey:@"avatar"];
     data.photoURL = [object objectForKey:@"photo"];
-    data.name = [object objectForKey:@"name"];
     data.alias = [object objectForKey:@"alias"];
     
     data.contributions = [TPContributionData parseWithObjects:[object objectForKeyOrNil:@"contributions"]];

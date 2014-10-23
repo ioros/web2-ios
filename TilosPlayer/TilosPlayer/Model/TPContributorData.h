@@ -15,6 +15,6 @@
 @interface TPContributorData : TPData
 
 @property (nonatomic, retain) TPAuthorData *author;
-@property (nonatomic, retain) TPAuthorData *nick;
+@property (nonatomic, retain) NSString *nick;
 
 @end
