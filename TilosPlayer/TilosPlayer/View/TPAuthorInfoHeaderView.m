@@ -10,7 +10,7 @@
 
 @implementation TPAuthorInfoHeaderView
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame items:(NSArray *)items
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -30,7 +30,7 @@
         self.detailTextView.backgroundColor = [UIColor clearColor];
         [self addSubview:self.detailTextView];
         
-        self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"AuthorInfo", nil), NSLocalizedString(@"AuthorShows", nil)]];
+        self.segmentedControl = [[UISegmentedControl alloc] initWithItems:items];
         CGSize s = [self.segmentedControl sizeThatFits:CGSizeMake(200, 30)];
         self.segmentedControl.frame = CGRectMake(0, 0, MAX(200,s.width), s.height);
         

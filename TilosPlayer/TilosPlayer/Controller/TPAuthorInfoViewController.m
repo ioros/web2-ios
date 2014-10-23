@@ -42,7 +42,7 @@ typedef enum {
 {
     [super viewDidLoad];
 
-    TPAuthorInfoHeaderView *headerView = [[TPAuthorInfoHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+    TPAuthorInfoHeaderView *headerView = [[TPAuthorInfoHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 100) items:@[NSLocalizedString(@"AuthorInfo", nil), NSLocalizedString(@"AuthorShows", nil)]];
     headerView.detailTextView.text = [[self.data nickNames] componentsJoinedByString:@", "];
     [headerView.imageView sd_setImageWithURL:[NSURL URLWithString:self.data.avatarURL]];
     [headerView sizeToFit];

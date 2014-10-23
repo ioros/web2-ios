@@ -40,6 +40,7 @@ typedef enum {
     [super viewDidLoad];
 
     self.headerView = [[TPShowInfoHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
+    self.headerView = [[TPShowInfoHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 200) items:@[NSLocalizedString(@"ShowInfo", nil), NSLocalizedString(@"ShowEpisodes", nil)]];
     self.tableView.tableHeaderView = self.headerView;
     [_headerView.segmentedControl addTarget:self action:@selector(headerViewSegmentChanged:) forControlEvents:UIControlEventValueChanged];
     [_headerView.segmentedControl setSelectedSegmentIndex:0];

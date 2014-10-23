@@ -15,4 +15,6 @@
 
 @property (nonatomic, retain) UISegmentedControl *segmentedControl;
 
+- (instancetype)initWithFrame:(CGRect)frame items:(NSArray *)items;
+
 @end
