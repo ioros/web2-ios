@@ -59,6 +59,8 @@
 		A5FA37BB19F9921500249D51 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37B419F9921500249D51 /* InfoPlist.strings */; };
 		A5FA37BC19F9921500249D51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37B619F9921500249D51 /* Localizable.strings */; };
 		A5FA37BD19F9921500249D51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37B919F9921500249D51 /* Localizable.strings */; };
+		A5FA37C119F9BD0000249D51 /* showinfo.css in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37BF19F9BD0000249D51 /* showinfo.css */; };
+		A5FA37C519F9BE9000249D51 /* showinfo.html in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37C319F9BE9000249D51 /* showinfo.html */; };
 		A5FEBFBA1858AF390084B4C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFB91858AF390084B4C5 /* Foundation.framework */; };
 		A5FEBFBC1858AF390084B4C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */; };
 		A5FEBFBE1858AF390084B4C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBD1858AF390084B4C5 /* UIKit.framework */; };
@@ -185,6 +187,8 @@
 		A5FA37B519F9921500249D51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		A5FA37B719F9921500249D51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		A5FA37BA19F9921500249D51 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = Localizable.strings; sourceTree = "<group>"; };
+		A5FA37BF19F9BD0000249D51 /* showinfo.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = showinfo.css; sourceTree = "<group>"; };
+		A5FA37C319F9BE9000249D51 /* showinfo.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = showinfo.html; sourceTree = "<group>"; };
 		A5FEBFB61858AF390084B4C5 /* TilosPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TilosPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5FEBFB91858AF390084B4C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -326,6 +330,15 @@
 			path = hu.lproj;
 			sourceTree = "<group>";
 		};
+		A5FA37BE19F9BCDC00249D51 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A5FA37BF19F9BD0000249D51 /* showinfo.css */,
+				A5FA37C319F9BE9000249D51 /* showinfo.html */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		A5FEBFAD1858AF390084B4C5 = {
 			isa = PBXGroup;
 			children = (
@@ -364,6 +377,7 @@
 		A5FEBFBF1858AF390084B4C5 /* TilosPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				A5FA37BE19F9BCDC00249D51 /* Resources */,
 				A5FEBFFD1858B2AB0084B4C5 /* Application */,
 				A5FEBFF41858B2940084B4C5 /* Controller */,
 				A5FEBFF91858B2940084B4C5 /* Model */,
@@ -625,6 +639,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5FA37C519F9BE9000249D51 /* showinfo.html in Resources */,
+				A5FA37C119F9BD0000249D51 /* showinfo.css in Resources */,
 				A5FA37BC19F9921500249D51 /* Localizable.strings in Resources */,
 				A5FA37BD19F9921500249D51 /* Localizable.strings in Resources */,
 				A5FEBFD81858AF390084B4C5 /* Images.xcassets in Resources */,
