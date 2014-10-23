@@ -27,6 +27,10 @@
     data.photoURL = [object objectForKey:@"photo"];
     data.alias = [object objectForKey:@"alias"];
     
+    NSString *introduction = [object objectForKeyOrNil:@"introduction"];
+    if([introduction isEqualToString:@""]) introduction = nil;
+    data.introduction = introduction;
+    
     data.contributions = [TPContributionData parseWithObjects:[object objectForKeyOrNil:@"contributions"]];
     
     return data;
