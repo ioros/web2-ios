@@ -30,6 +30,7 @@ typedef enum {
 @property (nonatomic, retain) TPAuthorInfoHeaderView *headerView;
 @property (nonatomic, readonly) TPAuthorInfoModel *authorInfoModel;
 @property (nonatomic, retain) TPTitleView *titleView;
+@property (nonatomic, assign) TPAuthorInfoViewType currentType;
 
 @end
 
@@ -45,32 +46,34 @@ typedef enum {
     headerView.detailTextView.text = [[self.data nickNames] componentsJoinedByString:@", "];
     [headerView.imageView sd_setImageWithURL:[NSURL URLWithString:self.data.avatarURL]];
     [headerView sizeToFit];
+    [headerView.segmentedControl addTarget:self action:@selector(changed:) forControlEvents:UIControlEventValueChanged];
     self.headerView = headerView;
     
     TPTitleView *titleView = [[TPTitleView alloc] initWithFrame:CGRectMake(0, 0, 240, 30)];
     self.titleView = titleView;
-    
-    [headerView.segmentedControl setSelectedSegmentIndex:0];
-    [headerView.segmentedControl addTarget:self action:@selector(changed:) forControlEvents:UIControlEventValueChanged];
-    
-
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 2.0f)];
-    webView.delegate = self;
-    webView.backgroundColor = [UIColor whiteColor];
-    self.webView = webView;
-    
-    self.tableView.tableHeaderView = self.headerView;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
     self.title = @"";
     self.titleView.text = self.data.name;
     [self.titleView sizeToFit];
     self.navigationItem.titleView = self.titleView;
     
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 200.0f)];
+    webView.delegate = self;
+    webView.backgroundColor = [UIColor whiteColor];
+    self.webView = webView;
+    
+    // setup the tab
+    NSInteger selectedIndex = 0;
+    NSNumber *tabIndex = [[NSUserDefaults standardUserDefaults] objectForKey:@"authorInfoPreferredTabIndex"];
+    if(tabIndex) selectedIndex = tabIndex.integerValue;
+    [self.headerView.segmentedControl setSelectedSegmentIndex:selectedIndex];
+    [self updateView:selectedIndex == 0 ? TPAuthorInfoViewInfo : TPAuthorInfoViewShows];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+
     if(self.data && self.model == nil)
     {
         self.model = [[TPAuthorInfoModel alloc] initWithParameters:self.data.identifier];
@@ -82,12 +85,19 @@ typedef enum {
 
 - (void)changed:(UISegmentedControl *)segmentedControl
 {
-    [self updateView:segmentedControl.selectedSegmentIndex == 1 ? TPAuthorInfoViewInfo : TPAuthorInfoViewShows];
+    NSInteger selectedIndex = segmentedControl.selectedSegmentIndex;
+
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:selectedIndex] forKey:@"authorInfoPreferredTabIndex"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self updateView:selectedIndex == 0 ? TPAuthorInfoViewInfo : TPAuthorInfoViewShows];
 }
 
 - (void)updateView:(TPAuthorInfoViewType)type
 {
     CGFloat topInset = self.topLayoutGuide.length;
+    
+    self.currentType = type;
     
     if(type == TPAuthorInfoViewInfo)
     {
@@ -105,15 +115,15 @@ typedef enum {
         
         [self.webView.scrollView addSubview:self.headerView];
         self.webView.frame = self.tableView.bounds;
-        [self.tableView addSubview:self.webView];
-        self.webView.scrollView.contentInset = UIEdgeInsetsMake(headerHeight + topInset, 0, 0, 0);
-        self.webView.scrollView.contentOffset = CGPointMake(0, -headerHeight - topInset);
+        self.webView.scrollView.contentInset = UIEdgeInsetsMake(headerHeight, 0, 0, 0);
+        self.webView.scrollView.contentOffset = CGPointMake(0, -headerHeight);
+
+        self.tableView.tableHeaderView = self.webView;
     }
     else
     {
         self.tableView.scrollEnabled = YES;
         self.tableView.tableHeaderView = self.headerView;
-        [self.webView removeFromSuperview];
     }
 }
 

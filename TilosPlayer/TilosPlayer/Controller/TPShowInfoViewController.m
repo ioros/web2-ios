@@ -27,6 +27,7 @@ typedef enum {
 @property (nonatomic, retain) TPShowInfoHeaderView *headerView;
 @property (nonatomic, retain) UIWebView *webView;
 @property (nonatomic, retain) TPTitleView *titleView;
+@property (nonatomic, assign) TPShowInfoViewType currentType;
 
 @end
 
@@ -42,32 +43,32 @@ typedef enum {
     self.tableView.tableHeaderView = self.headerView;
     [_headerView.segmentedControl addTarget:self action:@selector(headerViewSegmentChanged:) forControlEvents:UIControlEventValueChanged];
     [_headerView.segmentedControl setSelectedSegmentIndex:0];
+    self.headerView.detailTextView.text = self.data.definition;
+    [self.headerView sizeToFit];
     
     TPTitleView *titleView = [[TPTitleView alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
     self.titleView = titleView;
-    
-    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 180, 320.0, 1.0)];
-    self.webView.delegate = self;
-    self.webView.backgroundColor = [UIColor whiteColor];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
     self.title = @"";
     self.titleView.text = self.data.name;
     [self.titleView sizeToFit];
     self.navigationItem.titleView = self.titleView;
     
-    /////////////////////////////////////
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 180, 320.0, 1.0)];
+    self.webView.delegate = self;
+    self.webView.backgroundColor = [UIColor whiteColor];
     
-    self.headerView.detailTextView.text = self.data.definition;
-    [self.headerView sizeToFit];
-    self.tableView.tableHeaderView = self.headerView;
-    
-    //////////////////////////////////////
+    // setup the tab
+    NSInteger selectedIndex = 0;
+    NSNumber *tabIndex = [[NSUserDefaults standardUserDefaults] objectForKey:@"showInfoPreferredTabIndex"];
+    if(tabIndex) selectedIndex = tabIndex.integerValue;
+    [self.headerView.segmentedControl setSelectedSegmentIndex:selectedIndex];
+    [self updateView:selectedIndex == 0 ? TPShowInfoViewTypeInfo : TPShowInfoViewTypeEpisodes];
+}
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
     if(self.data && self.model == nil)
     {
         self.model = [[TPShowInfoModel alloc] initWithParameters:self.data.identifier];
@@ -100,20 +101,26 @@ typedef enum {
 
 - (void)headerViewSegmentChanged:(UISegmentedControl*)segmentedControl
 {
-    [self updateView: segmentedControl.selectedSegmentIndex == 0 ? TPShowInfoViewTypeEpisodes : TPShowInfoViewTypeInfo];
+    NSInteger selectedIndex = segmentedControl.selectedSegmentIndex;
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:selectedIndex] forKey:@"showInfoPreferredTabIndex"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    [self updateView: selectedIndex == 0 ? TPShowInfoViewTypeInfo : TPShowInfoViewTypeEpisodes];
 }
 
 
 - (void)updateView:(TPShowInfoViewType)type
 {
     CGFloat topInset = self.topLayoutGuide.length;
+    
+    self.currentType = type;
 
     if(type == TPShowInfoViewTypeEpisodes)
     {
         self.tableView.scrollEnabled = YES;
         self.tableView.tableHeaderView = self.headerView;
         self.tableView.contentOffset = CGPointMake(0, -topInset);
-        [self.webView removeFromSuperview];
     }
     else
     {
@@ -131,10 +138,10 @@ typedef enum {
         
         self.webView.frame = self.tableView.bounds;
         [self.webView.scrollView addSubview:self.headerView];
-        self.webView.scrollView.contentInset = UIEdgeInsetsMake(headerHeight + topInset, 0, 0, 0);
-        [self.tableView addSubview:self.webView];
-
-        self.webView.scrollView.contentOffset = CGPointMake(0, -headerHeight - topInset);
+        self.webView.scrollView.contentInset = UIEdgeInsetsMake(headerHeight, 0, 0, 0);
+        self.webView.scrollView.contentOffset = CGPointMake(0, -headerHeight);
+        
+        self.tableView.tableHeaderView = self.webView;
     }
 }
 

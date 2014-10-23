@@ -30,7 +30,7 @@
         self.detailTextView.backgroundColor = [UIColor clearColor];
         [self addSubview:self.detailTextView];
         
-        self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"AuthorShows", nil), NSLocalizedString(@"AuthorInfo", nil)]];
+        self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"AuthorInfo", nil), NSLocalizedString(@"AuthorShows", nil)]];
         CGSize s = [self.segmentedControl sizeThatFits:CGSizeMake(200, 30)];
         self.segmentedControl.frame = CGRectMake(0, 0, MAX(200,s.width), s.height);
         
