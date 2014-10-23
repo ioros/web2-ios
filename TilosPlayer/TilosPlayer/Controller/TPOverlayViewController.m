@@ -61,20 +61,20 @@
     
     if([host isEqualToString:@"author"])
     {
-        [self.tilosTabbarController setSelectedIndex:0];
-        [self.tabbar setSelectedIndex:0];
+        [self.tilosTabbarController setSelectedIndex:2];
+        [self.tabbar setSelectedIndex:2];
         [self.playerViewController closeAnimated:YES];
     }
     else if([host isEqualToString:@"episode"])
     {
-        [self.tilosTabbarController setSelectedIndex:1];
-        [self.tabbar setSelectedIndex:1];
+        [self.tilosTabbarController setSelectedIndex:0];
+        [self.tabbar setSelectedIndex:0];
         [self.playerViewController closeAnimated:YES];
     }
     else if([host isEqualToString:@"show"])
     {
-        [self.tilosTabbarController setSelectedIndex:2];
-        [self.tabbar setSelectedIndex:2];
+        [self.tilosTabbarController setSelectedIndex:1];
+        [self.tabbar setSelectedIndex:1];
         [self.playerViewController closeAnimated:YES];
     }
 }
