@@ -23,8 +23,11 @@
 
 #define kTitleFont [UIFont fontWithName:@"Avenir-Medium" size:23]
 #define kHalfTitleFont [UIFont fontWithName:@"Avenir-Medium" size:14];
+#define kDownSizedTitleFont [UIFont fontWithName:@"Avenir-Medium" size:17];
 #define kDescFont [UIFont fontWithName:@"Avenir-Light" size:13]
+#define kDownSizedDescFont [UIFont fontWithName:@"Avenir-Light" size:13]
 #define kSubFont [UIFont fontWithName:@"Avenir-Light" size:11]
+#define kSubSubFont [UIFont fontWithName:@"Avenir-Light" size:10]
 
 #define kListFont [UIFont fontWithName:@"Avenir-Light" size:17]
 

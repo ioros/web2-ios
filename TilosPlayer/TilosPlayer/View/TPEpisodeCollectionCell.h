@@ -15,6 +15,7 @@
 @property (nonatomic, retain) TPEpisodeData *episode;
 
 @property (nonatomic, retain) UILabel *textLabel;
+@property (nonatomic, retain) UILabel *authorLabel;
 @property (nonatomic, retain) UIImageView *imageView;
 @property (nonatomic, retain) UITextView *detailTextView;
 
