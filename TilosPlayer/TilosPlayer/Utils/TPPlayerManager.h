@@ -33,8 +33,6 @@
 
 - (void)togglePlay;
 
-- (void)setup;
-
 - (void)remoteControlReceivedWithEvent:(UIEvent *)receivedEvent;
 
 @end

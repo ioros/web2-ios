@@ -323,13 +323,13 @@
 			path = "../SDWebImage-master/SDWebImage";
 			sourceTree = "<group>";
 		};
-		A5DD101B185A7F81009D1A1A /* Overlay */ = {
+		A5DD101B185A7F81009D1A1A /* OverlayViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A5DD0FFC185A100F009D1A1A /* TPOverlayViewController.h */,
 				A5DD0FFD185A100F009D1A1A /* TPOverlayViewController.m */,
 			);
-			name = Overlay;
+			name = OverlayViewController;
 			sourceTree = "<group>";
 		};
 		A5FA37B319F9921500249D51 /* en.lproj */ = {
@@ -358,13 +358,41 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		A5FA37DA19FA9F7200249D51 /* TapeSeek */ = {
+		A5FA37DA19FA9F7200249D51 /* TapeSeekViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A5FA37DB19FA9F8900249D51 /* TPTapeSeekViewController.h */,
 				A5FA37DC19FA9F8900249D51 /* TPTapeSeekViewController.m */,
 			);
-			name = TapeSeek;
+			name = TapeSeekViewController;
+			sourceTree = "<group>";
+		};
+		A5FA37E119FAD8E900249D51 /* VOs */ = {
+			isa = PBXGroup;
+			children = (
+				A518618818CA4DC7009D807A /* TPData.h */,
+				A518618918CA4DC7009D807A /* TPData.m */,
+				A518618B18CA4F33009D807A /* TPAuthorData.h */,
+				A518618C18CA4F33009D807A /* TPAuthorData.m */,
+				A518618218CA4CD6009D807A /* TPEpisodeData.h */,
+				A518618318CA4CD6009D807A /* TPEpisodeData.m */,
+				A518618518CA4D19009D807A /* TPShowData.h */,
+				A518618618CA4D19009D807A /* TPShowData.m */,
+				A518618E18CA4FD7009D807A /* TPContributorData.h */,
+				A518618F18CA4FD7009D807A /* TPContributorData.m */,
+				A518619118CA57A7009D807A /* TPContributionData.h */,
+				A518619218CA57A7009D807A /* TPContributionData.m */,
+			);
+			name = VOs;
+			sourceTree = "<group>";
+		};
+		A5FA37E219FAD90300249D51 /* CollectionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A5FA37C719FA572900249D51 /* TPCollectionViewController.h */,
+				A5FA37C819FA572900249D51 /* TPCollectionViewController.m */,
+			);
+			name = CollectionViewController;
 			sourceTree = "<group>";
 		};
 		A5FEBFAD1858AF390084B4C5 = {
@@ -433,17 +461,16 @@
 		A5FEBFF41858B2940084B4C5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A5FA37DA19FA9F7200249D51 /* TapeSeek */,
 				A5FEC0191858C12E0084B4C5 /* TableViewController */,
-				A5DD101B185A7F81009D1A1A /* Overlay */,
-				A5FEC032185909E50084B4C5 /* PlayerView */,
-				A5FEC0211858C3870084B4C5 /* ShowInfo */,
-				A5FEC0201858C37A0084B4C5 /* AuthorInfo */,
-				A5FEC0181858C1260084B4C5 /* ShowList */,
-				A5FEC0171858C11C0084B4C5 /* AuthorList */,
-				A5FEC031185909CE0084B4C5 /* EpisodeList */,
-				A5FA37C719FA572900249D51 /* TPCollectionViewController.h */,
-				A5FA37C819FA572900249D51 /* TPCollectionViewController.m */,
+				A5FA37E219FAD90300249D51 /* CollectionViewController */,
+				A5DD101B185A7F81009D1A1A /* OverlayViewController */,
+				A5FEC032185909E50084B4C5 /* PlayerViewController */,
+				A5FA37DA19FA9F7200249D51 /* TapeSeekViewController */,
+				A5FEC0211858C3870084B4C5 /* ShowInfoViewController */,
+				A5FEC0201858C37A0084B4C5 /* AuthorInfoViewController */,
+				A5FEC0181858C1260084B4C5 /* ShowListViewController */,
+				A5FEC0171858C11C0084B4C5 /* AuthorListViewController */,
+				A5FEC031185909CE0084B4C5 /* EpisodeListViewController */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -451,18 +478,7 @@
 		A5FEBFF91858B2940084B4C5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A518618818CA4DC7009D807A /* TPData.h */,
-				A518618918CA4DC7009D807A /* TPData.m */,
-				A518618B18CA4F33009D807A /* TPAuthorData.h */,
-				A518618C18CA4F33009D807A /* TPAuthorData.m */,
-				A518618218CA4CD6009D807A /* TPEpisodeData.h */,
-				A518618318CA4CD6009D807A /* TPEpisodeData.m */,
-				A518618518CA4D19009D807A /* TPShowData.h */,
-				A518618618CA4D19009D807A /* TPShowData.m */,
-				A518618E18CA4FD7009D807A /* TPContributorData.h */,
-				A518618F18CA4FD7009D807A /* TPContributorData.m */,
-				A518619118CA57A7009D807A /* TPContributionData.h */,
-				A518619218CA57A7009D807A /* TPContributionData.m */,
+				A5FA37E119FAD8E900249D51 /* VOs */,
 				A5DD1011185A75A8009D1A1A /* TPModel.h */,
 				A5DD1012185A75A8009D1A1A /* TPModel.m */,
 				A5FEC0011858B2C40084B4C5 /* TPListModel.h */,
@@ -560,22 +576,22 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		A5FEC0171858C11C0084B4C5 /* AuthorList */ = {
+		A5FEC0171858C11C0084B4C5 /* AuthorListViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A5FEBFF51858B2940084B4C5 /* TPAuthorListViewController.h */,
 				A5FEBFF61858B2940084B4C5 /* TPAuthorListViewController.m */,
 			);
-			name = AuthorList;
+			name = AuthorListViewController;
 			sourceTree = "<group>";
 		};
-		A5FEC0181858C1260084B4C5 /* ShowList */ = {
+		A5FEC0181858C1260084B4C5 /* ShowListViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A5FEBFF71858B2940084B4C5 /* TPShowListViewController.h */,
 				A5FEBFF81858B2940084B4C5 /* TPShowListViewController.m */,
 			);
-			name = ShowList;
+			name = ShowListViewController;
 			sourceTree = "<group>";
 		};
 		A5FEC0191858C12E0084B4C5 /* TableViewController */ = {
@@ -587,40 +603,40 @@
 			name = TableViewController;
 			sourceTree = "<group>";
 		};
-		A5FEC0201858C37A0084B4C5 /* AuthorInfo */ = {
+		A5FEC0201858C37A0084B4C5 /* AuthorInfoViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A5FEC01A1858C1440084B4C5 /* TPAuthorInfoViewController.h */,
 				A5FEC01B1858C1440084B4C5 /* TPAuthorInfoViewController.m */,
 			);
-			name = AuthorInfo;
+			name = AuthorInfoViewController;
 			sourceTree = "<group>";
 		};
-		A5FEC0211858C3870084B4C5 /* ShowInfo */ = {
+		A5FEC0211858C3870084B4C5 /* ShowInfoViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A5FEC01D1858C1520084B4C5 /* TPShowInfoViewController.h */,
 				A5FEC01E1858C1520084B4C5 /* TPShowInfoViewController.m */,
 			);
-			name = ShowInfo;
+			name = ShowInfoViewController;
 			sourceTree = "<group>";
 		};
-		A5FEC031185909CE0084B4C5 /* EpisodeList */ = {
+		A5FEC031185909CE0084B4C5 /* EpisodeListViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A5FEC0221858C3A30084B4C5 /* TPEpisodeListViewController.h */,
 				A5FEC0231858C3A30084B4C5 /* TPEpisodeListViewController.m */,
 			);
-			name = EpisodeList;
+			name = EpisodeListViewController;
 			sourceTree = "<group>";
 		};
-		A5FEC032185909E50084B4C5 /* PlayerView */ = {
+		A5FEC032185909E50084B4C5 /* PlayerViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A5FEC02B1858DDC60084B4C5 /* TPPlayerViewController.h */,
 				A5FEC02C1858DDC60084B4C5 /* TPPlayerViewController.m */,
 			);
-			name = PlayerView;
+			name = PlayerViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

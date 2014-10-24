@@ -14,7 +14,9 @@
 
 @optional
 - (void)continuousProgramModelDidFinish:(TPContinuousProgramModel *)continuousProgramModel;
-- (void)continuousProgramModel:(TPContinuousProgramModel *)continuousProgramModel didInsertDataAtIndexPaths:(NSArray *)indexPaths atEnd:(BOOL)atEnd;
+- (void)continuousProgramModel:(TPContinuousProgramModel *)continuousProgramModel
+     didInsertDataAtIndexPaths:(NSArray *)indexPaths
+                         atEnd:(BOOL)atEnd;
 
 @end
 
