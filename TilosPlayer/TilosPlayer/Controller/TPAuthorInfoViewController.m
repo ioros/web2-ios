@@ -19,6 +19,7 @@
 #import "TPTitleView.h"
 #import "TPCollectionViewController.h"
 #import "TPShowCollectionCell.h"
+#import "TPBackButtonHandler.h"
 
 #import "TPShowInfoViewController.h"
 
@@ -34,6 +35,7 @@
 @property (nonatomic, retain) TPCollectionViewController *collectionViewController;
 
 @property (nonatomic, retain) UIButton *backButton;
+@property (nonatomic, retain) TPBackButtonHandler *backHandler;
 
 @end
 
@@ -58,6 +60,7 @@
     [self.view addSubview:self.backButton];
     [self.backButton addTarget:self action:@selector(backAnimated) forControlEvents:UIControlEventTouchUpInside];
 
+    self.backHandler = [[TPBackButtonHandler alloc] initWithScrollView:self.webView.scrollView view:self.backButton];
     
     UIView *headerContainer = [[UIView alloc] init];
     headerContainer.backgroundColor = [UIColor whiteColor];

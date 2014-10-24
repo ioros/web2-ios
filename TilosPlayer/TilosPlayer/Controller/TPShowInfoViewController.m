@@ -15,6 +15,7 @@
 #import "TPShowInfoHeaderView.h"
 #import "TPTitleView.h"
 #import "TPSmallEpisodeCell.h"
+#import "TPBackButtonHandler.h"
 
 @interface TPShowInfoViewController ()
 
@@ -24,6 +25,7 @@
 @property (nonatomic, retain) TPCollectionViewController *collectionViewController;
 
 @property (nonatomic, retain) UIButton *backButton;
+@property (nonatomic, retain) TPBackButtonHandler *backHandler;
 
 @end
 
@@ -56,6 +58,8 @@
     self.backButton.frame = CGRectMake(0, 0, 70, 120);
     [self.view addSubview:self.backButton];
     [self.backButton addTarget:self action:@selector(backAnimated) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.backHandler = [[TPBackButtonHandler alloc] initWithScrollView:self.webView.scrollView view:self.backButton];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(80, 30);

@@ -67,6 +67,7 @@
 		A5FA37D919FA8C4000249D51 /* TPShowPlaybackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FA37D819FA8C4000249D51 /* TPShowPlaybackButton.m */; };
 		A5FA37DD19FA9F8900249D51 /* TPTapeSeekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FA37DC19FA9F8900249D51 /* TPTapeSeekViewController.m */; };
 		A5FA37E019FAA09000249D51 /* TPCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FA37DF19FAA09000249D51 /* TPCollectionView.m */; };
+		A5FA37E519FAF4F300249D51 /* TPBackButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FA37E419FAF4F300249D51 /* TPBackButtonHandler.m */; };
 		A5FEBFBA1858AF390084B4C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFB91858AF390084B4C5 /* Foundation.framework */; };
 		A5FEBFBC1858AF390084B4C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */; };
 		A5FEBFBE1858AF390084B4C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBD1858AF390084B4C5 /* UIKit.framework */; };
@@ -208,6 +209,8 @@
 		A5FA37DC19FA9F8900249D51 /* TPTapeSeekViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTapeSeekViewController.m; sourceTree = "<group>"; };
 		A5FA37DE19FAA09000249D51 /* TPCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCollectionView.h; sourceTree = "<group>"; };
 		A5FA37DF19FAA09000249D51 /* TPCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCollectionView.m; sourceTree = "<group>"; };
+		A5FA37E319FAF4F300249D51 /* TPBackButtonHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPBackButtonHandler.h; sourceTree = "<group>"; };
+		A5FA37E419FAF4F300249D51 /* TPBackButtonHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPBackButtonHandler.m; sourceTree = "<group>"; };
 		A5FEBFB61858AF390084B4C5 /* TilosPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TilosPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5FEBFB91858AF390084B4C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -572,6 +575,8 @@
 				A5FA37CA19FA589400249D51 /* TPCollectionCellFactory.h */,
 				A5FA37DE19FAA09000249D51 /* TPCollectionView.h */,
 				A5FA37DF19FAA09000249D51 /* TPCollectionView.m */,
+				A5FA37E319FAF4F300249D51 /* TPBackButtonHandler.h */,
+				A5FA37E419FAF4F300249D51 /* TPBackButtonHandler.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -752,6 +757,7 @@
 				A51B1FDE185CA5E1009FA46D /* TPShowEpisodeCell.m in Sources */,
 				A5FEC01F1858C1520084B4C5 /* TPShowInfoViewController.m in Sources */,
 				A54B4CE119F94027001B7004 /* UIImage+MultiFormat.m in Sources */,
+				A5FA37E519FAF4F300249D51 /* TPBackButtonHandler.m in Sources */,
 				A5628CB9185917F4007CA45C /* TPTapeCollectionCell.m in Sources */,
 				A54B4CE219F94027001B7004 /* UIImage+WebP.m in Sources */,
 				A54B4CDA19F94027001B7004 /* SDWebImageDecoder.m in Sources */,
