@@ -37,6 +37,7 @@ static int kCurrentEpisodeContext;
 
 #define kTapeCellTime 300 // 5 minutes
 #define kTapeCellWidth 150.0f
+#define kTapePaddingCount 35 // how many cells to generate before and after
 
 @implementation TPTapeSeekViewController
 
@@ -117,15 +118,30 @@ static int kCurrentEpisodeContext;
         
         self.tapeCollectionView.hidden = NO;
         self.redDotView.hidden = NO;
+
+        NSTimeInterval newStartTime = episode.plannedFrom.timeIntervalSince1970;
+        NSTimeInterval newEndTime = episode.plannedTo.timeIntervalSince1970;
         
-        self.startTime = episode.plannedFrom.timeIntervalSince1970;
-        self.endTime = episode.plannedTo.timeIntervalSince1970;
+        ////////////////
         
-        // 100 before, 100 after
-        self.tapeStartTime = self.startTime - kTapeCellTime * 100;
-        self.tapeCollectionRowCount = 100 + (NSInteger)((self.endTime - self.startTime) / kTapeCellTime) + 100;
+        CGFloat currentOffset = self.tapeCollectionView.contentOffset.x;
+        CGFloat convertedOffset = currentOffset + (self.startTime - newStartTime)/kTapeCellTime * kTapeCellWidth;
+
+        
+        self.startTime = newStartTime;
+        self.endTime = newEndTime;
+        
+        //NSTimeInterval oldTapeStartTime = self.tapeStartTime;
+        NSTimeInterval newTapeStartTime = self.startTime - kTapeCellTime * kTapePaddingCount;
+        
+        // add cells before and after
+        self.tapeStartTime = newTapeStartTime;
+        
+        
+        self.tapeCollectionRowCount = kTapePaddingCount + (NSInteger)((self.endTime - self.startTime) / kTapeCellTime) + kTapePaddingCount;
         [self.tapeCollectionView reloadData];
         [self updateActiveRange];
+        [self.tapeCollectionView setContentOffset:CGPointMake(convertedOffset, 0)];
         
         CGFloat offsetX = (globalTime - self.tapeStartTime)/kTapeCellTime * kTapeCellWidth - _tapeScrollAdjustment;
         

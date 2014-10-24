@@ -260,16 +260,17 @@ static int kCurrentEpisodeContext;
 - (void)continuousProgramModelDidFinish:(TPContinuousProgramModel *)continuousProgramModel
 {
     [self.collectionView reloadData];
-    //[self.tapeCollectionView reloadData];
     
     [self checkLoadMore];
     
     if(self.jumpDate)
     {
         NSIndexPath *indexPath = [self.model indexPathForDate:self.jumpDate];
-        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-        self.jumpDate = nil;
         
+        [self scrollToIndexInCollectionView:indexPath.row animated:NO];
+        [[TPPlayerManager sharedManager] cueEpisode:[self.model dataForIndexPath:indexPath]];
+        self.jumpDate = nil;
+  
 //        self.currentEpisode = [self.model dataForIndexPath:indexPath];
     }
 }
