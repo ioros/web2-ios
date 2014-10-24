@@ -33,6 +33,8 @@
 @property (nonatomic, retain) TPTitleView *titleView;
 @property (nonatomic, retain) TPCollectionViewController *collectionViewController;
 
+@property (nonatomic, retain) UIButton *backButton;
+
 @end
 
 #pragma mark -
@@ -50,6 +52,12 @@
     
     /////////////////////////////////
     
+    self.backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.backButton setImage:[UIImage imageNamed:@"BackButton.png"] forState:UIControlStateNormal];
+    self.backButton.frame = CGRectMake(0, 0, 70, 120);
+    [self.view addSubview:self.backButton];
+    [self.backButton addTarget:self action:@selector(backAnimated) forControlEvents:UIControlEventTouchUpInside];
+
     
     UIView *headerContainer = [[UIView alloc] init];
     headerContainer.backgroundColor = [UIColor whiteColor];
@@ -125,6 +133,13 @@
     self.webView.backgroundColor = [UIColor whiteColor];
     self.webView.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(topInset, 0, 0, 0);
     self.webView.scrollView.contentOffset = CGPointMake(0, -headerHeight-topInset);
+}
+
+#pragma mark -
+
+- (void)backAnimated
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - List Model Delegate
