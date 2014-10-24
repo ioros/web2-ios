@@ -44,20 +44,25 @@
 
     CGFloat headerHeight = self.headerView.bounds.size.height;
     
-    CGFloat fullHeaderHeight = headerHeight + 50;
+    CGFloat fullHeaderHeight = headerHeight + 70;
 
     
     ///////////////
     
-    UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(80, 30);
-    layout.sectionInset = UIEdgeInsetsMake(0, 10, 0, 10);
-    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    layout.sectionInset = UIEdgeInsetsMake(0, 30, 0, 30);
+    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    
+//    UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
+  //  layout.itemSize = CGSizeMake(80, 30);
+   // layout.sectionInset = UIEdgeInsetsMake(0, 10, 0, 10);
+   // layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
     TPCollectionViewController *collectionViewController = [[TPCollectionViewController alloc] initWithCellFactory:[TPSmallEpisodeCell new] layout:layout];
     collectionViewController.delegate = self;
     collectionViewController.view.backgroundColor = [UIColor clearColor];
-    collectionViewController.view.frame = CGRectMake(0, headerHeight, 320, 50);
+    collectionViewController.view.frame = CGRectMake(0, headerHeight, 320, 70);
     self.collectionViewController = collectionViewController;
     
     ////////////////

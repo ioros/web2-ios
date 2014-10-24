@@ -44,6 +44,7 @@ static NSString *cellID = @"TPSmallEpisodeCell";
         UILabel *label = [[UILabel alloc] initWithFrame:self.bounds];
         label.text = @"test";
         label.font = kDescFont;
+        label.textAlignment = NSTextAlignmentCenter;
         label.frame = self.contentView.bounds;
         label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.contentView addSubview:label];

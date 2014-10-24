@@ -49,12 +49,12 @@
     
     CGRect b = self.bounds;
     CGFloat w = b.size.width;
-    CGFloat imageWidth = 200;
+    CGFloat imageWidth = b.size.width - 140;
     CGFloat imageHeight = floorf(imageWidth/ 210.0f * 60.f);
     
-    self.imageView.frame = CGRectMake((w-imageWidth)/2.0f, 10, imageWidth, imageHeight);
+    self.imageView.frame = CGRectMake((w-imageWidth)/2.0f, 35, imageWidth, imageHeight);
     
-    CGFloat offset = imageHeight + 15;
+    CGFloat offset = 35 + imageHeight + 20;
     
     CGSize s = [self.textLabel sizeThatFits:CGSizeMake(w-20, 200)];
     self.textLabel.frame = CGRectMake(10, offset, w-20, s.height);
@@ -67,14 +67,15 @@
 {
     CGRect frame = self.frame;
 
+    CGRect b = self.bounds;
     CGFloat w = frame.size.width;
-    CGFloat imageWidth = 200;
+    CGFloat imageWidth = b.size.width - 140;
     CGFloat imageHeight = floorf(imageWidth/ 210.0f * 60.f);
 
     CGSize titleSize = [self.textLabel sizeThatFits:CGSizeMake(w-20, 200)];
     CGSize detailSize = [self.detailTextView sizeThatFits:CGSizeMake(w-20, 1000)];
 
-    CGFloat h = 10 + imageHeight + 5 + titleSize.height + detailSize.height + 5;
+    CGFloat h = 35 + imageHeight + 20 + titleSize.height + detailSize.height + 5;
     
     self.frame = CGRectMake(frame.origin.x, frame.origin.y, w, h);
 }
