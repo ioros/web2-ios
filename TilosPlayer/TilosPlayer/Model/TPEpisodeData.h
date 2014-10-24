@@ -10,6 +10,12 @@
 
 #import "TPData.h"
 
+typedef enum {
+    TPEpisodeDataStatePast,
+    TPEpisodeDataStateLive,
+    TPEpisodeDataStateUpcoming
+} TPEpisodeDataState;
+
 @class TPShowData;
 
 @interface TPEpisodeData : TPData;
@@ -30,6 +36,6 @@
 
 @property (nonatomic, readonly) NSUInteger duration;
 
-- (BOOL)isRunningEpisode;
+@property (nonatomic, readonly) TPEpisodeDataState currentState;
 
 @end

@@ -31,14 +31,13 @@
 
 // small playback with banner
 @property (nonatomic, retain) TPShowPlaybackButton *playbackButton;
+@property (nonatomic, retain) UIButton *liveButton;
 @property (nonatomic, retain) UIButton *logoButton;
 @property (nonatomic, retain) TPPlayButton *playButton;
 
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, assign) TPScrollState collectionState;
 @property (nonatomic, assign) NSInteger collectionDragStartIndex;
-
-@property (nonatomic, retain) TPEpisodeData *currentEpisode;
 
 // we jump here after the load has been completed
 @property (nonatomic, retain) NSDate *jumpDate;
@@ -53,6 +52,7 @@
 
 static int kPlayingContext;
 static int kPlayerLoadingContext;
+static int kCurrentEpisodeContext;
 
 #pragma mark -
 
@@ -100,14 +100,14 @@ static int kPlayerLoadingContext;
     
     [self addChildViewController:self.tapeSeekViewController];
     
-    /*
     UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
     [b setBackgroundImage:[[UIImage imageNamed:@"RoundButton.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateNormal];
     [b setTitle:[NSLocalizedString(@"Live", nil) uppercaseString] forState:UIControlStateNormal];
-    b.frame = CGRectMake(10, 28, 100, 26);
-    [b.titleLabel setFont:kDescFont];
+    [b.titleLabel setFont:kSubFont];
+    b.frame = CGRectMake(0, 0, 40, 20);
+    b.center = CGPointMake(160, 145);
     [topView addSubview:b];
-     */
+    self.liveButton = b;
     
     TPShowPlaybackButton *playbackButton = [[TPShowPlaybackButton alloc] initWithFrame:CGRectMake(200, 30, 100, 24)];
     [topView addSubview:playbackButton];
@@ -179,6 +179,7 @@ static int kPlayerLoadingContext;
     
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"playing" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:&kPlayingContext];
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"playerLoading" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:&kPlayerLoadingContext];
+    [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"currentEpisode" options:NSKeyValueObservingOptionNew context:&kCurrentEpisodeContext];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -212,6 +213,27 @@ static int kPlayerLoadingContext;
     else if(context == &kPlayerLoadingContext)
     {
         [self.playButton setLoading:[[TPPlayerManager sharedManager] playerLoading]];
+    }
+    else if(context == &kCurrentEpisodeContext)
+    {
+        NSLog(@"episode changed");
+        TPEpisodeData *currentEpisode = [[TPPlayerManager sharedManager] currentEpisode];
+        
+        TPEpisodeDataState currentState = [currentEpisode currentState];
+        switch (currentState) {
+            case TPEpisodeDataStatePast:
+                self.tapeSeekViewController.view.hidden = NO;
+                self.liveButton.hidden = YES;
+                break;
+            case TPEpisodeDataStateLive:
+                self.liveButton.hidden = NO;
+                self.tapeSeekViewController.view.hidden = YES;
+                break;
+            case TPEpisodeDataStateUpcoming:
+                self.liveButton.hidden = YES;
+                self.tapeSeekViewController.view.hidden = YES;
+                break;
+        }
     }
 }
 
@@ -248,7 +270,7 @@ static int kPlayerLoadingContext;
         [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
         self.jumpDate = nil;
         
-        self.currentEpisode = [self.model dataForIndexPath:indexPath];
+//        self.currentEpisode = [self.model dataForIndexPath:indexPath];
     }
 }
 - (void)continuousProgramModel:(TPContinuousProgramModel *)continuousProgramModel didInsertDataAtIndexPaths:(NSArray *)indexPaths atEnd:(BOOL)atEnd
@@ -291,7 +313,6 @@ static int kPlayerLoadingContext;
 
 - (void)jumpToDate:(NSDate *)date
 {
-    self.currentEpisode = nil;
     self.jumpDate = date;
     [self.model jumpToDate:date];
 }
@@ -329,9 +350,11 @@ static int kPlayerLoadingContext;
     }
     else
     {
-        if(self.currentEpisode)
+        NSInteger index = [self selectedIndexInCollectionView];
+        TPEpisodeData *episode = [self.model dataForIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+        if(episode)
         {
-            [[TPPlayerManager sharedManager] playEpisode:self.currentEpisode];
+            [[TPPlayerManager sharedManager] playEpisode:episode];
         }
     }
 }
@@ -525,10 +548,8 @@ static int kPlayerLoadingContext;
     if(index == _collectionDragStartIndex) return;
     
     TPEpisodeData *episode = [self.model dataForRow:index section:0];
-    self.currentEpisode = episode;
-    
-    
-    self.playbackButton.imageURL = self.currentEpisode.bannerURL;
+
+    self.playbackButton.imageURL = episode.bannerURL;
     
     [[TPPlayerManager sharedManager] cueEpisode:episode];
     

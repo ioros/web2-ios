@@ -68,10 +68,16 @@
     return [self.plannedFrom dayDate];
 }
 
-- (BOOL)isRunningEpisode
+- (TPEpisodeDataState)currentState
 {
     NSDate *now = [NSDate date];
-    return (now.timeIntervalSince1970 >= self.plannedFrom.timeIntervalSince1970 && now.timeIntervalSince1970 < self.plannedTo.timeIntervalSince1970);
+    BOOL isPast = now.timeIntervalSince1970 > self.plannedTo.timeIntervalSince1970;
+    if(isPast) return TPEpisodeDataStatePast;
+    
+    BOOL isUpcoming = now.timeIntervalSince1970 < self.plannedFrom.timeIntervalSince1970;
+    if(isUpcoming) return TPEpisodeDataStateUpcoming;
+    
+    return TPEpisodeDataStateLive;
 }
 
 - (NSUInteger)duration

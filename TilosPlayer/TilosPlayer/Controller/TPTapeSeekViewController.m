@@ -32,7 +32,6 @@ static int kCurrentEpisodeContext;
 @property (nonatomic, assign) NSTimeInterval endTime;
 
 @property (nonatomic, retain) UIView *redDotView;
-@property (nonatomic, assign) BOOL redDotVisible;
 
 @end
 
@@ -75,25 +74,6 @@ static int kCurrentEpisodeContext;
     imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:imageView];
     self.redDotView = imageView;
-    
-    // init red dot
-    self.redDotView.alpha = 0.0f;
-    self.redDotVisible = NO;
-    
-    /*
-    ///////// setup initial value
-    NSDate *now = [NSDate date];
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit fromDate:now];
-    NSDate *pastDate = [[NSCalendar currentCalendar] dateFromComponents:components];
-    pastDate = [pastDate dateByAddingTimeInterval: -4 * 3600 * 24]; // 4 days back
-    self.tapeStartTime = [pastDate timeIntervalSince1970];
-    
-    NSTimeInterval difference = [now timeIntervalSinceDate:pastDate];
-    self.tapeCollectionRowCount = floorf( difference / (5 * 60) );
-    
-    [self.tapeCollectionView reloadData];
-    [self.tapeCollectionView setContentOffset:CGPointMake(self.tapeCollectionRowCount * kTapeCellWidth, 0)];
-     */
 }
 
 - (void)viewDidLoad
@@ -135,33 +115,25 @@ static int kCurrentEpisodeContext;
         TPEpisodeData *episode = [[TPPlayerManager sharedManager] currentEpisode];
         NSTimeInterval globalTime = [[TPPlayerManager sharedManager] globalTime];
         
-        if([episode isRunningEpisode])
+        self.tapeCollectionView.hidden = NO;
+        self.redDotView.hidden = NO;
+        
+        self.startTime = episode.plannedFrom.timeIntervalSince1970;
+        self.endTime = episode.plannedTo.timeIntervalSince1970;
+        
+        // 100 before, 100 after
+        self.tapeStartTime = self.startTime - kTapeCellTime * 100;
+        self.tapeCollectionRowCount = 100 + (NSInteger)((self.endTime - self.startTime) / kTapeCellTime) + 100;
+        [self.tapeCollectionView reloadData];
+        [self updateActiveRange];
+        
+        CGFloat offsetX = (globalTime - self.tapeStartTime)/kTapeCellTime * kTapeCellWidth - _tapeScrollAdjustment;
+        
+        CGFloat diff = ABS(self.tapeCollectionView.contentOffset.x - offsetX);
+        if(diff>2)
         {
-            self.tapeCollectionView.hidden = YES;
-            self.redDotView.hidden = YES;
-        }
-        else
-        {
-            self.tapeCollectionView.hidden = NO;
-            self.redDotView.hidden = NO;
-            
-            self.startTime = episode.plannedFrom.timeIntervalSince1970;
-            self.endTime = episode.plannedTo.timeIntervalSince1970;
-            
-            // 100 before, 100 after
-            self.tapeStartTime = self.startTime - kTapeCellTime * 100;
-            self.tapeCollectionRowCount = 100 + (NSInteger)((self.endTime - self.startTime) / kTapeCellTime) + 100;
-            [self.tapeCollectionView reloadData];
-            [self updateActiveRange];
-
-            CGFloat offsetX = (globalTime - self.tapeStartTime)/kTapeCellTime * kTapeCellWidth - _tapeScrollAdjustment;
-
-            CGFloat diff = ABS(self.tapeCollectionView.contentOffset.x - offsetX);
-            if(diff>2)
-            {
-                self.tapeCollectionState = TPScrollStateAnimating;
-                [self.tapeCollectionView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
-            }
+            self.tapeCollectionState = TPScrollStateAnimating;
+            [self.tapeCollectionView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
         }
     }
 }
@@ -193,7 +165,6 @@ static int kCurrentEpisodeContext;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self updateRedDot];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -225,26 +196,6 @@ static int kCurrentEpisodeContext;
 
     NSTimeInterval seconds = time - currentEpisode.plannedFrom.timeIntervalSince1970;
     [[TPPlayerManager sharedManager] playEpisode:currentEpisode atSeconds:seconds];
-}
-
-#pragma mark -
-
-- (void)updateRedDot
-{
-    CGFloat offsetX = self.tapeCollectionView.contentOffset.x;
-    CGFloat contentWidth = self.tapeCollectionRowCount * kTapeCellWidth;
-    
-    CGFloat diff = contentWidth - offsetX;
-    BOOL shouldRedDotBeVisible = diff > 310;
-    
-    if(shouldRedDotBeVisible != self.redDotVisible)
-    {
-        self.redDotVisible = shouldRedDotBeVisible;
-        
-        [UIView animateWithDuration:0.3 animations:^{
-            self.redDotView.alpha = shouldRedDotBeVisible ? 1.0f : 0.0f;
-        }];
-    }
 }
 
 #pragma mark - DataSource
