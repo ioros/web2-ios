@@ -59,8 +59,11 @@
 		A5FA37BB19F9921500249D51 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37B419F9921500249D51 /* InfoPlist.strings */; };
 		A5FA37BC19F9921500249D51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37B619F9921500249D51 /* Localizable.strings */; };
 		A5FA37BD19F9921500249D51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37B919F9921500249D51 /* Localizable.strings */; };
-		A5FA37C119F9BD0000249D51 /* showinfo.css in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37BF19F9BD0000249D51 /* showinfo.css */; };
 		A5FA37C519F9BE9000249D51 /* showinfo.html in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37C319F9BE9000249D51 /* showinfo.html */; };
+		A5FA37C919FA572900249D51 /* TPCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FA37C819FA572900249D51 /* TPCollectionViewController.m */; };
+		A5FA37CF19FA597700249D51 /* TPSmallEpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FA37CE19FA597700249D51 /* TPSmallEpisodeCell.m */; };
+		A5FA37D219FA63AD00249D51 /* authorinfo.html in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37D019FA63AD00249D51 /* authorinfo.html */; };
+		A5FA37D619FA667900249D51 /* TPShowCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FA37D519FA667900249D51 /* TPShowCollectionCell.m */; };
 		A5FEBFBA1858AF390084B4C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFB91858AF390084B4C5 /* Foundation.framework */; };
 		A5FEBFBC1858AF390084B4C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */; };
 		A5FEBFBE1858AF390084B4C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBD1858AF390084B4C5 /* UIKit.framework */; };
@@ -187,8 +190,15 @@
 		A5FA37B519F9921500249D51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		A5FA37B719F9921500249D51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		A5FA37BA19F9921500249D51 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = Localizable.strings; sourceTree = "<group>"; };
-		A5FA37BF19F9BD0000249D51 /* showinfo.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = showinfo.css; sourceTree = "<group>"; };
 		A5FA37C319F9BE9000249D51 /* showinfo.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = showinfo.html; sourceTree = "<group>"; };
+		A5FA37C719FA572900249D51 /* TPCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCollectionViewController.h; sourceTree = "<group>"; };
+		A5FA37C819FA572900249D51 /* TPCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCollectionViewController.m; sourceTree = "<group>"; };
+		A5FA37CA19FA589400249D51 /* TPCollectionCellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCollectionCellFactory.h; sourceTree = "<group>"; };
+		A5FA37CD19FA597700249D51 /* TPSmallEpisodeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPSmallEpisodeCell.h; sourceTree = "<group>"; };
+		A5FA37CE19FA597700249D51 /* TPSmallEpisodeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPSmallEpisodeCell.m; sourceTree = "<group>"; };
+		A5FA37D019FA63AD00249D51 /* authorinfo.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = authorinfo.html; sourceTree = "<group>"; };
+		A5FA37D419FA667900249D51 /* TPShowCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPShowCollectionCell.h; sourceTree = "<group>"; };
+		A5FA37D519FA667900249D51 /* TPShowCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPShowCollectionCell.m; sourceTree = "<group>"; };
 		A5FEBFB61858AF390084B4C5 /* TilosPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TilosPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5FEBFB91858AF390084B4C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -333,8 +343,8 @@
 		A5FA37BE19F9BCDC00249D51 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A5FA37BF19F9BD0000249D51 /* showinfo.css */,
 				A5FA37C319F9BE9000249D51 /* showinfo.html */,
+				A5FA37D019FA63AD00249D51 /* authorinfo.html */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -413,6 +423,8 @@
 				A5FEC0181858C1260084B4C5 /* ShowList */,
 				A5FEC0171858C11C0084B4C5 /* AuthorList */,
 				A5FEC031185909CE0084B4C5 /* EpisodeList */,
+				A5FA37C719FA572900249D51 /* TPCollectionViewController.h */,
+				A5FA37C819FA572900249D51 /* TPCollectionViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -483,6 +495,10 @@
 				A560DEF019F27EE60038A48E /* TPPlayButton.m */,
 				A54B4CB119F936C7001B7004 /* TPTitleView.h */,
 				A54B4CB219F936C7001B7004 /* TPTitleView.m */,
+				A5FA37CD19FA597700249D51 /* TPSmallEpisodeCell.h */,
+				A5FA37CE19FA597700249D51 /* TPSmallEpisodeCell.m */,
+				A5FA37D419FA667900249D51 /* TPShowCollectionCell.h */,
+				A5FA37D519FA667900249D51 /* TPShowCollectionCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -516,6 +532,7 @@
 				A5DD1003185A1C02009D1A1A /* TPAudioPlayer.m */,
 				A5DD1023185A9725009D1A1A /* NSDate+TPAdditions.h */,
 				A5DD1024185A9725009D1A1A /* NSDate+TPAdditions.m */,
+				A5FA37CA19FA589400249D51 /* TPCollectionCellFactory.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -639,8 +656,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5FA37D219FA63AD00249D51 /* authorinfo.html in Resources */,
 				A5FA37C519F9BE9000249D51 /* showinfo.html in Resources */,
-				A5FA37C119F9BD0000249D51 /* showinfo.css in Resources */,
 				A5FA37BC19F9921500249D51 /* Localizable.strings in Resources */,
 				A5FA37BD19F9921500249D51 /* Localizable.strings in Resources */,
 				A5FEBFD81858AF390084B4C5 /* Images.xcassets in Resources */,
@@ -710,10 +727,12 @@
 				A54B4CE319F94027001B7004 /* UIImageView+HighlightedWebCache.m in Sources */,
 				A5FEC02D1858DDC60084B4C5 /* TPPlayerViewController.m in Sources */,
 				A5FEBFFC1858B2940084B4C5 /* TPShowListViewController.m in Sources */,
+				A5FA37CF19FA597700249D51 /* TPSmallEpisodeCell.m in Sources */,
 				A51B1FDB185BA678009FA46D /* TPPlayerManager.m in Sources */,
 				A5FEC0031858B2C40084B4C5 /* TPListModel.m in Sources */,
 				A54B4CDB19F94027001B7004 /* SDWebImageDownloader.m in Sources */,
 				A54B4CDF19F94027001B7004 /* UIButton+WebCache.m in Sources */,
+				A5FA37C919FA572900249D51 /* TPCollectionViewController.m in Sources */,
 				A5DD1004185A1C02009D1A1A /* TPAudioPlayer.m in Sources */,
 				A51B1FE1185CAE80009FA46D /* TPTimestampView.m in Sources */,
 				A5FEC02A1858C9F20084B4C5 /* TPEpisodeListCell.m in Sources */,
@@ -749,6 +768,7 @@
 				A5FEC0061858B4540084B4C5 /* TPTableViewController.m in Sources */,
 				A5FEC0271858C3BC0084B4C5 /* TPEpisodeListModel.m in Sources */,
 				A54B4CE019F94027001B7004 /* UIImage+GIF.m in Sources */,
+				A5FA37D619FA667900249D51 /* TPShowCollectionCell.m in Sources */,
 				A5DD1019185A7F4B009D1A1A /* TPShowInfoHeaderView.m in Sources */,
 				A5DD0FFB1859FE42009D1A1A /* TPTapeCollectionLayout.m in Sources */,
 			);
