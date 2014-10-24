@@ -21,6 +21,7 @@
 
 #import "TPEpisodeData.h"
 #import "TPPlayButton.h"
+#import "TPShowPlaybackButton.h"
 
 
 typedef enum {
@@ -32,6 +33,8 @@ typedef enum {
 @interface TPPlayerViewController ()
 
 @property (nonatomic, assign) BOOL opened;
+
+@property (nonatomic, retain) TPShowPlaybackButton *playbackButton;
 
 @property (nonatomic, assign) NSTimeInterval tapeStartTime;
 @property (nonatomic, assign) NSInteger tapeCollectionRowCount;
@@ -89,6 +92,8 @@ static int kPlayerLoadingContext;
     v.clipsToBounds = YES;
     v.backgroundColor = [UIColor clearColor];
     self.view = v;
+
+    /////////////////////////////
     
     UIView *fadeView = [[UIView alloc] initWithFrame:CGRectMake(0, 110, 320, 340)];
     fadeView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
@@ -101,6 +106,22 @@ static int kPlayerLoadingContext;
     topView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
     self.topView = topView;
     
+    /*
+    UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
+    [b setBackgroundImage:[[UIImage imageNamed:@"RoundButton.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateNormal];
+    [b setTitle:[NSLocalizedString(@"Live", nil) uppercaseString] forState:UIControlStateNormal];
+    b.frame = CGRectMake(10, 28, 100, 26);
+    [b.titleLabel setFont:kDescFont];
+    [topView addSubview:b];
+     */
+    
+    TPShowPlaybackButton *playbackButton = [[TPShowPlaybackButton alloc] initWithFrame:CGRectMake(200, 30, 100, 24)];
+    [topView addSubview:playbackButton];
+    self.playbackButton = playbackButton;
+    [playbackButton addTarget:self action:@selector(openHandler) forControlEvents:UIControlEventTouchUpInside];
+    [playbackButton.button addTarget:self action:@selector(togglePlay:) forControlEvents:UIControlEventTouchUpInside];
+
+
 
     UIView *middleView = [[UIView alloc] initWithFrame:CGRectMake(0, 170, 320, 230)];
     middleView.backgroundColor = [UIColor clearColor];
@@ -131,6 +152,9 @@ static int kPlayerLoadingContext;
     [self.tapeCollectionView registerClass:[TPTapeCollectionCell class] forCellWithReuseIdentifier:@"TapeCollectionCell"];
     [self.tapeCollectionView registerClass:[TPTapeCollectionLiveCell class] forCellWithReuseIdentifier:@"TapeCollectionLiveCell"];
     [self.topView addSubview:self.tapeCollectionView];
+    
+    
+    //////////// red dot
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedDot.png"]];
     imageView.center = CGPointMake(160, 125 + 22);
@@ -257,6 +281,8 @@ static int kPlayerLoadingContext;
 {
     self.playButton.playing = [[TPPlayerManager sharedManager] playing];
     self.playButton.loading = [[TPPlayerManager sharedManager] playerLoading];
+    
+    self.playbackButton.playing = [[TPPlayerManager sharedManager] playing];
 }
 
 - (void)updateAmbience
@@ -393,6 +419,17 @@ static int kPlayerLoadingContext;
     }
 }
 
+- (void)openHandler
+{
+    [self doOpen:YES];
+}
+
+- (void)openAnimated:(BOOL)animated
+{
+    if(_opened) return;
+    
+    [self doOpen:animated];
+}
 - (void)closeAnimated:(BOOL)animated
 {
     if(!_opened) return;
@@ -414,6 +451,9 @@ static int kPlayerLoadingContext;
     CGRect backgroundTargetRect = CGRectMake(0, 0, 320, 64);
 
     _opened = NO;
+
+    self.tapeCollectionView.hidden = YES;
+    self.playbackButton.hidden = NO;
 
     if(animated)
     {
@@ -450,12 +490,6 @@ static int kPlayerLoadingContext;
         }
     }
 }
-- (void)openAnimated:(BOOL)animated
-{
-    if(_opened) return;
-    
-    [self doOpen:animated];
-}
 - (void)doOpen:(BOOL)animated
 {
     if([_delegate respondsToSelector:@selector(playerViewControllerWillOpen:)])
@@ -471,6 +505,10 @@ static int kPlayerLoadingContext;
     CGRect backgroundTargetRect = CGRectMake(0, 0, 320, self.view.bounds.size.height);
 
     _opened = YES;
+    
+    self.tapeCollectionView.hidden = NO;
+    self.playbackButton.hidden = YES;
+
 
     if(animated)
     {
@@ -485,7 +523,6 @@ static int kPlayerLoadingContext;
                              self.logoButton.frame = logoButtonTargetRect;
                              self.playButton.frame = playButtonTargetRect;
                              self.backgroundView.frame = backgroundTargetRect;
-
 
         } completion:nil];
     }
@@ -613,6 +650,9 @@ static int kPlayerLoadingContext;
     
     TPEpisodeData *episode = [self.model dataForRow:index section:0];
     self.currentEpisode = episode;
+    
+    
+    self.playbackButton.imageURL = self.currentEpisode.bannerURL;
 
     if([episode isRunningEpisode])
     {
@@ -694,7 +734,7 @@ static int kPlayerLoadingContext;
     }
     else
     {
-        NSDate *date = [NSDate new];
+        //NSDate *date = [NSDate new];
         //NSTimeInterval timeDifference = date.timeIntervalSince1970 - self.tapeStartTime;
         
         BOOL isEnd = (indexPath.row == self.tapeCollectionRowCount-1);

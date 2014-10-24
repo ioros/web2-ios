@@ -19,6 +19,9 @@
 {
     [super viewDidLoad];
     
+    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    
     self.title = @"";
     
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"All", nil), NSLocalizedString(@"Music", nil), NSLocalizedString(@"Talk", nil)]];

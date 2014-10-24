@@ -22,8 +22,8 @@
 {
     [super viewDidLoad];
     
-    // fake the title with a uilabel
-    // this way we can get only the chevron for the back button
+    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 260, 30)];
     label.font = kTitleFont;

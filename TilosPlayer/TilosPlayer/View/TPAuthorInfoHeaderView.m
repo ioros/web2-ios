@@ -43,7 +43,7 @@
     CGRect b = self.bounds;
     CGFloat w = b.size.width;
     
-    self.imageView.center = CGPointMake(w/2, 50);
+    self.imageView.center = CGPointMake(w/2, 60);
     
     CGFloat offset = 100;
     self.detailTextView.frame = CGRectMake(10, offset, w-20, b.size.height - offset);
