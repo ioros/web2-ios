@@ -28,12 +28,6 @@
 
 @interface TPPlayerViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, TPContinuousProgramModelDelegate>
 
-@property (nonatomic, retain) IBOutlet UICollectionView *collectionView;
-@property (nonatomic, retain) IBOutlet UICollectionView *tapeCollectionView;
-
-@property (nonatomic, retain) UIButton *logoButton;
-@property (nonatomic, retain) TPPlayButton *playButton;
-
 @property (nonatomic, retain) UIView *topView;
 @property (nonatomic, retain) UIView *middleView;
 @property (nonatomic, retain) UIImageView *backgroundView;

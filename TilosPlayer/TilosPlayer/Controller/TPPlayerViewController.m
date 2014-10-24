@@ -34,25 +34,28 @@ typedef enum {
 
 @property (nonatomic, assign) BOOL opened;
 
+// small playback with banner
 @property (nonatomic, retain) TPShowPlaybackButton *playbackButton;
-
-@property (nonatomic, assign) NSTimeInterval tapeStartTime;
-@property (nonatomic, assign) NSInteger tapeCollectionRowCount;
-
-@property (nonatomic, assign) TPScrollState tapeCollectionState;
-@property (nonatomic, assign) TPScrollState collectionState;
-
-@property (nonatomic, retain) TPEpisodeData *currentEpisode;
+@property (nonatomic, retain) UIButton *logoButton;
+@property (nonatomic, retain) TPPlayButton *playButton;
 
 @property (nonatomic, retain) UIView *redDotView;
 @property (nonatomic, assign) BOOL redDotVisible;
 
+@property (nonatomic, retain) UICollectionView *tapeCollectionView;
+@property (nonatomic, assign) CGFloat tapeScrollAdjustment;
+@property (nonatomic, assign) NSTimeInterval tapeStartTime;
+@property (nonatomic, assign) NSInteger tapeCollectionRowCount;
+@property (nonatomic, assign) TPScrollState tapeCollectionState;
+
+@property (nonatomic, retain) UICollectionView *collectionView;
+@property (nonatomic, assign) TPScrollState collectionState;
 @property (nonatomic, assign) NSInteger collectionDragStartIndex;
+
+@property (nonatomic, retain) TPEpisodeData *currentEpisode;
 
 // we jump here after the load has been completed
 @property (nonatomic, retain) NSDate *jumpDate;
-
-@property (nonatomic, assign) CGFloat tapeScrollAdjustment;
 
 @end
 
