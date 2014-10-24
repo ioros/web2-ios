@@ -16,27 +16,19 @@
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         
-        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
         self.imageView.backgroundColor = [UIColor lightGrayColor];
-        self.imageView.layer.cornerRadius = 50.0f;
+        self.imageView.layer.cornerRadius = 40.0f;
         self.imageView.clipsToBounds = YES;
         [self addSubview:self.imageView];
         
         self.detailTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
         self.detailTextView.textAlignment = NSTextAlignmentCenter;
-        self.detailTextView.font = kDescFont;
+        self.detailTextView.font = kTitleFont;
         self.detailTextView.contentInset = UIEdgeInsetsZero;
         self.detailTextView.editable = NO;
         self.detailTextView.backgroundColor = [UIColor clearColor];
         [self addSubview:self.detailTextView];
-        
-        self.segmentedControl = [[UISegmentedControl alloc] initWithItems:items];
-        CGSize s = [self.segmentedControl sizeThatFits:CGSizeMake(200, 30)];
-        self.segmentedControl.frame = CGRectMake(0, 0, MAX(200,s.width), s.height);
-        
-        [self addSubview:self.segmentedControl];
-        
-        [self.segmentedControl setSelectedSegmentIndex:1];
         
         self.backgroundColor = [UIColor whiteColor];
         
@@ -51,12 +43,10 @@
     CGRect b = self.bounds;
     CGFloat w = b.size.width;
     
-    self.imageView.frame = CGRectMake(w/2 - 50, 10, 100, 100);
+    self.imageView.center = CGPointMake(w/2, 50);
     
-    CGFloat offset = 120;
+    CGFloat offset = 100;
     self.detailTextView.frame = CGRectMake(10, offset, w-20, b.size.height - offset);
-    
-    self.segmentedControl.center = CGPointMake(w/2, b.size.height - 17);
 }
 
 - (void)sizeToFit
@@ -68,7 +58,7 @@
     
     CGSize s = [self.detailTextView sizeThatFits:CGSizeMake(w-20, 1000)];
     
-    CGFloat h = 10 + imageHeight + 10 + s.height + 35;
+    CGFloat h = 10 + imageHeight + 10 + s.height + 5;
     
     self.frame = CGRectMake(frame.origin.x, frame.origin.y, w, h);
 }

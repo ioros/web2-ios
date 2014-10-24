@@ -69,11 +69,17 @@
     
     if(author.introduction)
     {
-        self.htmlString = [NSString stringWithFormat:@"<html><head></head><body style=\"padding:15px; margin:0px;\"><div id = \"content\" style=\"font-family:Avenir-Light; font-size:15px\">%@</div></body></html>", author.introduction];
+        NSString *file = [[NSBundle mainBundle] pathForResource:@"authorinfo" ofType:@"html"];
+        NSString *html = [NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil];
+        
+        if(html)
+        {
+            self.htmlString = [NSString stringWithFormat:html, author.introduction];
+        }
     }
     else
     {
-        self.htmlString = nil;
+        self.htmlString = @"";
     }
     
 }

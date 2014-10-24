@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TPTableViewController.h"
+#import "TPListModel.h"
+#import "TPCollectionViewController.h"
 
 @class TPAuthorInfoModel;
 @class TPAuthorData;
 
-@interface TPAuthorInfoViewController : TPTableViewController <UIWebViewDelegate>
+@interface TPAuthorInfoViewController : UIViewController <UIWebViewDelegate, TPListModelDelegate, TPCollectionViewControllerDelegate>
 
 @property (nonatomic, strong) TPAuthorData *data;
+@property (nonatomic, retain) TPListModel *model;
 
 @end

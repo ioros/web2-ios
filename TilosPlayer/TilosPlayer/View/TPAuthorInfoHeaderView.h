@@ -13,8 +13,6 @@
 @property (nonatomic, retain) UIImageView *imageView;
 @property (nonatomic, retain) UITextView *detailTextView;
 
-@property (nonatomic, retain) UISegmentedControl *segmentedControl;
-
 - (instancetype)initWithFrame:(CGRect)frame items:(NSArray *)items;
 
 @end

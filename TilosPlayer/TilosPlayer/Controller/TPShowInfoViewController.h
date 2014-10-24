@@ -7,14 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TPTableViewController.h"
 
+#import "TPListModel.h"
 
 @class TPEpisodeData;
 @class TPShowData;
 
-@interface TPShowInfoViewController : TPTableViewController <UIWebViewDelegate>
+@interface TPShowInfoViewController : UIViewController <TPListModelDelegate, UIWebViewDelegate>
 
 @property (nonatomic, retain) TPShowData *data;
+@property (nonatomic, retain) TPListModel *model;
 
 @end

@@ -14,20 +14,15 @@
 #import "TPShowData.h"
 #import "TPShowInfoHeaderView.h"
 #import "TPTitleView.h"
-
-
-typedef enum {
-    TPShowInfoViewTypeInfo,
-    TPShowInfoViewTypeEpisodes
-} TPShowInfoViewType;
-
+#import "TPCollectionViewController.h"
+#import "TPSmallEpisodeCell.h"
 
 @interface TPShowInfoViewController ()
 
 @property (nonatomic, retain) TPShowInfoHeaderView *headerView;
 @property (nonatomic, retain) UIWebView *webView;
 @property (nonatomic, retain) TPTitleView *titleView;
-@property (nonatomic, assign) TPShowInfoViewType currentType;
+@property (nonatomic, retain) TPCollectionViewController *collectionViewController;
 
 @end
 
@@ -35,17 +30,49 @@ typedef enum {
 
 @implementation TPShowInfoViewController
 
-- (void)viewDidLoad
+- (void)loadView
 {
-    [super viewDidLoad];
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 180, 320.0, 480.0)];
+    self.webView.delegate = self;
+    self.webView.backgroundColor = [UIColor whiteColor];
+    
+    self.view = self.webView;
 
     self.headerView = [[TPShowInfoHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
-    self.headerView = [[TPShowInfoHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 200) items:@[NSLocalizedString(@"ShowInfo", nil), NSLocalizedString(@"ShowEpisodes", nil)]];
-    self.tableView.tableHeaderView = self.headerView;
-    [_headerView.segmentedControl addTarget:self action:@selector(headerViewSegmentChanged:) forControlEvents:UIControlEventValueChanged];
-    [_headerView.segmentedControl setSelectedSegmentIndex:0];
     self.headerView.detailTextView.text = self.data.definition;
+    self.headerView.textLabel.text = self.data.name;
     [self.headerView sizeToFit];
+
+    CGFloat headerHeight = self.headerView.bounds.size.height;
+    
+    CGFloat fullHeaderHeight = headerHeight + 50;
+
+    
+    ///////////////
+    
+    UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
+    layout.itemSize = CGSizeMake(80, 30);
+    layout.sectionInset = UIEdgeInsetsMake(0, 10, 0, 10);
+    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    
+    TPCollectionViewController *collectionViewController = [[TPCollectionViewController alloc] initWithCellFactory:[TPSmallEpisodeCell new] layout:layout];
+    collectionViewController.view.backgroundColor = [UIColor clearColor];
+    collectionViewController.view.frame = CGRectMake(0, headerHeight, 320, 50);
+    self.collectionViewController = collectionViewController;
+    
+    ////////////////
+    
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
+    header.frame = CGRectMake(0, -fullHeaderHeight, 320, fullHeaderHeight);
+    [header addSubview:self.headerView];
+    [header addSubview:collectionViewController.view];
+    
+    [self addChildViewController:collectionViewController];
+
+    [self.webView.scrollView addSubview:header];
+    self.webView.scrollView.contentInset = UIEdgeInsetsMake(fullHeaderHeight, 0, 0, 0);
+    self.webView.scrollView.contentOffset = CGPointMake(0, -fullHeaderHeight);
+    
     
     TPTitleView *titleView = [[TPTitleView alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
     self.titleView = titleView;
@@ -53,17 +80,6 @@ typedef enum {
     self.titleView.text = self.data.name;
     [self.titleView sizeToFit];
     self.navigationItem.titleView = self.titleView;
-    
-    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 180, 320.0, 1.0)];
-    self.webView.delegate = self;
-    self.webView.backgroundColor = [UIColor whiteColor];
-    
-    // setup the tab
-    NSInteger selectedIndex = 0;
-    NSNumber *tabIndex = [[NSUserDefaults standardUserDefaults] objectForKey:@"showInfoPreferredTabIndex"];
-    if(tabIndex) selectedIndex = tabIndex.integerValue;
-    [self.headerView.segmentedControl setSelectedSegmentIndex:selectedIndex];
-    [self updateView:selectedIndex == 0 ? TPShowInfoViewTypeInfo : TPShowInfoViewTypeEpisodes];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -77,10 +93,21 @@ typedef enum {
     }
 }
 
+#pragma mark -
+
+- (void)setModel:(TPListModel *)model
+{
+    _model.delegate = nil;
+    _model = model;
+    _model.delegate = self;
+    if(self.isViewLoaded)
+    {
+        [self.model loadForced:NO];
+    }
+}
+
 - (void)listModelDidFinish:(TPListModel *)listModel
 {
-    [super listModelDidFinish:listModel];
-
     TPShowInfoModel *model = (TPShowInfoModel *)self.model;
     
     NSString *url = model.show.bannerURL;
@@ -96,56 +123,9 @@ typedef enum {
     {
         [self.webView loadHTMLString:model.htmlString baseURL:[NSURL URLWithString:@"http://tilos.hu/"]];
     }
-}
-
-#pragma mark -
-
-- (void)headerViewSegmentChanged:(UISegmentedControl*)segmentedControl
-{
-    NSInteger selectedIndex = segmentedControl.selectedSegmentIndex;
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:selectedIndex] forKey:@"showInfoPreferredTabIndex"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-
-    [self updateView: selectedIndex == 0 ? TPShowInfoViewTypeInfo : TPShowInfoViewTypeEpisodes];
+    self.collectionViewController.model = [[TPListModel alloc] initWithSections:model.sections];
 }
-
-
-- (void)updateView:(TPShowInfoViewType)type
-{
-    CGFloat topInset = self.topLayoutGuide.length;
-    
-    self.currentType = type;
-
-    if(type == TPShowInfoViewTypeEpisodes)
-    {
-        self.tableView.scrollEnabled = YES;
-        self.tableView.tableHeaderView = self.headerView;
-        self.tableView.contentOffset = CGPointMake(0, -topInset);
-    }
-    else
-    {
-        self.tableView.scrollEnabled = NO;
-        self.tableView.contentOffset = CGPointMake(0, -topInset);
-        self.tableView.tableHeaderView = nil;
-        
-        CGFloat headerHeight = self.headerView.bounds.size.height;
-        
-        self.webView.scrollView.contentInset = UIEdgeInsetsMake(headerHeight, 0, 0, 0);
-        CGRect headerRect = self.headerView.frame;
-        headerRect.origin.x = 0;
-        headerRect.origin.y = -headerHeight;
-        self.headerView.frame = headerRect;
-        
-        self.webView.frame = self.tableView.bounds;
-        [self.webView.scrollView addSubview:self.headerView];
-        self.webView.scrollView.contentInset = UIEdgeInsetsMake(headerHeight, 0, 0, 0);
-        self.webView.scrollView.contentOffset = CGPointMake(0, -headerHeight);
-        
-        self.tableView.tableHeaderView = self.webView;
-    }
-}
-
 
 #pragma mark -
 
@@ -162,18 +142,14 @@ typedef enum {
     return cell;
 }
 
+/*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     NSDictionary *episode = [self.model dataForIndexPath:indexPath];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"playEpisode" object:self userInfo:@{@"episode":episode}];
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 44;
-}
+}*/
 
 
 #pragma mark - WebViewDelegate
