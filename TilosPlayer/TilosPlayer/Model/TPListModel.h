@@ -49,6 +49,7 @@
 - (void)sendError:(NSError *)error;
 
 - (id)initWithParameters:(id)parameters;
+- (id)initWithSections:(NSArray *)sections;
 
 - (id)dataForRow:(NSInteger)row section:(NSInteger)section;
 - (id)dataForIndexPath:(NSIndexPath *)indexPath;

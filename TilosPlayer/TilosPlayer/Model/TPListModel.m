@@ -43,6 +43,15 @@
     }
     return self;
 }
+- (id)initWithSections:(NSArray *)sections
+{
+    self = [super init];
+    if(self)
+    {
+        self.sections = sections;
+    }
+    return self;
+}
 
 - (void)loadForced:(BOOL)forced
 {
