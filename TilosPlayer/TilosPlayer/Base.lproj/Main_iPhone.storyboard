@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
-        <!--Authors-->
+        <!--AuthorsNavigation-->
         <scene sceneID="bat-30-Z1S">
             <objects>
-                <navigationController title="Authors" definesPresentationContext="YES" id="ak0-7k-rFp" sceneMemberID="viewController">
+                <navigationController title="Authors" definesPresentationContext="YES" id="ak0-7k-rFp" userLabel="AuthorsNavigation" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" image="EmptyDot" id="CWs-Cn-iNq"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WcO-dV-WEV">
                         <autoresizingMask key="autoresizingMask"/>
@@ -21,10 +21,10 @@
             </objects>
             <point key="canvasLocation" x="-1067" y="1196"/>
         </scene>
-        <!--First-->
+        <!--AuthorList-->
         <scene sceneID="W3I-pn-N6e">
             <objects>
-                <viewController title="First" id="CZ4-MO-1fc" customClass="TPAuthorListViewController" sceneMemberID="viewController">
+                <viewController title="First" id="CZ4-MO-1fc" userLabel="AuthorList" customClass="TPAuthorListViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Lpt-bV-y0g">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

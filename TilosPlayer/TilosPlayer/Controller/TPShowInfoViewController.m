@@ -14,7 +14,6 @@
 #import "TPShowData.h"
 #import "TPShowInfoHeaderView.h"
 #import "TPTitleView.h"
-#import "TPCollectionViewController.h"
 #import "TPSmallEpisodeCell.h"
 
 @interface TPShowInfoViewController ()
@@ -56,6 +55,7 @@
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
     TPCollectionViewController *collectionViewController = [[TPCollectionViewController alloc] initWithCellFactory:[TPSmallEpisodeCell new] layout:layout];
+    collectionViewController.delegate = self;
     collectionViewController.view.backgroundColor = [UIColor clearColor];
     collectionViewController.view.frame = CGRectMake(0, headerHeight, 320, 50);
     self.collectionViewController = collectionViewController;
@@ -142,13 +142,17 @@
     return cell;
 }
 
+- (void)collectionViewController:(TPCollectionViewController *)collectionViewController didSelectData:(id)data
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"playEpisode" object:self userInfo:@{@"episode":data}];
+}
+
 /*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     NSDictionary *episode = [self.model dataForIndexPath:indexPath];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"playEpisode" object:self userInfo:@{@"episode":episode}];
 }*/
 
 

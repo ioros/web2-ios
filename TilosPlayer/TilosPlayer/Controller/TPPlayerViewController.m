@@ -197,9 +197,6 @@ static int kCurrentEpisodeContext;
     
     
     [self jumpToDate:[NSDate date]];
-    
-    // initialize ambience
-    [self updateAmbience];
 }
 
 #pragma mark -
@@ -234,6 +231,8 @@ static int kCurrentEpisodeContext;
                 self.tapeSeekViewController.view.hidden = YES;
                 break;
         }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateAmbience" object:self userInfo:nil];
     }
 }
 
@@ -242,17 +241,6 @@ static int kCurrentEpisodeContext;
     self.playButton.playing = [[TPPlayerManager sharedManager] playing];
     self.playButton.loading = [[TPPlayerManager sharedManager] playerLoading];
     self.playbackButton.playing = [[TPPlayerManager sharedManager] playing];
-}
-
-- (void)updateAmbience
-{
-    NSInteger index = roundf(self.collectionView.contentOffset.x / 320.0f);
-
-    TPEpisodeCollectionCell *cell = (TPEpisodeCollectionCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-    if(cell.imageView.image)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateAmbience" object:self userInfo:@{@"image":cell.imageView.image}];
-    }
 }
 
 #pragma mark -
@@ -553,8 +541,6 @@ static int kCurrentEpisodeContext;
     self.playbackButton.imageURL = episode.bannerURL;
     
     [[TPPlayerManager sharedManager] cueEpisode:episode];
-    
-    [self updateAmbience];
 }
 
 #pragma mark - collection view

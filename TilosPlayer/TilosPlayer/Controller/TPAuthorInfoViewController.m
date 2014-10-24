@@ -20,6 +20,8 @@
 #import "TPCollectionViewController.h"
 #import "TPShowCollectionCell.h"
 
+#import "TPShowInfoViewController.h"
+
 
 @interface TPAuthorInfoViewController ()
 
@@ -100,8 +102,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    CGFloat fullHeaderHeight = self.headerContainer.bounds.size.height;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -173,7 +173,12 @@
 
 - (void)collectionViewController:(TPCollectionViewController *)collectionViewController didSelectData:(id)data
 {
-    NSLog(@"select");
+    NSLog(@"select %@", data);
+    TPShowInfoViewController *vc = [[TPShowInfoViewController alloc] init];
+    TPContributionData *contribution = data;
+    TPShowData *show = [contribution show];
+    vc.data = show;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 /*
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

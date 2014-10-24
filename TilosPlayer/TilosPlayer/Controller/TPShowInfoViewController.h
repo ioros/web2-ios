@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 
 #import "TPListModel.h"
+#import "TPCollectionViewController.h"
 
 @class TPEpisodeData;
 @class TPShowData;
 
-@interface TPShowInfoViewController : UIViewController <TPListModelDelegate, UIWebViewDelegate>
+@interface TPShowInfoViewController : UIViewController <TPListModelDelegate, UIWebViewDelegate, TPCollectionViewControllerDelegate>
 
 @property (nonatomic, retain) TPShowData *data;
 @property (nonatomic, retain) TPListModel *model;

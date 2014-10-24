@@ -15,6 +15,14 @@
 #define kTabbarHeight 49.0f
 #define kTopbarHeight 64.0f
 
+@interface TPOverlayViewController ()
+
+@property (nonatomic, retain) UIImageView *ambienceImageView;
+
+@end
+
+#pragma mark -
+
 @implementation TPOverlayViewController
 
 
@@ -24,6 +32,8 @@
     
     if(self)
     {
+        self.ambienceImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+        
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
         UITabBarController *vc = (UITabBarController *)[sb instantiateViewControllerWithIdentifier:@"tabbarController"];
 
@@ -171,7 +181,20 @@
 
 - (void)updateAmbience:(NSNotification *)n
 {
-    UIImage *image = [n.userInfo objectForKey:@"image"];
+    TPEpisodeData *episode = [[TPPlayerManager sharedManager] currentEpisode];
+
+    [self.ambienceImageView sd_setImageWithURL:[NSURL URLWithString:episode.bannerURL] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+        [self generateAmbience];
+        
+    }];
+}
+
+- (void)generateAmbience
+{
+    UIImage *image = [self.ambienceImageView image];
+    if(image == nil) return;
+    
     UIColor *tintColor = [UIColor colorWithWhite:0.0 alpha:0.5];
     image = [image applyBlurWithRadius:7 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
     
