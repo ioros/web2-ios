@@ -37,8 +37,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 {
     if([keyPath isEqualToString:@"currentTime"])
     {
-//        NSLog(@"time %@", change);
-        NSDate *date = [self.segmentStartDate dateByAddingTimeInterval:[TPAudioPlayer sharedPlayer].currentTime];
+        NSTimeInterval playerTime = [TPAudioPlayer sharedPlayer].currentTime;
+        NSLog(@"PLAYER TIME %f", playerTime);
+        NSDate *date = [self.segmentStartDate dateByAddingTimeInterval:playerTime];
+        
         self.globalTime = [date timeIntervalSince1970];
     }
     else if([keyPath isEqualToString:@"loading"])
@@ -49,7 +51,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 
 - (void)cueEpisode:(TPEpisodeData *)episode
 {
+    _globalTime = episode.plannedFrom.timeIntervalSince1970;
     self.currentEpisode = episode;
+    
     if(_playing)
     {
         [self playEpisode:self.currentEpisode];
@@ -107,11 +111,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     NSDate *startDate = episode.plannedFrom;
     //NSDate *dayDate = [startDate dayDate];
     //NSDate *segmentDate = [startDate archiveSegmentStartDate];
-    
+
+    _globalTime = episode.plannedFrom.timeIntervalSince1970 + seconds;
     self.currentEpisode = episode;
 
     NSDate *date = [startDate dateByAddingTimeInterval:seconds];
     NSDate *segmentStartDate = [date archiveSegmentStartDate];
+    
     
     self.segmentStartDate = segmentStartDate;
     

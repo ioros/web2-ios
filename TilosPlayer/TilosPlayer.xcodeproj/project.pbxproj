@@ -65,6 +65,8 @@
 		A5FA37D219FA63AD00249D51 /* authorinfo.html in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37D019FA63AD00249D51 /* authorinfo.html */; };
 		A5FA37D619FA667900249D51 /* TPShowCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FA37D519FA667900249D51 /* TPShowCollectionCell.m */; };
 		A5FA37D919FA8C4000249D51 /* TPShowPlaybackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FA37D819FA8C4000249D51 /* TPShowPlaybackButton.m */; };
+		A5FA37DD19FA9F8900249D51 /* TPTapeSeekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FA37DC19FA9F8900249D51 /* TPTapeSeekViewController.m */; };
+		A5FA37E019FAA09000249D51 /* TPCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FA37DF19FAA09000249D51 /* TPCollectionView.m */; };
 		A5FEBFBA1858AF390084B4C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFB91858AF390084B4C5 /* Foundation.framework */; };
 		A5FEBFBC1858AF390084B4C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */; };
 		A5FEBFBE1858AF390084B4C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5FEBFBD1858AF390084B4C5 /* UIKit.framework */; };
@@ -202,6 +204,10 @@
 		A5FA37D519FA667900249D51 /* TPShowCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPShowCollectionCell.m; sourceTree = "<group>"; };
 		A5FA37D719FA8C4000249D51 /* TPShowPlaybackButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPShowPlaybackButton.h; sourceTree = "<group>"; };
 		A5FA37D819FA8C4000249D51 /* TPShowPlaybackButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPShowPlaybackButton.m; sourceTree = "<group>"; };
+		A5FA37DB19FA9F8900249D51 /* TPTapeSeekViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTapeSeekViewController.h; sourceTree = "<group>"; };
+		A5FA37DC19FA9F8900249D51 /* TPTapeSeekViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTapeSeekViewController.m; sourceTree = "<group>"; };
+		A5FA37DE19FAA09000249D51 /* TPCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCollectionView.h; sourceTree = "<group>"; };
+		A5FA37DF19FAA09000249D51 /* TPCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCollectionView.m; sourceTree = "<group>"; };
 		A5FEBFB61858AF390084B4C5 /* TilosPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TilosPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5FEBFB91858AF390084B4C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5FEBFBB1858AF390084B4C5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -352,6 +358,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		A5FA37DA19FA9F7200249D51 /* TapeSeek */ = {
+			isa = PBXGroup;
+			children = (
+				A5FA37DB19FA9F8900249D51 /* TPTapeSeekViewController.h */,
+				A5FA37DC19FA9F8900249D51 /* TPTapeSeekViewController.m */,
+			);
+			name = TapeSeek;
+			sourceTree = "<group>";
+		};
 		A5FEBFAD1858AF390084B4C5 = {
 			isa = PBXGroup;
 			children = (
@@ -418,6 +433,7 @@
 		A5FEBFF41858B2940084B4C5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A5FA37DA19FA9F7200249D51 /* TapeSeek */,
 				A5FEC0191858C12E0084B4C5 /* TableViewController */,
 				A5DD101B185A7F81009D1A1A /* Overlay */,
 				A5FEC032185909E50084B4C5 /* PlayerView */,
@@ -538,6 +554,8 @@
 				A5DD1023185A9725009D1A1A /* NSDate+TPAdditions.h */,
 				A5DD1024185A9725009D1A1A /* NSDate+TPAdditions.m */,
 				A5FA37CA19FA589400249D51 /* TPCollectionCellFactory.h */,
+				A5FA37DE19FAA09000249D51 /* TPCollectionView.h */,
+				A5FA37DF19FAA09000249D51 /* TPCollectionView.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -771,10 +789,12 @@
 				A5FEBFFB1858B2940084B4C5 /* TPAuthorListViewController.m in Sources */,
 				A51F67CB18CDF370001214F3 /* TPTapeCollectionLiveCell.m in Sources */,
 				A54B4CD619F94027001B7004 /* MKAnnotationView+WebCache.m in Sources */,
+				A5FA37E019FAA09000249D51 /* TPCollectionView.m in Sources */,
 				A5FEC0061858B4540084B4C5 /* TPTableViewController.m in Sources */,
 				A5FEC0271858C3BC0084B4C5 /* TPEpisodeListModel.m in Sources */,
 				A54B4CE019F94027001B7004 /* UIImage+GIF.m in Sources */,
 				A5FA37D619FA667900249D51 /* TPShowCollectionCell.m in Sources */,
+				A5FA37DD19FA9F8900249D51 /* TPTapeSeekViewController.m in Sources */,
 				A5DD1019185A7F4B009D1A1A /* TPShowInfoHeaderView.m in Sources */,
 				A5DD0FFB1859FE42009D1A1A /* TPTapeCollectionLayout.m in Sources */,
 			);

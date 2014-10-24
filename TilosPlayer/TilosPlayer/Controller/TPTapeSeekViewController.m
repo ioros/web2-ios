@@ -1,0 +1,304 @@
+//
+//  TPTapeSeekViewController.m
+//  TilosPlayer
+//
+//  Created by Daniel Langh on 24/10/14.
+//  Copyright (c) 2014 rumori. All rights reserved.
+//
+
+#import "TPTapeSeekViewController.h"
+
+#import "TPTapeCollectionCell.h"
+#import "TPTapeCollectionLiveCell.h"
+#import "TPTapeCollectionLayout.h"
+#import "TPCollectionView.h"
+#import "TPEpisodeData.h"
+
+#import "TPPlayerManager.h"
+
+static int kGlobalTimeContext;
+static int kCurrentEpisodeContext;
+
+@interface TPTapeSeekViewController ()
+
+@property (nonatomic, retain) UICollectionView *tapeCollectionView;
+@property (nonatomic, assign) TPScrollState tapeCollectionState;
+
+@property (nonatomic, assign) CGFloat tapeScrollAdjustment;
+@property (nonatomic, assign) NSTimeInterval tapeStartTime;
+
+@property (nonatomic, assign) NSInteger tapeCollectionRowCount;
+@property (nonatomic, assign) NSTimeInterval startTime;
+@property (nonatomic, assign) NSTimeInterval endTime;
+
+@property (nonatomic, retain) UIView *redDotView;
+@property (nonatomic, assign) BOOL redDotVisible;
+
+@end
+
+#define kTapeCellTime 300 // 5 minutes
+#define kTapeCellWidth 150.0f
+
+@implementation TPTapeSeekViewController
+
+- (void)loadView
+{
+    self.startTime = NSIntegerMax;
+    self.endTime = NSIntegerMin;
+    self.tapeCollectionRowCount = 0;
+    
+    self.tapeScrollAdjustment = 160.0f - 30; // cell must start before
+    self.tapeCollectionState = TPScrollStateNormal;
+    
+    ///////////////////////
+    
+    CGRect frame = CGRectMake(0, 0, 320, 44);
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = [UIColor clearColor];
+    self.view = view;
+    
+    TPTapeCollectionLayout *collectionViewLayout = [[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(kTapeCellWidth, 22)];
+    self.tapeCollectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:collectionViewLayout];
+    self.tapeCollectionView.backgroundColor = [UIColor clearColor];
+    self.tapeCollectionView.delegate = self;
+    self.tapeCollectionView.showsHorizontalScrollIndicator = NO;
+    self.tapeCollectionView.dataSource = self;
+    self.tapeCollectionView.decelerationRate = 0.2;
+    self.tapeCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 85);
+    self.tapeCollectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+    [self.tapeCollectionView registerClass:[TPTapeCollectionCell class] forCellWithReuseIdentifier:@"TapeCollectionCell"];
+    [self.tapeCollectionView registerClass:[TPTapeCollectionLiveCell class] forCellWithReuseIdentifier:@"TapeCollectionLiveCell"];
+    [self.view addSubview:self.tapeCollectionView];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedDot.png"]];
+    imageView.center = CGPointMake(160, 28);
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+    [self.view addSubview:imageView];
+    self.redDotView = imageView;
+    
+    // init red dot
+    self.redDotView.alpha = 0.0f;
+    self.redDotVisible = NO;
+    
+    /*
+    ///////// setup initial value
+    NSDate *now = [NSDate date];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit fromDate:now];
+    NSDate *pastDate = [[NSCalendar currentCalendar] dateFromComponents:components];
+    pastDate = [pastDate dateByAddingTimeInterval: -4 * 3600 * 24]; // 4 days back
+    self.tapeStartTime = [pastDate timeIntervalSince1970];
+    
+    NSTimeInterval difference = [now timeIntervalSinceDate:pastDate];
+    self.tapeCollectionRowCount = floorf( difference / (5 * 60) );
+    
+    [self.tapeCollectionView reloadData];
+    [self.tapeCollectionView setContentOffset:CGPointMake(self.tapeCollectionRowCount * kTapeCellWidth, 0)];
+     */
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"globalTime" options:NSKeyValueObservingOptionNew context:&kGlobalTimeContext];
+    [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"currentEpisode" options:NSKeyValueObservingOptionNew context:&kCurrentEpisodeContext];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.tapeCollectionView reloadData];
+}
+
+
+#pragma mark -
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if(context == &kGlobalTimeContext)
+    {
+        if(self.tapeCollectionState == TPScrollStateNormal)
+        {
+            NSTimeInterval globalTime = [[TPPlayerManager sharedManager] globalTime];
+            NSTimeInterval timeDiff = globalTime - self.tapeStartTime;
+
+            CGFloat offset = timeDiff / kTapeCellTime * kTapeCellWidth;
+            
+            NSLog(@"UPDATING BY PLAYER POSITION %f %f", timeDiff, globalTime);
+            [self.tapeCollectionView setContentOffset:CGPointMake(offset - _tapeScrollAdjustment, 0)];
+        }
+        //        NSLog(@"offset %f %f %f", offset, globalTime, self.startTime);
+    }
+    else if(context == &kCurrentEpisodeContext)
+    {
+        TPEpisodeData *episode = [[TPPlayerManager sharedManager] currentEpisode];
+        NSTimeInterval globalTime = [[TPPlayerManager sharedManager] globalTime];
+        
+        if([episode isRunningEpisode])
+        {
+            self.tapeCollectionView.hidden = YES;
+            self.redDotView.hidden = YES;
+        }
+        else
+        {
+            self.tapeCollectionView.hidden = NO;
+            self.redDotView.hidden = NO;
+            
+            self.startTime = episode.plannedFrom.timeIntervalSince1970;
+            self.endTime = episode.plannedTo.timeIntervalSince1970;
+            
+            // 100 before, 100 after
+            self.tapeStartTime = self.startTime - kTapeCellTime * 100;
+            self.tapeCollectionRowCount = 100 + (NSInteger)((self.endTime - self.startTime) / kTapeCellTime) + 100;
+            [self.tapeCollectionView reloadData];
+            [self updateActiveRange];
+
+            CGFloat offsetX = (globalTime - self.tapeStartTime)/kTapeCellTime * kTapeCellWidth - _tapeScrollAdjustment;
+
+            CGFloat diff = ABS(self.tapeCollectionView.contentOffset.x - offsetX);
+            if(diff>2)
+            {
+                self.tapeCollectionState = TPScrollStateAnimating;
+                [self.tapeCollectionView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+            }
+        }
+    }
+}
+
+- (void)updateActiveRange
+{
+    NSArray *cells = [self.tapeCollectionView visibleCells];
+    for(TPTapeCollectionCell *cell in cells)
+    {
+        NSIndexPath *indexPath = [self.tapeCollectionView indexPathForCell:cell];
+        if(indexPath)
+        {
+            [self setupCellActivity:cell indexPath:indexPath];
+        }
+    }
+}
+
+#pragma mark -
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    self.tapeCollectionState = TPScrollStateNormal;
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    self.tapeCollectionState = TPScrollStateDragging;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self updateRedDot];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self finishTapeScrolling];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if(decelerate)
+    {
+        self.tapeCollectionState = TPScrollStateAnimating;
+    }
+    else
+    {
+        [self finishTapeScrolling];
+    }
+}
+
+- (void)finishTapeScrolling
+{
+    self.tapeCollectionState = TPScrollStateNormal;
+    
+    CGFloat offsetX = self.tapeCollectionView.contentOffset.x + _tapeScrollAdjustment;
+    
+    NSTimeInterval time = self.tapeStartTime + (offsetX / kTapeCellWidth) * kTapeCellTime;
+
+    TPEpisodeData *currentEpisode = [[TPPlayerManager sharedManager] currentEpisode];
+
+    NSTimeInterval seconds = time - currentEpisode.plannedFrom.timeIntervalSince1970;
+    [[TPPlayerManager sharedManager] playEpisode:currentEpisode atSeconds:seconds];
+}
+
+#pragma mark -
+
+- (void)updateRedDot
+{
+    CGFloat offsetX = self.tapeCollectionView.contentOffset.x;
+    CGFloat contentWidth = self.tapeCollectionRowCount * kTapeCellWidth;
+    
+    CGFloat diff = contentWidth - offsetX;
+    BOOL shouldRedDotBeVisible = diff > 310;
+    
+    if(shouldRedDotBeVisible != self.redDotVisible)
+    {
+        self.redDotVisible = shouldRedDotBeVisible;
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            self.redDotView.alpha = shouldRedDotBeVisible ? 1.0f : 0.0f;
+        }];
+    }
+}
+
+#pragma mark - DataSource
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.tapeCollectionRowCount;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    TPTapeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TapeCollectionCell" forIndexPath:indexPath];
+    [self setupCellActivity:cell indexPath:indexPath];
+    return cell;
+}
+
+- (void)setupCellActivity:(TPTapeCollectionCell *)cell indexPath:(NSIndexPath *)indexPath
+{
+    NSInteger row = indexPath.row;
+    
+    NSTimeInterval globalTime = self.tapeStartTime + row * kTapeCellTime;
+
+    if(globalTime >= self.startTime && globalTime <= self.endTime)
+    {
+        if(globalTime == self.startTime)
+        {
+            cell.type = TPTapeCollectionCellTypeStart;
+        }
+        else if(globalTime == self.endTime)
+        {
+            cell.type = TPTapeCollectionCellTypeEnd;
+        }
+        else
+        {
+            cell.type = TPTapeCollectionCellTypeActive;
+        }
+
+        NSTimeInterval diff = globalTime - self.startTime;
+        NSString *label = [NSString stringWithFormat:@"%d:%02d", (int)(diff / 60.0f), ((int)diff % 60)];
+        cell.activeText = label;
+    }
+    else
+    {
+        cell.type = TPTapeCollectionCellTypeInactive;
+        cell.activeText = nil;
+    }
+}
+
+#pragma mark -
+
+
+@end

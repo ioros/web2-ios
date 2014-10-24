@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum {
+    TPTapeCollectionCellTypeInactive,
+    TPTapeCollectionCellTypeStart,
+    TPTapeCollectionCellTypeEnd,
+    TPTapeCollectionCellTypeActive
+} TPTapeCollectionCellType;
+
 @interface TPTapeCollectionCell : UICollectionViewCell
+
+@property (nonatomic, retain) NSString *activeText;
+@property (nonatomic, assign) TPTapeCollectionCellType type;
 
 @end

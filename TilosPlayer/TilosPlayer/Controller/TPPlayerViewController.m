@@ -8,45 +8,31 @@
 
 #import "TPPlayerViewController.h"
 
-#import "TPListModel.h"
 #import "TPContinuousProgramModel.h"
+#import "TPEpisodeData.h"
 
-#import "TPEpisodeCollectionCell.h"
-#import "TPTapeCollectionCell.h"
-#import "TPTapeCollectionLiveCell.h"
-
-#import "TPTapeCollectionLayout.h"
 #import "UIImage+ImageEffects.h"
 #import "TPPlayerManager.h"
 
-#import "TPEpisodeData.h"
 #import "TPPlayButton.h"
 #import "TPShowPlaybackButton.h"
+#import "TPCollectionView.h"
+#import "TPEpisodeCollectionCell.h"
+#import "TPTapeCollectionLayout.h"
 
+#import "TPTapeSeekViewController.h"
 
-typedef enum {
-    TPScrollStateNormal,
-    TPScrollStateDragging,
-    TPScrollStateAnimating,
-} TPScrollState;
 
 @interface TPPlayerViewController ()
 
 @property (nonatomic, assign) BOOL opened;
 
+@property (nonatomic, retain) TPTapeSeekViewController *tapeSeekViewController;
+
 // small playback with banner
 @property (nonatomic, retain) TPShowPlaybackButton *playbackButton;
 @property (nonatomic, retain) UIButton *logoButton;
 @property (nonatomic, retain) TPPlayButton *playButton;
-
-@property (nonatomic, retain) UIView *redDotView;
-@property (nonatomic, assign) BOOL redDotVisible;
-
-@property (nonatomic, retain) UICollectionView *tapeCollectionView;
-@property (nonatomic, assign) CGFloat tapeScrollAdjustment;
-@property (nonatomic, assign) NSTimeInterval tapeStartTime;
-@property (nonatomic, assign) NSInteger tapeCollectionRowCount;
-@property (nonatomic, assign) TPScrollState tapeCollectionState;
 
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, assign) TPScrollState collectionState;
@@ -65,7 +51,6 @@ typedef enum {
 
 #define kAnimationDuration 0.7f
 
-static int kGlobalTimeContext;
 static int kPlayingContext;
 static int kPlayerLoadingContext;
 
@@ -83,10 +68,8 @@ static int kPlayerLoadingContext;
 - (void)loadView
 {
     self.opened = YES;
-    self.tapeScrollAdjustment = 160.0f;
     
     self.collectionState = TPScrollStateNormal;
-    self.tapeCollectionState = TPScrollStateNormal;
     
     /////////////////////////////////
 
@@ -108,6 +91,14 @@ static int kPlayerLoadingContext;
     topView.backgroundColor = [UIColor clearColor];
     topView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
     self.topView = topView;
+    
+    
+    self.tapeSeekViewController = [[TPTapeSeekViewController alloc] init];
+    self.tapeSeekViewController.view.frame = CGRectMake(0, 120, 320, 45);
+    self.tapeSeekViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+    [topView addSubview:self.tapeSeekViewController.view];
+    
+    [self addChildViewController:self.tapeSeekViewController];
     
     /*
     UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -143,32 +134,6 @@ static int kPlayerLoadingContext;
     [self.view addSubview:self.topView];
     
     ///////////////////////////
-    
-    TPTapeCollectionLayout *collectionViewLayout = [[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(150, 20)];
-    self.tapeCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 125, 320, 44) collectionViewLayout:collectionViewLayout];
-    self.tapeCollectionView.backgroundColor = [UIColor clearColor];
-    self.tapeCollectionView.delegate = self;
-    self.tapeCollectionView.showsHorizontalScrollIndicator = NO;
-    self.tapeCollectionView.dataSource = self;
-    self.tapeCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 85);
-    self.tapeCollectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    [self.tapeCollectionView registerClass:[TPTapeCollectionCell class] forCellWithReuseIdentifier:@"TapeCollectionCell"];
-    [self.tapeCollectionView registerClass:[TPTapeCollectionLiveCell class] forCellWithReuseIdentifier:@"TapeCollectionLiveCell"];
-    [self.topView addSubview:self.tapeCollectionView];
-    
-    
-    //////////// red dot
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedDot.png"]];
-    imageView.center = CGPointMake(160, 125 + 22);
-    imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
-    [self.topView addSubview:imageView];
-    self.redDotView = imageView;
-
-    // init red dot
-    self.redDotView.alpha = 0.0f;
-    self.redDotVisible = NO;
-    
     
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 15, 320, 220) collectionViewLayout:[[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(320, 220)]];
     self.collectionView.pagingEnabled = YES;
@@ -206,27 +171,12 @@ static int kPlayerLoadingContext;
 
     [self.view addSubview:button];
     self.logoButton = button;
-    
-    
-    ///////// setup initial value
-    NSDate *now = [NSDate date];
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit fromDate:now];
-    NSDate *pastDate = [[NSCalendar currentCalendar] dateFromComponents:components];
-    pastDate = [pastDate dateByAddingTimeInterval: -4 * 3600 * 24];
-    self.tapeStartTime = [pastDate timeIntervalSince1970];
-    
-    NSTimeInterval difference = [now timeIntervalSinceDate:pastDate];
-    self.tapeCollectionRowCount = floorf( difference / (5 * 60) );
-    
-    [self.tapeCollectionView reloadData];
-    [self.tapeCollectionView setContentOffset:CGPointMake(self.tapeCollectionRowCount * 150.0f, 0)];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"globalTime" options:NSKeyValueObservingOptionNew context:&kGlobalTimeContext];
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"playing" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:&kPlayingContext];
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"playerLoading" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:&kPlayerLoadingContext];
 }
@@ -255,22 +205,7 @@ static int kPlayerLoadingContext;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if(context == &kGlobalTimeContext)
-    {
-        if(self.tapeCollectionState == TPScrollStateNormal)
-        {
-            NSTimeInterval globalTime = [TPPlayerManager sharedManager].globalTime;
-            NSTimeInterval timeDiff = globalTime - self.tapeStartTime;
-            float timeDiffMinutes = timeDiff / 60.0f;
-            CGFloat offset = timeDiffMinutes * 30.0f;
-
-            //NSLog(@"UPDATING BY PLAYER POSITION %f %f", timeDiff, globalTime);
-
-            [self.tapeCollectionView setContentOffset:CGPointMake(offset - _tapeScrollAdjustment, 0)];
-        }
-//        NSLog(@"offset %f %f %f", offset, globalTime, self.startTime);
-    }
-    else if(context == &kPlayingContext)
+    if(context == &kPlayingContext)
     {
         [self updatePlayButton];
     }
@@ -284,7 +219,6 @@ static int kPlayerLoadingContext;
 {
     self.playButton.playing = [[TPPlayerManager sharedManager] playing];
     self.playButton.loading = [[TPPlayerManager sharedManager] playerLoading];
-    
     self.playbackButton.playing = [[TPPlayerManager sharedManager] playing];
 }
 
@@ -304,7 +238,7 @@ static int kPlayerLoadingContext;
 - (void)continuousProgramModelDidFinish:(TPContinuousProgramModel *)continuousProgramModel
 {
     [self.collectionView reloadData];
-    [self.tapeCollectionView reloadData];
+    //[self.tapeCollectionView reloadData];
     
     [self checkLoadMore];
     
@@ -332,8 +266,6 @@ static int kPlayerLoadingContext;
     }
 }
 
-#pragma mark -
-
 - (void)checkLoadMore
 {
     if([self.model numberOfSections] == 0 || [self.model numberOfItemsInSection:0] == 0) return;
@@ -352,24 +284,6 @@ static int kPlayerLoadingContext;
     if(offsetX > (contentWidth - threshold - collectionWidth))
     {
         [self.model loadTail];
-    }
-}
-
-- (void)updateRedDot
-{
-    CGFloat offsetX = self.tapeCollectionView.contentOffset.x;
-    CGFloat contentWidth = self.tapeCollectionRowCount * 150;
-    
-    CGFloat diff = contentWidth - offsetX;
-    BOOL shouldRedDotBeVisible = diff > 310;
-    
-    if(shouldRedDotBeVisible != self.redDotVisible)
-    {
-        self.redDotVisible = shouldRedDotBeVisible;
-        
-        [UIView animateWithDuration:0.3 animations:^{
-            self.redDotView.alpha = shouldRedDotBeVisible ? 1.0f : 0.0f;
-        }];
     }
 }
 
@@ -422,6 +336,8 @@ static int kPlayerLoadingContext;
     }
 }
 
+#pragma mark -
+
 - (void)openHandler
 {
     [self doOpen:YES];
@@ -455,8 +371,8 @@ static int kPlayerLoadingContext;
 
     _opened = NO;
 
-    self.tapeCollectionView.hidden = YES;
     self.playbackButton.hidden = NO;
+    self.tapeSeekViewController.view.hidden = YES;
 
     if(animated)
     {
@@ -509,8 +425,8 @@ static int kPlayerLoadingContext;
 
     _opened = YES;
     
-    self.tapeCollectionView.hidden = NO;
     self.playbackButton.hidden = YES;
+    self.tapeSeekViewController.view.hidden = NO;
 
 
     if(animated)
@@ -563,84 +479,41 @@ static int kPlayerLoadingContext;
     [self.collectionView setContentOffset:CGPointMake(index * 320, 0) animated:animated];
 }
 
-
 #pragma mark -
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    if(scrollView == self.tapeCollectionView)
-    {
-        self.tapeCollectionState = TPScrollStateNormal;
-    }
-    else if(scrollView == self.collectionView)
-    {
-        self.collectionState = TPScrollStateNormal;
-    }
+    self.collectionState = TPScrollStateNormal;
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    if(scrollView == self.tapeCollectionView)
-    {
-        self.tapeCollectionState = TPScrollStateDragging;
-    }
-    else if(scrollView == self.collectionView)
-    {
-        NSInteger index = roundf(self.collectionView.contentOffset.x / self.collectionView.bounds.size.width);
-        self.collectionDragStartIndex = index;
-        self.collectionState = TPScrollStateDragging;
-    }
+    NSInteger index = roundf(self.collectionView.contentOffset.x / self.collectionView.bounds.size.width);
+    self.collectionDragStartIndex = index;
+    self.collectionState = TPScrollStateDragging;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if(scrollView == self.tapeCollectionView)
-    {
-        [self updateRedDot];
-    }
-    else if(scrollView == self.collectionView)
-    {
-        // check the model loading
-        [self checkLoadMore];
-    }
+    // check the model loading
+    [self checkLoadMore];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if(self.tapeCollectionView == scrollView)
+    if(decelerate)
     {
-        if(decelerate)
-        {
-            self.tapeCollectionState = TPScrollStateAnimating;
-        }
-        else
-        {
-            [self finishTapeScrolling];
-        }
+        self.collectionState = TPScrollStateAnimating;
     }
-    else if(self.collectionView == scrollView)
+    else
     {
-        if(decelerate)
-        {
-            self.collectionState = TPScrollStateAnimating;
-        }
-        else
-        {
-            [self finishCollectionScrolling];
-        }
+        [self finishCollectionScrolling];
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if(self.tapeCollectionView == scrollView)
-    {
-        [self finishTapeScrolling];
-    }
-    else if(self.collectionView == scrollView)
-    {
-        [self finishCollectionScrolling];
-    }
+    [self finishCollectionScrolling];
 }
 
 - (void)finishCollectionScrolling
@@ -656,102 +529,31 @@ static int kPlayerLoadingContext;
     
     
     self.playbackButton.imageURL = self.currentEpisode.bannerURL;
-
-    if([episode isRunningEpisode])
-    {
-        CGFloat offsetX = (self.tapeCollectionRowCount-1) * 150.0f;
-        offsetX -= 160 - 75;
-
-        self.tapeCollectionState = TPScrollStateAnimating;
-        [self.tapeCollectionView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
-    }
-    else
-    {
-        NSDate *plannedFrom = episode.plannedFrom;
-        NSTimeInterval difference = plannedFrom.timeIntervalSince1970 - self.tapeStartTime;
-        
-        CGFloat offsetX = difference / (5 * 60) * 150.0f;
-        
-        self.tapeCollectionState = TPScrollStateAnimating;
-        [self.tapeCollectionView setContentOffset:CGPointMake(offsetX - _tapeScrollAdjustment, 0) animated:YES];
-    }
     
     [[TPPlayerManager sharedManager] cueEpisode:episode];
     
     [self updateAmbience];
 }
 
-- (void)finishTapeScrolling
-{
-    self.tapeCollectionState = TPScrollStateNormal;
-    
-    CGFloat offsetX = self.tapeCollectionView.contentOffset.x + _tapeScrollAdjustment;
-
-    NSTimeInterval time = self.tapeStartTime + (offsetX / 30.0f) * 60.0f;
-    
-    if(time < self.currentEpisode.plannedFrom.timeIntervalSince1970 || time >= self.currentEpisode.plannedTo.timeIntervalSince1970)
-    {
-        NSIndexPath *indexPath = [self.model indexPathForDate:[NSDate dateWithTimeIntervalSince1970:time]];
-        self.currentEpisode = [self.model dataForIndexPath:indexPath];
-    }
-
-    NSTimeInterval seconds = time - self.currentEpisode.plannedFrom.timeIntervalSince1970;
-    [[TPPlayerManager sharedManager] playEpisode:self.currentEpisode atSeconds:seconds];
-}
-
 #pragma mark - collection view
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    if(collectionView == self.collectionView)
-    {
-        return [self.model numberOfSections];
-    }
-    else
-    {
-        return 1;
-    }
+    return [self.model numberOfSections];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if(collectionView == self.collectionView)
-    {
-        return [self.model numberOfItemsInSection:section];
-    }
-    else
-    {
-        return self.tapeCollectionRowCount;
-    }
+    return [self.model numberOfItemsInSection:section];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(collectionView == self.collectionView)
-    {
-        static NSString *cellIdentifier = @"EpisodeCollectionCell";
-        TPEpisodeCollectionCell *cell = (TPEpisodeCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-        
-        cell.episode = (TPEpisodeData *)[self.model dataForIndexPath:indexPath];
-        return cell;
-    }
-    else
-    {
-        //NSDate *date = [NSDate new];
-        //NSTimeInterval timeDifference = date.timeIntervalSince1970 - self.tapeStartTime;
-        
-        BOOL isEnd = (indexPath.row == self.tapeCollectionRowCount-1);
-        if(!isEnd)
-        {
-            TPTapeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TapeCollectionCell" forIndexPath:indexPath];
-            return cell;
-        }
-        else
-        {
-            TPTapeCollectionLiveCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TapeCollectionLiveCell" forIndexPath:indexPath];
-            return cell;
-        }
-    }
+    static NSString *cellIdentifier = @"EpisodeCollectionCell";
+    TPEpisodeCollectionCell *cell = (TPEpisodeCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    cell.episode = (TPEpisodeData *)[self.model dataForIndexPath:indexPath];
+    return cell;
 }
 
 @end
