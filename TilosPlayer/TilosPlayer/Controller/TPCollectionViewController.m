@@ -46,6 +46,7 @@
     collectionView.dataSource = self;
     collectionView.showsHorizontalScrollIndicator = NO;
     collectionView.showsVerticalScrollIndicator = NO;
+    collectionView.pagingEnabled = YES;
     
     [self.cellFactory registerClasses:collectionView];
 
