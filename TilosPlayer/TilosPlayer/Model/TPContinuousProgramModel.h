@@ -10,6 +10,10 @@
 
 @class TPContinuousProgramModel;
 
+FOUNDATION_EXPORT NSString *const TPContinuousProgramModelDidFinishNotification;
+FOUNDATION_EXPORT NSString *const TPContinuousProgramModelDidInsertDataNotification;
+
+
 @protocol TPContinuousProgramModelDelegate <NSObject>
 
 @optional

@@ -21,14 +21,30 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 - (id)init
 {
     self = [super init];
-    if (self) {
-        self.cachedDays = [NSMutableDictionary dictionary];
+    if (self)
+    {
+        self.model = [TPContinuousProgramModel new];
+        self.model.delegate = self;
+        
         self.playerLoading = NO;
         
         [[TPAudioPlayer sharedPlayer] addObserver:self forKeyPath:@"loading" options:NSKeyValueObservingOptionInitial context:nil];
         [[TPAudioPlayer sharedPlayer] addObserver:self forKeyPath:@"currentTime" options:NSKeyValueObservingOptionNew context:nil];
+        
+        [[[TPPlayerManager sharedManager] model] jumpToDate:[NSDate date]];
     }
     return self;
+}
+
+#pragma mark -
+
+- (void)continuousProgramModelDidFinish:(TPContinuousProgramModel *)continuousProgramModel
+{
+    
+}
+- (void)continuousProgramModel:(TPContinuousProgramModel *)continuousProgramModel didInsertDataAtIndexPaths:(NSArray *)indexPaths atEnd:(BOOL)atEnd
+{
+    
 }
 
 #pragma mark -

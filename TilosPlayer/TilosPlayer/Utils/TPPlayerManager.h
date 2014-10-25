@@ -9,10 +9,15 @@
 #import <Foundation/Foundation.h>
 
 #import <MediaPlayer/MediaPlayer.h>
+#import <AVFoundation/AVFoundation.h>
+
+#import "TPContinuousProgramModel.h"
 
 @class TPEpisodeData;
 
-@interface TPPlayerManager : NSObject
+@interface TPPlayerManager : NSObject <TPContinuousProgramModelDelegate, AVAudioSessionDelegate>
+
+@property (nonatomic, retain) TPContinuousProgramModel *model;
 
 @property (nonatomic, retain) TPEpisodeData *currentEpisode;
 @property (nonatomic, retain) NSDate *segmentStartDate;
@@ -20,8 +25,6 @@
 @property (nonatomic, assign) NSTimeInterval globalTime;
 @property (nonatomic, assign) BOOL playerLoading;
 @property (nonatomic, assign) BOOL playing;
-
-@property (nonatomic, retain) NSMutableDictionary *cachedDays;
 
 + (TPPlayerManager *)sharedManager;
 

@@ -25,6 +25,15 @@
 
 @implementation TPOverlayViewController
 
+- (id)initWithRootViewController:(UIViewController *)viewController
+{
+    self = [super init];
+    if(self)
+    {
+        self.rootViewController = viewController;
+    }
+    return self;
+}
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -52,6 +61,51 @@
 }
 
 #pragma mark -
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    if(self.rootViewController)
+    {
+        UIViewController *viewController = self.rootViewController;
+        UIView *view = viewController.view;
+        view.frame = UIEdgeInsetsInsetRect(self.view.bounds, UIEdgeInsetsMake(kTopbarHeight, 0, 0, 0));
+        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self.view addSubview:view];
+        [self addChildViewController:viewController];
+        
+        self.tilosTabbarController.delegate = self;
+        [self.tabbar deselectItems];
+    }
+    
+    if(self.overlayViewController)
+    {
+        UIViewController *viewController = self.overlayViewController;
+        UIView *view = viewController.view;
+        
+        view.frame = UIEdgeInsetsInsetRect(self.view.bounds, UIEdgeInsetsMake(0, 0, kTabbarHeight, 0));
+        view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        [self.view addSubview:view];
+        [self addChildViewController:viewController];
+    }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAmbience:) name:@"updateAmbience" object:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[self tabbar] deselectItems];
+    
+    if(self.urlToOpen)
+    {
+        [self handleURL:self.urlToOpen];
+        self.urlToOpen = nil;
+    }
+}
+
+#pragma mark - url handling
 
 - (void)openURL:(NSURL *)url
 {
@@ -115,66 +169,9 @@
     TPEpisodeData *episode = [n.userInfo objectForKey:@"episode"];
     
     [self.playerViewController openAnimated:YES];
-    [self.playerViewController jumpToDate:episode.plannedFrom];
     [self.tabbar deselectItems];
     
     [[TPPlayerManager sharedManager] playEpisode:episode];
-}
-
-#pragma mark -
-
-
-- (id)initWithRootViewController:(UIViewController *)viewController
-{
-    self = [super init];
-    if(self)
-    {
-        self.rootViewController = viewController;
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    if(self.rootViewController)
-    {
-        UIViewController *viewController = self.rootViewController;
-        UIView *view = viewController.view;
-        view.frame = UIEdgeInsetsInsetRect(self.view.bounds, UIEdgeInsetsMake(kTopbarHeight, 0, 0, 0));
-        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self addChildViewController:viewController];
-        [self.view addSubview:view];
-
-        self.tilosTabbarController.delegate = self;
-        [self.tabbar deselectItems];
-    }
-    
-    if(self.overlayViewController)
-    {
-        UIViewController *viewController = self.overlayViewController;
-        UIView *view = viewController.view;
-        
-        view.frame = UIEdgeInsetsInsetRect(self.view.bounds, UIEdgeInsetsMake(0, 0, kTabbarHeight, 0));
-        view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        [self addChildViewController:viewController];
-        [self.view addSubview:view];
-    }
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAmbience:) name:@"updateAmbience" object:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [[self tabbar] deselectItems];
-    
-    if(self.urlToOpen)
-    {
-        [self handleURL:self.urlToOpen];
-        self.urlToOpen = nil;
-    }
 }
 
 #pragma mark -

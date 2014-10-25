@@ -10,6 +10,10 @@
 
 #import "TPEpisodeData.h"
 
+
+NSString *const TPContinuousProgramModelDidFinishNotification = @"TPContinuousProgramModelDidFinishNotification";
+NSString *const TPContinuousProgramModelDidInsertDataNotification = @"TPContinuousProgramModelDidInsertDataNotification";
+
 @interface TPContinuousProgramModel ()
 
 @property (nonatomic, retain) AFHTTPRequestOperation *tailOperation;
@@ -239,6 +243,7 @@
     {
         [_delegate performSelector:@selector(continuousProgramModelDidFinish:) withObject:self];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:TPContinuousProgramModelDidFinishNotification object:self];
 }
 
 - (void)sendDataInserts:(NSArray *)indexPaths atEnd:(BOOL)atEnd
@@ -247,6 +252,7 @@
     {
         [_delegate continuousProgramModel:self didInsertDataAtIndexPaths:indexPaths atEnd:atEnd];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:TPContinuousProgramModelDidInsertDataNotification object:self userInfo:@{@"indexPaths":indexPaths, @"atEnd":[NSNumber numberWithBool:atEnd]}];
 }
 
 #pragma mark -

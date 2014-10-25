@@ -39,9 +39,6 @@
 @property (nonatomic, assign) TPScrollState collectionState;
 @property (nonatomic, assign) NSInteger collectionDragStartIndex;
 
-// we jump here after the load has been completed
-@property (nonatomic, retain) NSDate *jumpDate;
-
 @end
 
 #pragma mark -
@@ -55,15 +52,6 @@ static int kPlayerLoadingContext;
 static int kCurrentEpisodeContext;
 
 #pragma mark -
-
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        self.jumpDate = [NSDate new];
-    }
-    return self;
-}
 
 - (void)loadView
 {
@@ -180,6 +168,9 @@ static int kCurrentEpisodeContext;
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"playing" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:&kPlayingContext];
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"playerLoading" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:&kPlayerLoadingContext];
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"currentEpisode" options:NSKeyValueObservingOptionNew context:&kCurrentEpisodeContext];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelDidFinish:) name:TPContinuousProgramModelDidFinishNotification object:[[TPPlayerManager sharedManager] model]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelDidInsertData:) name:TPContinuousProgramModelDidInsertDataNotification object:[[TPPlayerManager sharedManager] model]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -188,15 +179,6 @@ static int kCurrentEpisodeContext;
     
     // initialize the layout
     [self doOpen:NO];
-    
-    if(self.model == nil)
-    {
-        self.model = [[TPContinuousProgramModel alloc] init];
-        self.model.delegate = self;
-    }
-    
-    
-    [self jumpToDate:[NSDate date]];
 }
 
 #pragma mark -
@@ -245,25 +227,24 @@ static int kCurrentEpisodeContext;
 
 #pragma mark -
 
-- (void)continuousProgramModelDidFinish:(TPContinuousProgramModel *)continuousProgramModel
+- (void)modelDidFinish:(NSNotification*)notification
 {
     [self.collectionView reloadData];
     
-    [self checkLoadMore];
-    
+    /*
     if(self.jumpDate)
     {
         NSIndexPath *indexPath = [self.model indexPathForDate:self.jumpDate];
-        
-        [self scrollToIndexInCollectionView:indexPath.row animated:NO];
-        [[TPPlayerManager sharedManager] cueEpisode:[self.model dataForIndexPath:indexPath]];
+        //[self scrollToIndexInCollectionView:indexPath.row animated:NO];
         self.jumpDate = nil;
-  
-//        self.currentEpisode = [self.model dataForIndexPath:indexPath];
     }
+    */
 }
-- (void)continuousProgramModel:(TPContinuousProgramModel *)continuousProgramModel didInsertDataAtIndexPaths:(NSArray *)indexPaths atEnd:(BOOL)atEnd
+- (void)modelDidInsertData:(NSNotification *)notification
 {
+    NSArray *indexPaths = [notification.userInfo objectForKey:@"indexPaths"];
+    BOOL atEnd = [[notification.userInfo objectForKey:@"atEnd"] boolValue];
+    
     CGFloat offsetX = self.collectionView.contentOffset.x;
     
     [UIView setAnimationsEnabled:NO];
@@ -275,35 +256,6 @@ static int kCurrentEpisodeContext;
         CGFloat diff = atEnd ? 0 : indexPaths.count * self.collectionView.bounds.size.width;
         self.collectionView.contentOffset = CGPointMake(offsetX + diff, 0);
     }
-}
-
-- (void)checkLoadMore
-{
-    if([self.model numberOfSections] == 0 || [self.model numberOfItemsInSection:0] == 0) return;
-    
-    CGFloat offsetX = self.collectionView.contentOffset.x;
-    CGFloat collectionWidth = self.collectionView.bounds.size.width;
-    CGFloat contentWidth = [self.model numberOfItemsInSection:0] * collectionWidth;
-    
-    if(contentWidth == 0) return;
-
-    CGFloat threshold = 300.0f;
-    if(offsetX < threshold)
-    {
-        [self.model loadHead];
-    }
-    if(offsetX > (contentWidth - threshold - collectionWidth))
-    {
-        [self.model loadTail];
-    }
-}
-
-#pragma mark -
-
-- (void)jumpToDate:(NSDate *)date
-{
-    self.jumpDate = date;
-    [self.model jumpToDate:date];
 }
 
 #pragma mark - actions
@@ -339,12 +291,7 @@ static int kCurrentEpisodeContext;
     }
     else
     {
-        NSInteger index = [self selectedIndexInCollectionView];
-        TPEpisodeData *episode = [self.model dataForIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-        if(episode)
-        {
-            [[TPPlayerManager sharedManager] playEpisode:episode];
-        }
+        [[TPPlayerManager sharedManager] play];
     }
 }
 
@@ -505,12 +452,6 @@ static int kCurrentEpisodeContext;
     self.collectionState = TPScrollStateDragging;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    // check the model loading
-    [self checkLoadMore];
-}
-
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if(decelerate)
@@ -533,26 +474,22 @@ static int kCurrentEpisodeContext;
     self.collectionState = TPScrollStateNormal;
     
     NSInteger index = roundf(self.collectionView.contentOffset.x / self.collectionView.bounds.size.width);
-    if(index < 0 || index >= [self.model numberOfItemsInSection:0]) return;
+    if(index < 0 || index >= [self.collectionView numberOfItemsInSection:0]) return;
     if(index == _collectionDragStartIndex) return;
     
-    TPEpisodeData *episode = [self.model dataForRow:index section:0];
-
-    self.playbackButton.imageURL = episode.bannerURL;
-    
-    [[TPPlayerManager sharedManager] cueEpisode:episode];
+    NSLog(@"set current episode");
 }
 
 #pragma mark - collection view
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return [self.model numberOfSections];
+    return [[[TPPlayerManager sharedManager] model] numberOfSections];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [self.model numberOfItemsInSection:section];
+    return [[[TPPlayerManager sharedManager] model] numberOfItemsInSection:section];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -560,7 +497,7 @@ static int kCurrentEpisodeContext;
     static NSString *cellIdentifier = @"EpisodeCollectionCell";
     TPEpisodeCollectionCell *cell = (TPEpisodeCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    cell.episode = (TPEpisodeData *)[self.model dataForIndexPath:indexPath];
+    cell.episode = (TPEpisodeData *)[[[TPPlayerManager sharedManager] model] dataForIndexPath:indexPath];
     return cell;
 }
 
