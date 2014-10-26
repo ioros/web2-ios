@@ -19,6 +19,7 @@
 @property (nonatomic, strong) AFHTTPRequestOperation *operation;
 
 @property (nonatomic, strong) TPAuthorData *author;
-@property (nonatomic, strong) NSString *htmlString;
+@property (nonatomic, strong) NSString *introHTML;
+@property (nonatomic, assign) BOOL introAvailable;
 
 @end

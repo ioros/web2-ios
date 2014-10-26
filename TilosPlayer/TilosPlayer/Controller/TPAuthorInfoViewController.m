@@ -20,6 +20,7 @@
 #import "TPCollectionViewController.h"
 #import "TPShowCollectionCell.h"
 #import "TPBackButtonHandler.h"
+#import "TPLabel.h"
 
 #import "TPShowInfoViewController.h"
 
@@ -27,8 +28,11 @@
 @interface TPAuthorInfoViewController ()
 
 @property (nonatomic, retain) UIWebView *webView;
-@property (nonatomic, retain) TPAuthorInfoHeaderView *headerView;
+
 @property (nonatomic, retain) UIView *headerContainer;
+@property (nonatomic, retain) TPAuthorInfoHeaderView *headerView;
+@property (nonatomic, retain) TPLabel *showLabel;
+@property (nonatomic, retain) TPLabel *introLabel;
 
 @property (nonatomic, readonly) TPAuthorInfoModel *authorInfoModel;
 @property (nonatomic, retain) TPTitleView *titleView;
@@ -78,9 +82,35 @@
 
     /////////////////////////
     
+    TPLabel *b = [[TPLabel alloc] initWithFrame:CGRectMake(40, 100, 100, 30)];
+    b.font = kDescFont;
+    b.backgroundImage = [[UIImage imageNamed:@"RoundButtonBlack.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+    b.textAlignment = NSTextAlignmentCenter;
+    b.text = NSLocalizedString(@"AuthorShows", nil);
+    CGSize s = [b sizeThatFits:CGSizeMake(200, 30)];
+    b.frame = CGRectMake(0, 0, s.width + 20, s.height + 4);
+    b.center = CGPointMake(160, headerHeight + 25);
+    [headerContainer addSubview:b];
+    self.showLabel = b;
+
+    b = [[TPLabel alloc] initWithFrame:CGRectMake(40, 100, 100, 30)];
+    b.font = kDescFont;
+    b.backgroundImage = [[UIImage imageNamed:@"RoundButtonBlack.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+    b.textAlignment = NSTextAlignmentCenter;
+    b.text = NSLocalizedString(@"AuthorInfo", nil);
+    s = [b sizeThatFits:CGSizeMake(200, 30)];
+    b.frame = CGRectMake(0, 0, s.width + 20, s.height + 4);
+    b.center = CGPointMake(160, headerHeight + 25);
+    [headerContainer addSubview:b];
+    self.introLabel = b;
+    
+    self.showLabel.hidden = YES;
+    self.introLabel.hidden = YES;
+
+    
 
     UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-    layout.itemSize = CGSizeMake(260, 100);
+    layout.itemSize = CGSizeMake(280, 70);
     layout.sectionInset = UIEdgeInsetsMake(10, 30, 10, 30);
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
@@ -91,11 +121,12 @@
     collectionViewController.delegate = self;
     self.collectionViewController = collectionViewController;
     
-    self.collectionViewController.view.frame = CGRectMake(0, headerHeight, 320, collectionHeight);
+    self.collectionViewController.view.frame = CGRectMake(0, headerHeight + 30, 320, collectionHeight);
+    self.collectionViewController.view.backgroundColor = [UIColor clearColor];
     self.collectionViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     [headerContainer addSubview:self.collectionViewController.view];
 
-    CGFloat fullHeaderHeight = headerHeight + collectionHeight;
+    CGFloat fullHeaderHeight = headerHeight + collectionHeight + 30;
     headerContainer.frame = CGRectMake(0, -fullHeaderHeight, 320, fullHeaderHeight);
 
     [self.webView.scrollView addSubview:headerContainer];
@@ -160,20 +191,28 @@
 
 - (void)listModelDidFinish:(TPListModel *)listModel
 {
-    if(self.authorInfoModel.htmlString)
+    TPAuthorInfoModel *authorInfoModel = self.authorInfoModel;
+    
+    if(self.authorInfoModel.introHTML)
     {
-        [self.webView loadHTMLString:self.authorInfoModel.htmlString baseURL:[NSURL URLWithString:@"http://tilos.hu"]];
+        [self.webView loadHTMLString:self.authorInfoModel.introHTML baseURL:[NSURL URLWithString:@"http://tilos.hu"]];
     }
     
     NSInteger itemCount = [self.model numberOfRowsInSection:0];
     
     CGFloat headerHeight = self.headerView.bounds.size.height;
+    CGFloat showLabelHeight = 40;
+    CGFloat introLabelHeight = authorInfoModel.introAvailable ? 40 : 0;
     
-    CGFloat collectionHeight =  itemCount * 100 + (itemCount -1) * 10 + 20;
-    self.collectionViewController.view.frame = CGRectMake(0, headerHeight, 320, collectionHeight);
+    CGFloat collectionHeight =  itemCount * 70 + (itemCount -1) * 10 + 20;
+    self.collectionViewController.view.frame = CGRectMake(0, headerHeight + showLabelHeight, 320, collectionHeight);
     self.collectionViewController.model = [[TPListModel alloc] initWithSections:self.model.sections];
+
+    self.showLabel.hidden = NO;
+    self.introLabel.center = CGPointMake(160, headerHeight + showLabelHeight + collectionHeight + 25);
+    self.introLabel.hidden = !authorInfoModel.introAvailable;
     
-    CGFloat fullHeaderHeight = headerHeight + collectionHeight;
+    CGFloat fullHeaderHeight = headerHeight + showLabelHeight + collectionHeight + introLabelHeight;
     self.headerContainer.frame = CGRectMake(0, -fullHeaderHeight, 320, fullHeaderHeight);
     
     [self.view setNeedsLayout];

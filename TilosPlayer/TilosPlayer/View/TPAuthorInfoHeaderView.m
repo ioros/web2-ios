@@ -29,9 +29,6 @@
         self.detailTextView.editable = NO;
         self.detailTextView.backgroundColor = [UIColor clearColor];
         [self addSubview:self.detailTextView];
-        
-        self.backgroundColor = [UIColor whiteColor];
-        
     }
     return self;
 }
@@ -52,13 +49,11 @@
 - (void)sizeToFit
 {
     CGRect frame = self.frame;
-    
     CGFloat w = frame.size.width;
-    CGFloat imageHeight = 100;
     
     CGSize s = [self.detailTextView sizeThatFits:CGSizeMake(w-20, 1000)];
     
-    CGFloat h = 10 + imageHeight + 10 + s.height + 5;
+    CGFloat h = 100 + s.height + 5;
     
     self.frame = CGRectMake(frame.origin.x, frame.origin.y, w, h);
 }

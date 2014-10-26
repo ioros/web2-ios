@@ -48,26 +48,24 @@ static NSString *cellID = @"TPShowCollectionCell";
     if(self)
     {
         UILabel *label = [[UILabel alloc] initWithFrame:self.bounds];
-        label.text = @"test";
         label.font = kDescFont;
         label.textAlignment = NSTextAlignmentCenter;
         label.frame = self.contentView.bounds;
+        label.backgroundColor = [UIColor clearColor];
         label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.contentView addSubview:label];
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:UIEdgeInsetsInsetRect(self.bounds, UIEdgeInsetsMake(0, 0, 20, 0))];
         imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        imageView.layer.cornerRadius = 5;
+        imageView.clipsToBounds = YES;
         [self.contentView addSubview:imageView];
         self.imageView = imageView;
         
-        self.contentView.backgroundColor = [UIColor colorWithWhite:0.8f alpha:0.7f];
-        self.contentView.layer.cornerRadius = 5;
-        self.contentView.clipsToBounds = YES;
+        self.contentView.backgroundColor = [UIColor clearColor];
         
         UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-        backgroundView.layer.cornerRadius = 5;
-        backgroundView.clipsToBounds = YES;
-        backgroundView.backgroundColor = [UIColor lightGrayColor];
+        backgroundView.backgroundColor = [UIColor clearColor];
         self.selectedBackgroundView = backgroundView;
         
         self.label = label;
@@ -80,6 +78,7 @@ static NSString *cellID = @"TPShowCollectionCell";
     [super layoutSubviews];
     
     CGRect b = self.bounds;
+    self.imageView.frame = CGRectMake((b.size.width - 180)/2.0f, 0, 180, 50);
     self.label.frame = CGRectMake(0, b.size.height - 20, b.size.width, 20);
 }
 

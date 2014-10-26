@@ -67,19 +67,21 @@
 {
     _author = author;
     
-    if(author.introduction)
+    self.introAvailable = author.introduction != nil;
+    
+    if(self.introAvailable)
     {
         NSString *file = [[NSBundle mainBundle] pathForResource:@"authorinfo" ofType:@"html"];
         NSString *html = [NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil];
         
         if(html)
         {
-            self.htmlString = [NSString stringWithFormat:html, author.introduction];
+            self.introHTML = [NSString stringWithFormat:html, author.introduction];
         }
     }
     else
     {
-        self.htmlString = @"";
+        self.introHTML = @"";
     }
     
 }

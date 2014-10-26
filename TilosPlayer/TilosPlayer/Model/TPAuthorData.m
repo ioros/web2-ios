@@ -40,12 +40,13 @@
 
 - (NSArray *)nickNames
 {
-    NSMutableArray *nickNames = [NSMutableArray array];
+    NSMutableDictionary *nickNames = [NSMutableDictionary dictionary];
+    
     for(TPContributionData *contribution in self.contributions)
     {
-        [nickNames addObject:contribution.nick];
+        [nickNames setObject:[NSNumber numberWithBool:YES] forKey:contribution.nick];
     }
-    return nickNames;
+    return nickNames.allKeys;
 }
 
 @end
