@@ -63,15 +63,21 @@
     
     NSString *description = self.show.infoHTML;
     
-    if (description.length > 0)
+    self.introAvailable = description.length > 0;
+    
+    if (self.introAvailable)
     {
         NSString *file = [[NSBundle mainBundle] pathForResource:@"showinfo" ofType:@"html"];
         NSString *html = [NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil];
         
         if(html)
         {
-            self.htmlString = [NSString stringWithFormat:html, description];
+            self.introHTML = [NSString stringWithFormat:html, description];
         }
+    }
+    else
+    {
+        self.introHTML = @"";
     }
     
     NSArray *episodes = self.show.episodes;
