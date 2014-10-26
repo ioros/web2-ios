@@ -220,6 +220,8 @@ static int kCurrentEpisodeContext;
     {
         TPEpisodeData *currentEpisode = [[TPPlayerManager sharedManager] currentEpisode];
         
+        self.playbackButton.imageURL = currentEpisode.bannerURL;
+        
         TPEpisodeDataState currentState = [currentEpisode currentState];
         switch (currentState) {
             case TPEpisodeDataStatePast:
