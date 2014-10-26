@@ -17,7 +17,6 @@
 		A51B1FDB185BA678009FA46D /* TPPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A51B1FDA185BA678009FA46D /* TPPlayerManager.m */; };
 		A51B1FDE185CA5E1009FA46D /* TPShowEpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A51B1FDD185CA5E1009FA46D /* TPShowEpisodeCell.m */; };
 		A51B1FE1185CAE80009FA46D /* TPTimestampView.m in Sources */ = {isa = PBXBuildFile; fileRef = A51B1FE0185CAE80009FA46D /* TPTimestampView.m */; };
-		A51F67CB18CDF370001214F3 /* TPTapeCollectionLiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A51F67CA18CDF370001214F3 /* TPTapeCollectionLiveCell.m */; };
 		A54B4CB319F936C7001B7004 /* TPTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A54B4CB219F936C7001B7004 /* TPTitleView.m */; };
 		A54B4CD619F94027001B7004 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A54B4CB619F94027001B7004 /* MKAnnotationView+WebCache.m */; };
 		A54B4CD719F94027001B7004 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = A54B4CB819F94027001B7004 /* NSData+ImageContentType.m */; };
@@ -115,8 +114,6 @@
 		A51B1FDD185CA5E1009FA46D /* TPShowEpisodeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPShowEpisodeCell.m; sourceTree = "<group>"; };
 		A51B1FDF185CAE80009FA46D /* TPTimestampView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTimestampView.h; sourceTree = "<group>"; };
 		A51B1FE0185CAE80009FA46D /* TPTimestampView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTimestampView.m; sourceTree = "<group>"; };
-		A51F67C918CDF370001214F3 /* TPTapeCollectionLiveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTapeCollectionLiveCell.h; sourceTree = "<group>"; };
-		A51F67CA18CDF370001214F3 /* TPTapeCollectionLiveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTapeCollectionLiveCell.m; sourceTree = "<group>"; };
 		A54B4CB119F936C7001B7004 /* TPTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTitleView.h; sourceTree = "<group>"; };
 		A54B4CB219F936C7001B7004 /* TPTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTitleView.m; sourceTree = "<group>"; };
 		A54B4CB519F94027001B7004 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
@@ -513,8 +510,6 @@
 				A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */,
 				A5628CB7185917F4007CA45C /* TPTapeCollectionCell.h */,
 				A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */,
-				A51F67C918CDF370001214F3 /* TPTapeCollectionLiveCell.h */,
-				A51F67CA18CDF370001214F3 /* TPTapeCollectionLiveCell.m */,
 				A5DD1017185A7F4B009D1A1A /* TPShowInfoHeaderView.h */,
 				A5DD1018185A7F4B009D1A1A /* TPShowInfoHeaderView.m */,
 				A5F44AB919F82F9900A731CB /* TPAuthorInfoHeaderView.h */,
@@ -809,7 +804,6 @@
 				A5DD1013185A75A8009D1A1A /* TPModel.m in Sources */,
 				A54B4CE419F94027001B7004 /* UIImageView+WebCache.m in Sources */,
 				A5FEBFFB1858B2940084B4C5 /* TPAuthorListViewController.m in Sources */,
-				A51F67CB18CDF370001214F3 /* TPTapeCollectionLiveCell.m in Sources */,
 				A54B4CD619F94027001B7004 /* MKAnnotationView+WebCache.m in Sources */,
 				A5FA37E019FAA09000249D51 /* TPCollectionView.m in Sources */,
 				A5FEC0061858B4540084B4C5 /* TPTableViewController.m in Sources */,

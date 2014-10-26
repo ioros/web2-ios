@@ -9,7 +9,6 @@
 #import "TPTapeSeekViewController.h"
 
 #import "TPTapeCollectionCell.h"
-#import "TPTapeCollectionLiveCell.h"
 #import "TPTapeCollectionLayout.h"
 #import "TPCollectionView.h"
 #import "TPEpisodeData.h"
@@ -67,7 +66,6 @@ static int kCurrentEpisodeContext;
     self.tapeCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 85);
     self.tapeCollectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     [self.tapeCollectionView registerClass:[TPTapeCollectionCell class] forCellWithReuseIdentifier:@"TapeCollectionCell"];
-    [self.tapeCollectionView registerClass:[TPTapeCollectionLiveCell class] forCellWithReuseIdentifier:@"TapeCollectionLiveCell"];
     [self.view addSubview:self.tapeCollectionView];
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedDot.png"]];
