@@ -453,7 +453,7 @@ static int kCurrentEpisodeContext;
 
 - (NSInteger)selectedIndexInCollectionView
 {
-    return (NSInteger)floorf(self.collectionView.contentOffset.x / 320);
+    return (NSInteger)floorf(self.collectionView.contentOffset.x / self.collectionView.bounds.size.width);
 }
 
 - (void)scrollToIndexInCollectionView:(NSInteger)index animated:(BOOL)animated
@@ -470,7 +470,7 @@ static int kCurrentEpisodeContext;
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    NSInteger index = roundf(self.collectionView.contentOffset.x / self.collectionView.bounds.size.width);
+    NSInteger index = [self selectedIndexInCollectionView];
     self.collectionDragStartIndex = index;
     self.collectionState = TPScrollStateDragging;
 }
@@ -496,11 +496,21 @@ static int kCurrentEpisodeContext;
 {
     self.collectionState = TPScrollStateNormal;
     
-    NSInteger index = roundf(self.collectionView.contentOffset.x / self.collectionView.bounds.size.width);
-    if(index < 0 || index >= [self.collectionView numberOfItemsInSection:0]) return;
+    NSInteger index = [self selectedIndexInCollectionView];
+    NSInteger count = [self.collectionView numberOfItemsInSection:0];
+    if(index < 0 || index >= count) return;
     if(index == _collectionDragStartIndex) return;
     
     [[TPPlayerManager sharedManager] cueEpisode:[self.model dataForIndexPath:[NSIndexPath indexPathForRow:index inSection:0]]];
+
+    if(index < 3)
+    {
+        [self.model loadHead];
+    }
+    if(index > count-3)
+    {
+        [self.model loadTail];
+    }
 }
 
 #pragma mark - collection view
