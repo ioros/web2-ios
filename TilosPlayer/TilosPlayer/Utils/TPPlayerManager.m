@@ -31,7 +31,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
         [[TPAudioPlayer sharedPlayer] addObserver:self forKeyPath:@"loading" options:NSKeyValueObservingOptionInitial context:nil];
         [[TPAudioPlayer sharedPlayer] addObserver:self forKeyPath:@"currentTime" options:NSKeyValueObservingOptionNew context:nil];
         
-        [[[TPPlayerManager sharedManager] model] jumpToDate:[NSDate date]];
+        [self.model jumpToDate:[NSDate date]];
     }
     return self;
 }
@@ -40,7 +40,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 
 - (void)continuousProgramModelDidFinish:(TPContinuousProgramModel *)continuousProgramModel
 {
-    
+    // select the live episode
+    NSDate *now = [NSDate date];
+    NSInteger count = [continuousProgramModel numberOfItemsInSection:0];
+    for(int i=0; i<count; i++)
+    {
+        TPEpisodeData *episode = [continuousProgramModel dataForIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+        if([episode.plannedFrom timeIntervalSinceDate:now] < 0 && [episode.plannedTo timeIntervalSinceDate:now] > 0)
+        {
+            [self cueEpisode:episode];
+            break;
+        }
+    }
 }
 - (void)continuousProgramModel:(TPContinuousProgramModel *)continuousProgramModel didInsertDataAtIndexPaths:(NSArray *)indexPaths atEnd:(BOOL)atEnd
 {

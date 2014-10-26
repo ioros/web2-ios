@@ -39,6 +39,8 @@
 @property (nonatomic, assign) TPScrollState collectionState;
 @property (nonatomic, assign) NSInteger collectionDragStartIndex;
 
+@property (nonatomic, retain) TPContinuousProgramModel *model;
+
 @end
 
 #pragma mark -
@@ -168,18 +170,39 @@ static int kCurrentEpisodeContext;
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"playing" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:&kPlayingContext];
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"playerLoading" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:&kPlayerLoadingContext];
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"currentEpisode" options:NSKeyValueObservingOptionNew context:&kCurrentEpisodeContext];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelDidFinish:) name:TPContinuousProgramModelDidFinishNotification object:[[TPPlayerManager sharedManager] model]];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelDidInsertData:) name:TPContinuousProgramModelDidInsertDataNotification object:[[TPPlayerManager sharedManager] model]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
+    if(self.model == nil)
+    {
+        self.model = [[TPPlayerManager sharedManager] model];
+        [self.collectionView reloadData];
+    }
+    
     // initialize the layout
     [self doOpen:NO];
 }
+
+- (void)setModel:(TPContinuousProgramModel *)model
+{
+    if(_model)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:TPContinuousProgramModelDidFinishNotification object:_model];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:TPContinuousProgramModelDidInsertDataNotification object:_model];
+    }
+    
+    _model = model;
+    
+    if(_model)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelDidFinish:) name:TPContinuousProgramModelDidFinishNotification object:_model];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelDidInsertData:) name:TPContinuousProgramModelDidInsertDataNotification object:_model];
+    }
+}
+
 
 #pragma mark -
 
@@ -195,7 +218,6 @@ static int kCurrentEpisodeContext;
     }
     else if(context == &kCurrentEpisodeContext)
     {
-        NSLog(@"episode changed");
         TPEpisodeData *currentEpisode = [[TPPlayerManager sharedManager] currentEpisode];
         
         TPEpisodeDataState currentState = [currentEpisode currentState];
@@ -231,14 +253,15 @@ static int kCurrentEpisodeContext;
 {
     [self.collectionView reloadData];
     
-    /*
-    if(self.jumpDate)
+    TPEpisodeData *episode = [[TPPlayerManager sharedManager] currentEpisode];
+    if(episode)
     {
-        NSIndexPath *indexPath = [self.model indexPathForDate:self.jumpDate];
-        //[self scrollToIndexInCollectionView:indexPath.row animated:NO];
-        self.jumpDate = nil;
+        NSIndexPath *indexPath = [self.model indexPathForDate:episode.plannedFrom];
+        if(indexPath)
+        {
+            [self scrollToIndexInCollectionView:indexPath.row animated:NO];
+        }
     }
-    */
 }
 - (void)modelDidInsertData:(NSNotification *)notification
 {
@@ -477,19 +500,19 @@ static int kCurrentEpisodeContext;
     if(index < 0 || index >= [self.collectionView numberOfItemsInSection:0]) return;
     if(index == _collectionDragStartIndex) return;
     
-    NSLog(@"set current episode");
+    [[TPPlayerManager sharedManager] cueEpisode:[self.model dataForIndexPath:[NSIndexPath indexPathForRow:index inSection:0]]];
 }
 
 #pragma mark - collection view
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return [[[TPPlayerManager sharedManager] model] numberOfSections];
+    return [self.model numberOfSections];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [[[TPPlayerManager sharedManager] model] numberOfItemsInSection:section];
+    return [self.model numberOfItemsInSection:section];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -497,7 +520,7 @@ static int kCurrentEpisodeContext;
     static NSString *cellIdentifier = @"EpisodeCollectionCell";
     TPEpisodeCollectionCell *cell = (TPEpisodeCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    cell.episode = (TPEpisodeData *)[[[TPPlayerManager sharedManager] model] dataForIndexPath:indexPath];
+    cell.episode = (TPEpisodeData *)[self.model dataForIndexPath:indexPath];
     return cell;
 }
 
