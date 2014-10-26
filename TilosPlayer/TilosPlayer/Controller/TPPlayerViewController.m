@@ -256,7 +256,7 @@ static int kCurrentEpisodeContext;
     TPEpisodeData *episode = [[TPPlayerManager sharedManager] currentEpisode];
     if(episode)
     {
-        NSIndexPath *indexPath = [self.model indexPathForDate:episode.plannedFrom];
+        NSIndexPath *indexPath = [self.model indexPathForData:episode];
         if(indexPath)
         {
             [self scrollToIndexInCollectionView:indexPath.row animated:NO];

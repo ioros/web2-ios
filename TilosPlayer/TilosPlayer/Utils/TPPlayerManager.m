@@ -41,16 +41,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 - (void)continuousProgramModelDidFinish:(TPContinuousProgramModel *)continuousProgramModel
 {
     // select the live episode
-    NSDate *now = [NSDate date];
-    NSInteger count = [continuousProgramModel numberOfItemsInSection:0];
-    for(int i=0; i<count; i++)
+    
+    NSIndexPath *indexPath = [self.model indexPathForLiveData];
+    if(indexPath)
     {
-        TPEpisodeData *episode = [continuousProgramModel dataForIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-        if([episode.plannedFrom timeIntervalSinceDate:now] < 0 && [episode.plannedTo timeIntervalSinceDate:now] > 0)
-        {
-            [self cueEpisode:episode];
-            break;
-        }
+        [self cueEpisode:[self.model dataForIndexPath:indexPath]];
     }
 }
 - (void)continuousProgramModel:(TPContinuousProgramModel *)continuousProgramModel didInsertDataAtIndexPaths:(NSArray *)indexPaths atEnd:(BOOL)atEnd

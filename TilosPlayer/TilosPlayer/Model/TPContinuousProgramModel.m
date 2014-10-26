@@ -257,17 +257,49 @@ NSString *const TPContinuousProgramModelDidInsertDataNotification = @"TPContinuo
 
 #pragma mark -
 
-- (NSIndexPath *)indexPathForDate:(NSDate *)date
+- (NSIndexPath *)indexPathForData:(id)data
 {
-    int counter = 0;
-    for(TPEpisodeData *episode in self.episodes)
+    NSInteger index = [self.episodes indexOfObject:data];
+    if(index > -1)
     {
-        if(episode.plannedFrom.timeIntervalSince1970 <= date.timeIntervalSince1970 && date.timeIntervalSince1970 < episode.plannedTo.timeIntervalSince1970)
+        return [NSIndexPath indexPathForRow:index inSection:0];
+    }
+    return nil;
+}
+
+- (NSIndexPath *)indexPathForLiveData
+{
+    // select the live episode
+    NSDate *now = [NSDate date];
+    NSInteger count = self.episodes.count;
+    
+    for(int i=0; i<count; i++)
+    {
+        TPEpisodeData *episode = [self.episodes objectAtIndex:i];
+        TPEpisodeData *nextEpisode = nil;
+        
+        // TODO: remove this when server is fixd
+        if(i < (count -1))
         {
-            return [NSIndexPath indexPathForRow:counter inSection:0];
-            break;
+            nextEpisode = [self.episodes objectAtIndex:i+1];
         }
-        counter++;
+        
+        if(nextEpisode)
+        {
+            if([episode.plannedFrom timeIntervalSinceDate:now] < 0 && [nextEpisode.plannedFrom timeIntervalSinceDate:now] > 0)
+            {
+                return [NSIndexPath indexPathForRow:i inSection:0];
+                break;
+            }
+        }
+        else
+        {
+            if([episode.plannedFrom timeIntervalSinceDate:now] < 0 && [episode.plannedTo timeIntervalSinceDate:now] > 0)
+            {
+                return [NSIndexPath indexPathForRow:i inSection:0];
+                break;
+            }
+        }
     }
     return nil;
 }

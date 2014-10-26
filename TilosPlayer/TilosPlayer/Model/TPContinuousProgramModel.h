@@ -29,7 +29,8 @@ FOUNDATION_EXPORT NSString *const TPContinuousProgramModelDidInsertDataNotificat
 @property (nonatomic, retain) NSMutableArray *episodes;
 @property (nonatomic, assign) id<TPContinuousProgramModelDelegate> delegate;
 
-- (NSIndexPath *)indexPathForDate:(NSDate *)date;
+- (NSIndexPath *)indexPathForLiveData;
+- (NSIndexPath *)indexPathForData:(id)data;
 
 - (void)loadTail;
 - (void)loadHead;

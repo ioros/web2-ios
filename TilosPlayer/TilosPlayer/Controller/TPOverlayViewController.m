@@ -192,61 +192,63 @@
     UIImage *image = [self.ambienceImageView image];
     if(image == nil) return;
     
-    UIColor *tintColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-    image = [image applyBlurWithRadius:7 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
+    __block UIImage *bannerImage = image;
+    __block CGSize viewSize = self.view.bounds.size;
     
-    CGSize size = self.view.frame.size;
-    CGFloat scale = MAX(size.width / image.size.width, size.height / image.size.height);
-    CGSize scaledSize = CGSizeMake(image.size.width * scale, image.size.height * scale);
-    
-    if(UIGraphicsBeginImageContextWithOptions != NULL)
-	{
-		UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
-	}
-	else
-	{
-		UIGraphicsBeginImageContext(size);
-	}
-    [image drawInRect:CGRectMake( (size.width - scaledSize.width)/2, (size.height - scaledSize.height)/2, scaledSize.width, scaledSize.height)];
-    
-	UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    
-    
-    size = CGSizeMake(320, 50);
-    
-    if(UIGraphicsBeginImageContextWithOptions != NULL)
-	{
-		UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
-	}
-	else
-	{
-		UIGraphicsBeginImageContext(size);
-	}
-    [scaledImage drawInRect:CGRectMake(0, -568.0f + size.height, size.width, 568.0f)];
-    
-	UIImage *tabbarImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    ////////////
-    
-    UIImageView *view = nil;
-    
-    view = [self.tabbar coverView];
-    [UIView transitionWithView:view
-                      duration:0.3f
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        view.image = tabbarImage;
-                    } completion:NULL];
+    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
-    
-    view = [self.playerViewController backgroundView];
-    [UIView transitionWithView:view
-                      duration:0.3f
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        view.image = scaledImage;
-                    } completion:NULL];
+        // generate images
+        
+        UIColor *tintColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+        UIImage *blurredImage = [bannerImage applyBlurWithRadius:5 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
+        
+        CGSize size = viewSize;
+        CGFloat scale = MAX(size.width / blurredImage.size.width, size.height / blurredImage.size.height);
+        CGSize scaledSize = CGSizeMake(blurredImage.size.width * scale, blurredImage.size.height * scale);
+        
+        
+        if(UIGraphicsBeginImageContextWithOptions != NULL) {
+            UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
+        } else {
+            UIGraphicsBeginImageContext(size);
+        }
+        [blurredImage drawInRect:CGRectMake( (size.width - scaledSize.width)/2, (size.height - scaledSize.height)/2, scaledSize.width, scaledSize.height)];
+        UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+        
+        size = CGSizeMake(320, 50);
+
+        
+        if(UIGraphicsBeginImageContextWithOptions != NULL) {
+            UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
+        } else {
+            UIGraphicsBeginImageContext(size);
+        }
+        [scaledImage drawInRect:CGRectMake(0, -568.0f + size.height, size.width, 568.0f)];
+        
+        UIImage *tabbarImage = UIGraphicsGetImageFromCurrentImageContext();
+        
+        dispatch_async( dispatch_get_main_queue(), ^{
+
+            UIImageView *imageView = nil;
+            
+            imageView = [self.tabbar coverView];
+            [UIView transitionWithView:imageView
+                              duration:0.3f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                imageView.image = tabbarImage;
+                            } completion:NULL];
+            
+            
+            imageView = [self.playerViewController backgroundView];
+            [UIView transitionWithView:imageView
+                              duration:0.3f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                imageView.image = scaledImage;
+                            } completion:NULL];
+        });
+    });
 }
 
 #pragma mark -
