@@ -157,7 +157,7 @@ static int kCurrentEpisodeContext;
     button.frame = CGRectMake(0, 0, 60, 60);
     button.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
     button.center = CGPointMake(160, 100);
-    [button addTarget:self action:@selector(toggle:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(openSettings) forControlEvents:UIControlEventTouchUpInside];
 
     [self.view addSubview:button];
     self.logoButton = button;
@@ -166,6 +166,11 @@ static int kCurrentEpisodeContext;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.tapeSeekViewController.view.hidden = YES;
+    self.liveButton.hidden = YES;
+    self.collectionView.hidden = YES;
+    self.playButton.hidden = YES;
     
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"playing" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:&kPlayingContext];
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"playerLoading" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:&kPlayerLoadingContext];
@@ -186,6 +191,8 @@ static int kCurrentEpisodeContext;
     [self doOpen:NO];
 }
 
+#pragma mark -
+
 - (void)setModel:(TPContinuousProgramModel *)model
 {
     if(_model)
@@ -203,6 +210,17 @@ static int kCurrentEpisodeContext;
     }
 }
 
+#pragma mark -
+
+- (void)openSettings
+{
+    BOOL canOpenSettings = (&UIApplicationOpenSettingsURLString != NULL);
+    if (canOpenSettings)
+    {
+        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [[UIApplication sharedApplication] openURL:url];
+    }
+}
 
 #pragma mark -
 
@@ -237,6 +255,27 @@ static int kCurrentEpisodeContext;
                 self.tapeSeekViewController.view.hidden = YES;
                 break;
         }
+        
+        if(self.collectionView.hidden)
+        {
+            self.collectionView.hidden = NO;
+            self.collectionView.alpha = 0;
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                self.collectionView.alpha = 1.0f;
+            }];
+        }
+
+        if(self.playButton.hidden)
+        {
+            self.playButton.hidden = NO;
+            self.playButton.alpha = 0;
+            [UIView animateWithDuration:0.3 animations:^{
+                self.playButton.alpha = 1.0f;
+            }];
+        }
+        
+        [self setCollectionDragStartIndex:[[self.model indexPathForData:currentEpisode] row]];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"updateAmbience" object:self userInfo:nil];
     }
@@ -410,8 +449,9 @@ static int kCurrentEpisodeContext;
     _opened = YES;
     
     self.playbackButton.hidden = YES;
-    self.tapeSeekViewController.view.hidden = NO;
-
+    
+    TPEpisodeDataState state = [[[TPPlayerManager sharedManager] currentEpisode] currentState];
+    self.tapeSeekViewController.view.hidden = (state == TPEpisodeDataStatePast);
 
     if(animated)
     {
