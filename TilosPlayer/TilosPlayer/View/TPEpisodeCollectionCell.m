@@ -88,7 +88,7 @@
     self.detailTextView.contentInset = UIEdgeInsetsMake(-3, 0, 0, 0);
     [self.contentView addSubview:self.detailTextView];
     */
-    self.contentView.layer.cornerRadius = 5.0;
+    self.contentView.layer.cornerRadius = 10.0;
     self.contentView.clipsToBounds = YES;
     self.contentView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.05];
 }
