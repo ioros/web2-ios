@@ -16,20 +16,25 @@
     if (self) {
         
         _playing = NO;
+        _isMusic = YES;
         
         self.layer.cornerRadius = 5.0f;
         self.clipsToBounds = YES;
         self.backgroundColor = [UIColor blackColor];
         
-        self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SmallPlayButton.png"]];
-        self.imageView.contentMode = UIViewContentModeCenter;
-        [self addSubview:self.imageView];
-        
+        self.button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.button setImage:[UIImage imageNamed:@"SmallPlayButton.png"] forState:UIControlStateNormal];
+        [self addSubview:self.button];
+
+        self.typeView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SmallOpenButton.png"]];
+        self.typeView.contentMode = UIViewContentModeCenter;
+        [self addSubview:self.typeView];
+
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         label.textAlignment = NSTextAlignmentCenter;
         label.font = kSubFont;
         label.textColor = [UIColor whiteColor];
-        label.text = @"0:00 / 95:00";
+        label.text = @"35:00 / 120:00";
         self.label = label;
         
         [self addSubview:self.label];
@@ -42,11 +47,11 @@
     _playing = playing;
     if(_playing)
     {
-        [self.imageView setImage:[UIImage imageNamed:@"SmallPauseButton.png"]];
+        [self.button setImage:[UIImage imageNamed:@"SmallPauseButton.png"] forState:UIControlStateNormal];
     }
     else
     {
-        [self.imageView setImage:[UIImage imageNamed:@"SmallPlayButton.png"]];
+        [self.button setImage:[UIImage imageNamed:@"SmallPlayButton.png"] forState:UIControlStateNormal];
     }
 }
 
@@ -54,8 +59,9 @@
 - (void)layoutSubviews
 {
     CGRect b = self.bounds;
-    self.imageView.frame = CGRectMake(0, 0, b.size.height, b.size.height);
-    self.label.frame = CGRectMake(b.size.height, 0, 80, b.size.height);
+    self.button.frame = CGRectMake(-5, -5, b.size.height+10, b.size.height+10);
+    self.label.frame = CGRectMake(b.size.height, 0, b.size.width - 2 * b.size.height, b.size.height);
+    self.typeView.frame = CGRectMake(b.size.width-b.size.height, 0, b.size.height, b.size.height);
 }
 
 

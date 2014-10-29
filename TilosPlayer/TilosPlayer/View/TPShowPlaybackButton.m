@@ -26,9 +26,10 @@
         self.clipsToBounds = YES;
         self.backgroundColor = [UIColor blackColor];
         self.customImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        self.customImageView.contentMode = UIViewContentModeScaleAspectFill;
         [self addSubview:self.customImageView];
         
-        self.chevronView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SmallOpenButton.png"]];
+        self.chevronView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SmallRecord.png"]];
         self.chevronView.contentMode = UIViewContentModeCenter;
         [self addSubview:self.chevronView];
     }
@@ -48,7 +49,7 @@
     
     CGRect b = self.bounds;
     self.chevronView.frame = CGRectMake(b.size.width-b.size.height, 0, b.size.height, b.size.height);
-    self.customImageView.frame = CGRectMake(b.size.width-b.size.height - 80, 0, 80, b.size.height);
+    self.customImageView.frame = CGRectMake(0, 0, b.size.width-b.size.height, b.size.height);
 }
 
 @end

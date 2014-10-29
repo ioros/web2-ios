@@ -10,9 +10,11 @@
 
 @interface TPPlaybackTimeButton : UIControl
 
-@property (nonatomic, retain) UIImageView *imageView;
+@property (nonatomic, retain) UIButton *button;
+@property (nonatomic, retain) UIImageView *typeView;
 @property (nonatomic, retain) UILabel *label;
 
 @property (nonatomic, assign) BOOL playing;
+@property (nonatomic, assign) BOOL isMusic;
 
 @end

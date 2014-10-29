@@ -127,6 +127,7 @@ static int kCurrentEpisodeContext;
     
     TPPlaybackTimeButton *playbackTimeView = [[TPPlaybackTimeButton alloc] initWithFrame:UIEdgeInsetsInsetRect(topBarLeftContainer.bounds, UIEdgeInsetsMake(3, 0, 3, 0))];
     playbackTimeView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    [playbackTimeView addTarget:self action:@selector(openHandler) forControlEvents:UIControlEventTouchUpInside];
     self.playbackTimeView = playbackTimeView;
     [topBarLeftContainer addSubview:self.playbackTimeView];
 
@@ -427,6 +428,8 @@ static int kCurrentEpisodeContext;
               initialSpringVelocity:0.2
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
+                             self.collectionView.alpha = 0.0;
+
                              self.topBarLeftContainer.frame = topBarLeftContainerTargetRect;
                              self.topBarRightContainer.frame = topBarRightContainerTargetRect;
                              self.topView.frame = topTargetRect;
@@ -444,6 +447,8 @@ static int kCurrentEpisodeContext;
     }
     else
     {
+        self.collectionView.alpha = 0.0;
+        
         self.topBarLeftContainer.frame = topBarLeftContainerTargetRect;
         self.topBarRightContainer.frame = topBarRightContainerTargetRect;
         self.topView.frame = topTargetRect;
@@ -478,7 +483,7 @@ static int kCurrentEpisodeContext;
     _opened = YES;
     
     TPEpisodeDataState state = [[[TPPlayerManager sharedManager] currentEpisode] currentState];
-    self.tapeSeekViewController.view.hidden = (state == TPEpisodeDataStatePast);
+    self.tapeSeekViewController.view.hidden = NO;
 
     if(animated)
     {
@@ -487,6 +492,9 @@ static int kCurrentEpisodeContext;
               initialSpringVelocity:0.2
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
+                             
+                             self.collectionView.alpha = 1.0;
+
                              self.topBarLeftContainer.frame = topBarLeftContainerTargetRect;
                              self.topBarRightContainer.frame = topBarRightContainerTargetRect;
                              self.topView.frame = topTargetRect;
@@ -500,6 +508,9 @@ static int kCurrentEpisodeContext;
     }
     else
     {
+        
+        self.collectionView.alpha = 1.0;
+
         self.topBarLeftContainer.frame = topBarLeftContainerTargetRect;
         self.topBarRightContainer.frame = topBarRightContainerTargetRect;
         self.topView.frame = topTargetRect;
