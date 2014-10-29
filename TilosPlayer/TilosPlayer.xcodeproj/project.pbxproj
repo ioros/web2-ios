@@ -36,6 +36,7 @@
 		A54B4CE519F94027001B7004 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A54B4CD519F94027001B7004 /* UIView+WebCacheOperation.m */; };
 		A560DEF119F27EE60038A48E /* TPPlayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A560DEF019F27EE60038A48E /* TPPlayButton.m */; };
 		A5628CB9185917F4007CA45C /* TPTapeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */; };
+		A585563C1A00821B0046B391 /* TPPlaybackTimeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A585563B1A00821B0046B391 /* TPPlaybackTimeButton.m */; };
 		A5997F3219FD6D4D009A30DD /* TPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = A5997F3119FD6D4D009A30DD /* TPLabel.m */; };
 		A5A811F918B3910F0087DF31 /* TPContinuousProgramModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A811F818B3910F0087DF31 /* TPContinuousProgramModel.m */; };
 		A5DD0FFB1859FE42009D1A1A /* TPTapeCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DD0FFA1859FE42009D1A1A /* TPTapeCollectionLayout.m */; };
@@ -154,6 +155,8 @@
 		A560DEF019F27EE60038A48E /* TPPlayButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPPlayButton.m; sourceTree = "<group>"; };
 		A5628CB7185917F4007CA45C /* TPTapeCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTapeCollectionCell.h; sourceTree = "<group>"; };
 		A5628CB8185917F4007CA45C /* TPTapeCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTapeCollectionCell.m; sourceTree = "<group>"; };
+		A585563A1A00821B0046B391 /* TPPlaybackTimeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPPlaybackTimeButton.h; sourceTree = "<group>"; };
+		A585563B1A00821B0046B391 /* TPPlaybackTimeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPPlaybackTimeButton.m; sourceTree = "<group>"; };
 		A5997F3019FD6D4D009A30DD /* TPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPLabel.h; sourceTree = "<group>"; };
 		A5997F3119FD6D4D009A30DD /* TPLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPLabel.m; sourceTree = "<group>"; };
 		A5A811F718B3910F0087DF31 /* TPContinuousProgramModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPContinuousProgramModel.h; sourceTree = "<group>"; };
@@ -539,6 +542,8 @@
 				A5FA37D819FA8C4000249D51 /* TPShowPlaybackButton.m */,
 				A5997F3019FD6D4D009A30DD /* TPLabel.h */,
 				A5997F3119FD6D4D009A30DD /* TPLabel.m */,
+				A585563A1A00821B0046B391 /* TPPlaybackTimeButton.h */,
+				A585563B1A00821B0046B391 /* TPPlaybackTimeButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -816,6 +821,7 @@
 				A5FEC0271858C3BC0084B4C5 /* TPEpisodeListModel.m in Sources */,
 				A54B4CE019F94027001B7004 /* UIImage+GIF.m in Sources */,
 				A5FA37D619FA667900249D51 /* TPShowCollectionCell.m in Sources */,
+				A585563C1A00821B0046B391 /* TPPlaybackTimeButton.m in Sources */,
 				A5FA37DD19FA9F8900249D51 /* TPTapeSeekViewController.m in Sources */,
 				A5DD1019185A7F4B009D1A1A /* TPShowInfoHeaderView.m in Sources */,
 				A5DD0FFB1859FE42009D1A1A /* TPTapeCollectionLayout.m in Sources */,

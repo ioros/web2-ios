@@ -28,24 +28,11 @@
         self.customImageView = [[UIImageView alloc] initWithFrame:self.bounds];
         [self addSubview:self.customImageView];
         
-        self.button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.button setImage:[UIImage imageNamed:@"SmallPlayButton.png"] forState:UIControlStateNormal];
-        [self addSubview:self.button];
+        self.chevronView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SmallOpenButton.png"]];
+        self.chevronView.contentMode = UIViewContentModeCenter;
+        [self addSubview:self.chevronView];
     }
     return self;
-}
-
-- (void)setPlaying:(BOOL)playing
-{
-    _playing = playing;
-    if(_playing)
-    {
-        [self.button setImage:[UIImage imageNamed:@"SmallPauseButton.png"] forState:UIControlStateNormal];
-    }
-    else
-    {
-        [self.button setImage:[UIImage imageNamed:@"SmallPlayButton.png"] forState:UIControlStateNormal];
-    }
 }
 
 - (void)setImageURL:(NSString *)imageURL
@@ -60,9 +47,8 @@
     [super layoutSubviews];
     
     CGRect b = self.bounds;
-    self.customImageView.frame = UIEdgeInsetsInsetRect(self.bounds, UIEdgeInsetsMake(0, b.size.height, 0, 0));
-    
-    self.button.frame = CGRectMake(0, 0, b.size.height, b.size.height);
+    self.chevronView.frame = CGRectMake(b.size.width-b.size.height, 0, b.size.height, b.size.height);
+    self.customImageView.frame = CGRectMake(b.size.width-b.size.height - 80, 0, 80, b.size.height);
 }
 
 @end

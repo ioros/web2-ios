@@ -11,7 +11,6 @@
 @interface TPShowPlaybackButton : UIControl
 
 @property (nonatomic, retain) NSString *imageURL;
-@property (nonatomic, assign) BOOL playing;
-@property (nonatomic, retain) UIButton *button;
+@property (nonatomic, retain) UIImageView *chevronView;
 
 @end

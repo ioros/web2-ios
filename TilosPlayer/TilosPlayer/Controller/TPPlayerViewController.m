@@ -16,6 +16,8 @@
 
 #import "TPPlayButton.h"
 #import "TPShowPlaybackButton.h"
+#import "TPPlaybackTimeButton.h"
+
 #import "TPCollectionView.h"
 #import "TPEpisodeCollectionCell.h"
 #import "TPTapeCollectionLayout.h"
@@ -29,8 +31,12 @@
 
 @property (nonatomic, retain) TPTapeSeekViewController *tapeSeekViewController;
 
-// small playback with banner
+@property (nonatomic, retain) UIView *topBarLeftContainer;
+@property (nonatomic, retain) UIView *topBarRightContainer;
 @property (nonatomic, retain) TPShowPlaybackButton *playbackButton;
+@property (nonatomic, retain) TPPlaybackTimeButton *playbackTimeView;
+
+// small playback with banner
 @property (nonatomic, retain) UIButton *liveButton;
 @property (nonatomic, retain) UIButton *logoButton;
 @property (nonatomic, retain) TPPlayButton *playButton;
@@ -99,12 +105,33 @@ static int kCurrentEpisodeContext;
     [topView addSubview:b];
     self.liveButton = b;
     
-    TPShowPlaybackButton *playbackButton = [[TPShowPlaybackButton alloc] initWithFrame:CGRectMake(200, 30, 100, 24)];
-    [topView addSubview:playbackButton];
+    ///////////////////
+    
+    UIView *topBarLeftContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 120, 30)];
+    topBarLeftContainer.backgroundColor = [UIColor clearColor];
+    topBarLeftContainer.clipsToBounds = YES;
+    self.topBarLeftContainer = topBarLeftContainer;
+    [self.topView addSubview:self.topBarLeftContainer];
+
+    UIView *topBarRightContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 120, 30)];
+    topBarRightContainer.backgroundColor = [UIColor clearColor];
+    topBarRightContainer.clipsToBounds = YES;
+    self.topBarRightContainer = topBarRightContainer;
+    [self.topView addSubview:self.topBarRightContainer];
+
+    TPShowPlaybackButton *playbackButton = [[TPShowPlaybackButton alloc] initWithFrame:UIEdgeInsetsInsetRect(topBarRightContainer.bounds, UIEdgeInsetsMake(3, 0, 3, 0))];
+    playbackButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     self.playbackButton = playbackButton;
     [playbackButton addTarget:self action:@selector(openHandler) forControlEvents:UIControlEventTouchUpInside];
-    [playbackButton.button addTarget:self action:@selector(togglePlay:) forControlEvents:UIControlEventTouchUpInside];
+    [topBarRightContainer addSubview:playbackButton];
+    
+    TPPlaybackTimeButton *playbackTimeView = [[TPPlaybackTimeButton alloc] initWithFrame:UIEdgeInsetsInsetRect(topBarLeftContainer.bounds, UIEdgeInsetsMake(3, 0, 3, 0))];
+    playbackTimeView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    self.playbackTimeView = playbackTimeView;
+    [topBarLeftContainer addSubview:self.playbackTimeView];
 
+    
+    //////////////////
 
 
     UIView *middleView = [[UIView alloc] initWithFrame:CGRectMake(0, 170, 320, 230)];
@@ -137,10 +164,6 @@ static int kCurrentEpisodeContext;
     
     ////////////////
     
-    UIButton *button = nil;
-
-    /////////////////////
-    
     TPPlayButton *playButton = [[TPPlayButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
     playButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
     playButton.center = CGPointMake(160, 400);
@@ -152,15 +175,14 @@ static int kCurrentEpisodeContext;
 
     /////////////
     
-    button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setImage:[UIImage imageNamed:@"logoAlpha.png"] forState:UIControlStateNormal];
-    button.frame = CGRectMake(0, 0, 60, 60);
-    button.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
-    button.center = CGPointMake(160, 100);
-    [button addTarget:self action:@selector(openSettings) forControlEvents:UIControlEventTouchUpInside];
-
-    [self.view addSubview:button];
-    self.logoButton = button;
+    UIButton *logoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [logoButton setImage:[UIImage imageNamed:@"logoAlpha.png"] forState:UIControlStateNormal];
+    logoButton.frame = CGRectMake(0, 0, 60, 60);
+    logoButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
+    logoButton.center = CGPointMake(160, 100);
+    [logoButton addTarget:self action:@selector(toggle:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:logoButton];
+    self.logoButton = logoButton;
 }
 
 - (void)viewDidLoad
@@ -285,7 +307,7 @@ static int kCurrentEpisodeContext;
 {
     self.playButton.playing = [[TPPlayerManager sharedManager] playing];
     self.playButton.loading = [[TPPlayerManager sharedManager] playerLoading];
-    self.playbackButton.playing = [[TPPlayerManager sharedManager] playing];
+    self.playbackTimeView.playing = [[TPPlayerManager sharedManager] playing];
 }
 
 #pragma mark -
@@ -391,10 +413,11 @@ static int kCurrentEpisodeContext;
     CGRect logoButtonTargetRect = CGRectMake(140, 20, 40, 40);
     CGRect playButtonTargetRect = CGRectMake(140, 20, 40, 40);
     CGRect backgroundTargetRect = CGRectMake(0, 0, 320, 64);
-
+    CGRect topBarLeftContainerTargetRect = CGRectMake(160-145, 27, 145, 30);
+    CGRect topBarRightContainerTargetRect = CGRectMake(160, 27, 145, 30);
+    
     _opened = NO;
 
-    self.playbackButton.hidden = NO;
     self.tapeSeekViewController.view.hidden = YES;
 
     if(animated)
@@ -404,6 +427,8 @@ static int kCurrentEpisodeContext;
               initialSpringVelocity:0.2
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
+                             self.topBarLeftContainer.frame = topBarLeftContainerTargetRect;
+                             self.topBarRightContainer.frame = topBarRightContainerTargetRect;
                              self.topView.frame = topTargetRect;
                              self.middleView.frame = middleTargetRect;
                              self.fadeView.alpha = fadeTargetAlpha;
@@ -419,6 +444,8 @@ static int kCurrentEpisodeContext;
     }
     else
     {
+        self.topBarLeftContainer.frame = topBarLeftContainerTargetRect;
+        self.topBarRightContainer.frame = topBarRightContainerTargetRect;
         self.topView.frame = topTargetRect;
         self.middleView.frame = middleTargetRect;
         self.fadeView.alpha = fadeTargetAlpha;
@@ -445,10 +472,10 @@ static int kCurrentEpisodeContext;
     CGRect logoButtonTargetRect = CGRectMake(130, 50, 60, 60);
     CGRect playButtonTargetRect = CGRectMake(130, 430, 60, 60);
     CGRect backgroundTargetRect = CGRectMake(0, 0, 320, self.view.bounds.size.height);
+    CGRect topBarLeftContainerTargetRect = CGRectMake(160-15, 65, 30, 30);
+    CGRect topBarRightContainerTargetRect = CGRectMake(160-15, 65, 30, 30);
 
     _opened = YES;
-    
-    self.playbackButton.hidden = YES;
     
     TPEpisodeDataState state = [[[TPPlayerManager sharedManager] currentEpisode] currentState];
     self.tapeSeekViewController.view.hidden = (state == TPEpisodeDataStatePast);
@@ -460,6 +487,8 @@ static int kCurrentEpisodeContext;
               initialSpringVelocity:0.2
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
+                             self.topBarLeftContainer.frame = topBarLeftContainerTargetRect;
+                             self.topBarRightContainer.frame = topBarRightContainerTargetRect;
                              self.topView.frame = topTargetRect;
                              self.middleView.frame = middleTargetRect;
                              self.fadeView.alpha = fadeTargetAlpha;
@@ -471,6 +500,8 @@ static int kCurrentEpisodeContext;
     }
     else
     {
+        self.topBarLeftContainer.frame = topBarLeftContainerTargetRect;
+        self.topBarRightContainer.frame = topBarRightContainerTargetRect;
         self.topView.frame = topTargetRect;
         self.middleView.frame = middleTargetRect;
         self.fadeView.alpha = fadeTargetAlpha;
