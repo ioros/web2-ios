@@ -259,8 +259,8 @@ NSString *const TPContinuousProgramModelDidInsertDataNotification = @"TPContinuo
 
 - (NSIndexPath *)indexPathForData:(id)data
 {
-    NSInteger index = [self.episodes indexOfObject:data];
-    if(index > -1)
+    NSUInteger index = [self.episodes indexOfObject:data];
+    if(index != NSNotFound)
     {
         return [NSIndexPath indexPathForRow:index inSection:0];
     }
