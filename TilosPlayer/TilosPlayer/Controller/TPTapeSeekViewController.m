@@ -104,7 +104,7 @@ static int kCurrentEpisodeContext;
 
             CGFloat offset = timeDiff / kTapeCellTime * kTapeCellWidth;
             
-            NSLog(@"UPDATING BY PLAYER POSITION %f %f", timeDiff, globalTime);
+            //NSLog(@"UPDATING BY PLAYER POSITION %f %f", timeDiff, globalTime);
             [self.tapeCollectionView setContentOffset:CGPointMake(offset - _tapeScrollAdjustment, 0)];
         }
         //        NSLog(@"offset %f %f %f", offset, globalTime, self.startTime);
