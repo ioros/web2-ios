@@ -21,6 +21,7 @@
 - (void)playerViewControllerWillClose:(TPPlayerViewController *)playerViewController;
 - (void)playerViewControllerDidClose:(TPPlayerViewController *)playerViewController;
 - (void)playerViewControllerWillOpen:(TPPlayerViewController *)playerViewController;
+- (void)playerViewControllerDidOpen:(TPPlayerViewController *)playerViewController;
 
 @end
 
@@ -31,7 +32,6 @@
 @property (nonatomic, retain) UIView *topView;
 @property (nonatomic, retain) UIView *middleView;
 @property (nonatomic, retain) UIImageView *backgroundView;
-
 @property (nonatomic, retain) UIView *fadeView;
 
 @property (nonatomic, assign) id<TPPlayerViewControllerDelegate> delegate;

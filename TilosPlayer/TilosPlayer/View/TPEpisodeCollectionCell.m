@@ -63,8 +63,9 @@
 
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
     self.imageView.backgroundColor = [UIColor lightGrayColor];
-//    self.imageView.layer.cornerRadius = 5.0f;
-//    self.imageView.clipsToBounds = YES;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.imageView.opaque = YES;
+    self.imageView.clipsToBounds = YES;
     [self.contentView addSubview:self.imageView];
     
     self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];

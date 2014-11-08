@@ -138,8 +138,8 @@ static int kCurrentEpisodeContext;
         
         self.tapeCollectionRowCount = kTapePaddingCount + (NSInteger)((self.endTime - self.startTime) / kTapeCellTime) + kTapePaddingCount;
         [self.tapeCollectionView reloadData];
-        [self updateActiveRange];
         [self.tapeCollectionView setContentOffset:CGPointMake(convertedOffset, 0)];
+        [self updateActiveRange];
         
         CGFloat offsetX = (globalTime - self.tapeStartTime)/kTapeCellTime * kTapeCellWidth - _tapeScrollAdjustment;
         
@@ -148,6 +148,10 @@ static int kCurrentEpisodeContext;
         {
             self.tapeCollectionState = TPScrollStateAnimating;
             [self.tapeCollectionView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+        }
+        else
+        {
+            NSLog(@"seek diisabled");
         }
     }
 }

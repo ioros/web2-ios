@@ -50,32 +50,38 @@
         
         self.loadingView.hidden = YES;
         
-        [self updateButton];
+        [self updateButtonAnimated:NO];
     }
     return self;
 }
 
-- (void)updateButton
+- (void)updateButtonAnimated:(BOOL)animated
 {
     self.buttonView.image = _playing ? [UIImage imageNamed:@"PauseButton.png"] : [UIImage imageNamed:@"PlayButton.png"];
     
     if(_loading)
     {
+        self.loadingView.hidden = NO;
         [UIView animateWithDuration:0.2 animations:^{
             self.circleView.alpha = 0.0f;
             self.loadingView.alpha = 1.0f;
         }];
-        self.loadingView.hidden = NO;
         [self animateOneRound];
     }
     else
     {
-        [UIView animateWithDuration:0.2 animations:^{
-            self.circleView.alpha = 1.0f;
-            self.loadingView.alpha = 0.0f;
-        } completion:^(BOOL finished) {
-            self.loadingView.hidden = YES;
-        }];
+        if(!self.loadingView.hidden)
+        {
+            [UIView animateWithDuration:0.2f
+                                  delay:0
+                                options:UIViewAnimationOptionBeginFromCurrentState
+                             animations:^{
+                                 self.circleView.alpha = 1.0f;
+                                 self.loadingView.alpha = 0.0f;
+                             } completion:^(BOOL finished) {
+                                 self.loadingView.hidden = YES;
+                             }];
+        }
     }
 }
 
@@ -112,13 +118,15 @@
 
 - (void)setLoading:(BOOL)loading
 {
+    if(_loading == loading) return;
     _loading = loading;
-    [self updateButton];
+    [self updateButtonAnimated:YES];
 }
 - (void)setPlaying:(BOOL)playing
 {
+    if(_playing == playing) return;
     _playing = playing;
-    [self updateButton];
+    [self updateButtonAnimated:YES];
 }
 
 @end

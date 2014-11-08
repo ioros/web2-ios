@@ -13,6 +13,14 @@
 #import "TPEpisodeData.h"
 #import "TPShowData.h"
 
+@interface TPPlayerManager()
+
+@property (nonatomic, retain) TPEpisodeData *jumpToEpisode;
+
+@end
+
+#pragma mark -
+
 @implementation TPPlayerManager
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
@@ -40,12 +48,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 
 - (void)continuousProgramModelDidFinish:(TPContinuousProgramModel *)continuousProgramModel
 {
-    // select the live episode
-    
-    NSIndexPath *indexPath = [self.model indexPathForLiveData];
-    if(indexPath)
+    if(self.jumpToEpisode)
     {
-        [self cueEpisode:[self.model dataForIndexPath:indexPath]];
+        NSIndexPath *indexPath = [self.model indexPathForData:self.jumpToEpisode];
+        if(indexPath)
+        {
+            [self playEpisode:[self.model dataForIndexPath:indexPath]];
+        }
+        self.jumpToEpisode = nil;
+    }
+    else
+    {
+        // select the live episode
+        NSIndexPath *indexPath = [self.model indexPathForLiveData];
+        if(indexPath)
+        {
+            [self cueEpisode:[self.model dataForIndexPath:indexPath]];
+        }
     }
 }
 - (void)continuousProgramModel:(TPContinuousProgramModel *)continuousProgramModel didInsertDataAtIndexPaths:(NSArray *)indexPaths atEnd:(BOOL)atEnd
@@ -60,7 +79,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     if([keyPath isEqualToString:@"currentTime"])
     {
         NSTimeInterval playerTime = [TPAudioPlayer sharedPlayer].currentTime;
-        NSLog(@"PLAYER TIME %f", playerTime);
+        //NSLog(@"PLAYER TIME %f", playerTime);
         NSDate *date = [self.segmentStartDate dateByAddingTimeInterval:playerTime];
         
         self.globalTime = [date timeIntervalSince1970];
@@ -74,12 +93,24 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 - (void)cueEpisode:(TPEpisodeData *)episode
 {
     _globalTime = episode.plannedFrom.timeIntervalSince1970;
-    self.currentEpisode = episode;
     
-    if(_playing)
+    if(![self.currentEpisode isEqual:episode])
     {
-        [self playEpisode:self.currentEpisode];
+        self.currentEpisode = episode;
+        if(_playing)
+        {
+            [self playEpisode:self.currentEpisode];
+        }
     }
+    else
+    {
+        if(_playing)
+        {
+            NSTimeInterval offset = self.currentEpisode.plannedFrom.timeIntervalSince1970 - _globalTime;
+            [self playEpisode:self.currentEpisode atSeconds:offset];
+        }
+    }
+    
 }
 
 - (void)playEpisode:(TPEpisodeData *)episode
@@ -88,13 +119,56 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 }
 - (void)playEpisode:(TPEpisodeData *)episode atSeconds:(NSTimeInterval)seconds
 {
+    NSIndexPath *indexPath = [self.model indexPathForData:episode];
+    if(indexPath == nil)
+    {
+        self.jumpToEpisode = episode;
+        self.currentEpisode = nil;
+        // wait for loading
+        [self.model jumpToDate:episode.plannedFrom];
+        return;
+    }
+    else
+    {
+        // nothing?
+    }
+    
+    ///////////////////////////////
+    
+    // TODO: handle seconds
+    
+    NSDate *startDate = episode.plannedFrom;
+    //NSDate *dayDate = [startDate dayDate];
+    //NSDate *segmentDate = [startDate archiveSegmentStartDate];
+
+    _globalTime = episode.plannedFrom.timeIntervalSince1970 + seconds;
+    
+    // prevent duplicated setting
+    if(_currentEpisode != episode)
+        self.currentEpisode = episode;
+
+    NSDate *date = [startDate dateByAddingTimeInterval:seconds];
+    NSDate *segmentStartDate = [date archiveSegmentStartDate];
+    
+    self.segmentStartDate = segmentStartDate;
+    
+    NSString *url = [self urlForArchiveSegmentAtDate:date];
+    
+    self.playing = YES;
+    
+    
+    //////////////////
+    
     
     NSError *sessionError = nil;
     [[AVAudioSession sharedInstance] setDelegate:self];
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&sessionError];
     NSError *error = nil;
-    [[AVAudioSession sharedInstance] setActive:YES error:&error]; 
-
+    [[AVAudioSession sharedInstance] setActive:YES error:&error];
+    
+    
+    NSTimeInterval segmentSeconds = [date timeIntervalSinceDate:segmentStartDate];
+    [[TPAudioPlayer sharedPlayer] cueUrl:url atPosition:segmentSeconds];
     
     /// setup control center //////////////////////////////////////////
     
@@ -119,36 +193,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     [playCommand setEnabled:YES];
     [playCommand addTarget:self action:@selector(playOrPauseEvent:)];
     /*
-    MPFeedbackCommand *likeCommand = [rcc likeCommand];
-    [likeCommand setEnabled:YES];
-    [likeCommand setLocalizedTitle:@"I love it"];  // can leave this out for default
-    [likeCommand addTarget:self action:@selector(likeEvent:)];
+     MPFeedbackCommand *likeCommand = [rcc likeCommand];
+     [likeCommand setEnabled:YES];
+     [likeCommand setLocalizedTitle:@"I love it"];  // can leave this out for default
+     [likeCommand addTarget:self action:@selector(likeEvent:)];
      */
-    
-    
-    ///////////////////////////////
-    
-    // TODO: handle seconds
-    
-    NSDate *startDate = episode.plannedFrom;
-    //NSDate *dayDate = [startDate dayDate];
-    //NSDate *segmentDate = [startDate archiveSegmentStartDate];
 
-    _globalTime = episode.plannedFrom.timeIntervalSince1970 + seconds;
-    self.currentEpisode = episode;
-
-    NSDate *date = [startDate dateByAddingTimeInterval:seconds];
-    NSDate *segmentStartDate = [date archiveSegmentStartDate];
-    
-    
-    self.segmentStartDate = segmentStartDate;
-    
-    NSString *url = [self urlForArchiveSegmentAtDate:date];
-    
-    NSTimeInterval segmentSeconds = [date timeIntervalSinceDate:segmentStartDate];
-    [[TPAudioPlayer sharedPlayer] cueUrl:url atPosition:segmentSeconds];
-
-    self.playing = YES;
 
     
     //////////////////////////////////////
@@ -250,7 +300,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     if(self.currentEpisode)
     {
         self.playing = YES;
-        [self playEpisode:self.currentEpisode];
+        
+        NSTimeInterval offset = _globalTime - self.currentEpisode.plannedFrom.timeIntervalSince1970;
+        offset = MAX(0, offset);
+        [self playEpisode:self.currentEpisode atSeconds:offset];
     }
 }
 
@@ -258,6 +311,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 {
     if(!_playing) return;
 
+    self.playerLoading = NO;
     self.playing = NO;
     [[TPAudioPlayer sharedPlayer] pause];
 }
