@@ -68,6 +68,15 @@
     return [self.plannedFrom dayDate];
 }
 
+- (BOOL)isEqual:(id)other
+{
+    if([other isKindOfClass:[TPEpisodeData class]])
+    {
+        return [self.plannedFrom isEqual:[(TPEpisodeData *)other plannedFrom]];
+    }
+    return NO;
+}
+
 - (TPEpisodeDataState)currentState
 {
     NSDate *now = [NSDate date];
