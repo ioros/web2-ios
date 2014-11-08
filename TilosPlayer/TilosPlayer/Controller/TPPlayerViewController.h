@@ -27,7 +27,7 @@
 
 #pragma mark -
 
-@interface TPPlayerViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, TPContinuousProgramModelDelegate>
+@interface TPPlayerViewController : UIViewController
 
 @property (nonatomic, retain) UIView *topView;
 @property (nonatomic, retain) UIView *middleView;

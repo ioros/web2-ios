@@ -8,9 +8,6 @@
 
 #import "TPPlayerViewController.h"
 
-#import "TPContinuousProgramModel.h"
-#import "TPEpisodeData.h"
-
 #import "UIImage+ImageEffects.h"
 #import "TPPlayerManager.h"
 
@@ -18,14 +15,12 @@
 #import "TPShowPlaybackButton.h"
 #import "TPPlaybackTimeButton.h"
 
-#import "TPCollectionView.h"
-#import "TPEpisodeCollectionCell.h"
-#import "TPTapeCollectionLayout.h"
-
 #import "TPPlayerTopNavigationBar.h"
 
 #import "TPTapeSeekViewController.h"
+#import "TPEpisodeTimelineViewController.h"
 
+#import "TPEpisodeData.h"
 
 
 #pragma mark - Private
@@ -35,6 +30,7 @@
 @property (nonatomic, assign) BOOL opened;
 
 @property (nonatomic, retain) TPTapeSeekViewController *tapeSeekViewController;
+@property (nonatomic, retain) TPEpisodeTimelineViewController *episodeTimelineViewController;
 
 @property (nonatomic, retain) UIView *topBarLeftContainer;
 @property (nonatomic, retain) UIView *topBarRightContainer;
@@ -45,12 +41,6 @@
 @property (nonatomic, retain) UIView *liveView;
 @property (nonatomic, retain) UIButton *logoButton;
 @property (nonatomic, retain) TPPlayButton *playButton;
-
-@property (nonatomic, retain) UICollectionView *collectionView;
-@property (nonatomic, assign) TPScrollState collectionState;
-@property (nonatomic, assign) NSInteger collectionDragStartIndex;
-
-@property (nonatomic, retain) TPContinuousProgramModel *model;
 
 @property (nonatomic, retain) TPPlayerTopNavigationBar *topBarButtonView;
 @property (nonatomic, retain) UIButton *gotoArchiveButton;
@@ -76,7 +66,6 @@ static int kCurrentEpisodeContext;
     [super viewDidLoad];
     
     self.opened = YES;
-    self.collectionState = TPScrollStateNormal;
     
     CGRect bounds = self.view.bounds;
     CGFloat topHeight = 170;
@@ -228,15 +217,11 @@ static int kCurrentEpisodeContext;
     
     // MIDDLE STUFF /////////////////////////////////////
     
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 5, 320, 220) collectionViewLayout:[[TPTapeCollectionLayout alloc] initWithItemSize:CGSizeMake(320, 220)]];
-    self.collectionView.pagingEnabled = YES;
-    self.collectionView.backgroundColor = [UIColor clearColor];
-    self.collectionView.showsHorizontalScrollIndicator = NO;
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
-    self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-    [self.collectionView registerClass:[TPEpisodeCollectionCell class] forCellWithReuseIdentifier:@"EpisodeCollectionCell"];
-    [self.middleView addSubview:self.collectionView];
+    self.episodeTimelineViewController = [[TPEpisodeTimelineViewController alloc] init];
+    UIView *episodeView = self.episodeTimelineViewController.view;
+    episodeView.frame = CGRectMake(0, 5, width, 220);
+    episodeView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+    [self.middleView addSubview:episodeView];
     
     //
     
@@ -256,7 +241,7 @@ static int kCurrentEpisodeContext;
     
     self.tapeSeekViewController.view.hidden = YES;
     self.liveView.hidden = YES;
-    self.collectionView.hidden = YES;
+    self.episodeTimelineViewController.view.hidden = YES;
     self.playButton.hidden = YES;
     
     self.topBarButtonView.leftButton = self.gotoArchiveButton;
@@ -270,34 +255,7 @@ static int kCurrentEpisodeContext;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    if(self.model == nil)
-    {
-        self.model = [[TPPlayerManager sharedManager] model];
-        [self.collectionView reloadData];
-    }
-    
-    // initialize the layout
     [self doOpen:NO];
-}
-
-#pragma mark -
-
-- (void)setModel:(TPContinuousProgramModel *)model
-{
-    if(_model)
-    {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:TPContinuousProgramModelDidFinishNotification object:_model];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:TPContinuousProgramModelDidInsertDataNotification object:_model];
-    }
-    
-    _model = model;
-    
-    if(_model)
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelDidFinish:) name:TPContinuousProgramModelDidFinishNotification object:_model];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelDidInsertData:) name:TPContinuousProgramModelDidInsertDataNotification object:_model];
-    }
 }
 
 #pragma mark -
@@ -322,8 +280,8 @@ static int kCurrentEpisodeContext;
 }
 - (void)gotoLive
 {
-    NSIndexPath *indexPath = [self.model indexPathForLiveData];
-    [[TPPlayerManager sharedManager] cueEpisode:[self.model dataForIndexPath:indexPath]];
+    ////
+    NSLog(@"LIVE");
 }
 
 #pragma mark -
@@ -344,55 +302,80 @@ static int kCurrentEpisodeContext;
     }
 }
 
+#pragma mark -
+
 - (void)updateByCurrentEpisode
 {
     TPEpisodeData *currentEpisode = [[TPPlayerManager sharedManager] currentEpisode];
-    
-    self.playbackButton.imageURL = currentEpisode.bannerURL;
-    
-    TPEpisodeDataState currentState = [currentEpisode currentState];
-    switch (currentState) {
-        case TPEpisodeDataStatePast:
-            self.tapeSeekViewController.view.hidden = !_opened;
-            self.liveView.hidden = YES;
-            self.topBarButtonView.leftButton = nil;
-            self.topBarButtonView.rightButton = self.gotoLiveButton;
-            break;
-        case TPEpisodeDataStateLive:
-            self.liveView.hidden = !_opened;
-            self.tapeSeekViewController.view.hidden = YES;
-            self.topBarButtonView.leftButton = self.gotoArchiveButton;
-            self.topBarButtonView.rightButton = self.callButton;
-            break;
-        case TPEpisodeDataStateUpcoming:
-            self.liveView.hidden = YES;
-            self.tapeSeekViewController.view.hidden = YES;
-            self.topBarButtonView.leftButton = self.gotoLiveButton;
-            self.topBarButtonView.rightButton = nil;
-            break;
-    }
-    
-    if(self.collectionView.hidden)
+
+    if(currentEpisode)
     {
-        self.collectionView.hidden = NO;
-        self.collectionView.alpha = 0;
+        self.playbackButton.imageURL = currentEpisode.bannerURL;
         
-        [UIView animateWithDuration:0.3 animations:^{
-            self.collectionView.alpha = 1.0f;
-        }];
+        TPEpisodeDataState currentState = [currentEpisode currentState];
+        switch (currentState) {
+            case TPEpisodeDataStatePast:
+                [self setTapeVisible:_opened animated:YES];
+                self.liveView.hidden = YES;
+                self.topBarButtonView.leftButton = nil;
+                self.topBarButtonView.rightButton = self.gotoLiveButton;
+                break;
+            case TPEpisodeDataStateLive:
+                self.liveView.hidden = !_opened;
+                [self setTapeVisible:NO animated:YES];
+                self.topBarButtonView.leftButton = self.gotoArchiveButton;
+                self.topBarButtonView.rightButton = self.callButton;
+                break;
+            case TPEpisodeDataStateUpcoming:
+                self.liveView.hidden = YES;
+                [self setTapeVisible:NO animated:YES];
+                self.topBarButtonView.leftButton = self.gotoLiveButton;
+                self.topBarButtonView.rightButton = nil;
+                break;
+        }
+        
+        if(self.episodeTimelineViewController.view.hidden)
+        {
+            self.episodeTimelineViewController.view.hidden = NO;
+            self.episodeTimelineViewController.view.alpha = 0;
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                self.episodeTimelineViewController.view.alpha = 1.0f;
+            }];
+        }
+        
+        if(self.playButton.hidden)
+        {
+            self.playButton.hidden = NO;
+            self.playButton.alpha = 0;
+            [UIView animateWithDuration:0.3 animations:^{
+                self.playButton.alpha = 1.0f;
+            }];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateAmbience" object:self userInfo:nil];
     }
     
-    if(self.playButton.hidden)
+}
+
+- (void)setTapeVisible:(BOOL)visible animated:(BOOL)animated
+{
+    UIView *tapeView = self.tapeSeekViewController.view;
+    
+    if(visible && tapeView.hidden)
     {
-        self.playButton.hidden = NO;
-        self.playButton.alpha = 0;
+        tapeView.hidden = NO;
         [UIView animateWithDuration:0.3 animations:^{
-            self.playButton.alpha = 1.0f;
+            tapeView.alpha = 1.0f;
         }];
     }
-    
-    [self updateCollectionView:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateAmbience" object:self userInfo:nil];
+    else if(!visible && !tapeView.hidden)
+    {
+        [UIView animateWithDuration:0.3 animations:^{
+            tapeView.alpha = 0.0f;
+        } completion:^(BOOL finished) {
+            tapeView.hidden = YES;
+        }];
+    }
 }
 
 #pragma mark -
@@ -404,100 +387,11 @@ static int kCurrentEpisodeContext;
     self.playbackTimeView.playing = [[TPPlayerManager sharedManager] playing];
 }
 
-- (void)updateCollectionView:(BOOL)animated
-{
-    TPEpisodeData *episode = [[TPPlayerManager sharedManager] currentEpisode];
-    if(episode)
-    {
-        NSIndexPath *indexPath = [self.model indexPathForData:episode];
-        if(indexPath)
-        {
-            [self scrollToIndexInCollectionView:indexPath.row animated:NO];
-        }
-        
-        if(self.collectionView.alpha < 1.0f)
-        {
-            if(animated)
-            {
-                [UIView animateWithDuration:0.2 animations:^{
-                    self.collectionView.alpha = 1.0f;
-                }];
-            }
-            else
-            {
-                self.collectionView.alpha = 1.0f;
-            }
-        }
-        if(self.tapeSeekViewController.view.alpha < 1.0f)
-        {
-            if(animated)
-            {
-                [UIView animateWithDuration:0.2 animations:^{
-                    self.tapeSeekViewController.view.alpha = 1.0f;
-                }];
-            }
-            else
-            {
-                self.tapeSeekViewController.view.alpha = 1.0f;
-            }
-        }
-    }
-    else
-    {
-        self.collectionView.alpha = 0.0;
-        self.tapeSeekViewController.view.alpha = 0.0f;
-    }
-}
-
-#pragma mark -
-
-- (void)modelDidFinish:(NSNotification*)notification
-{
-    [self.collectionView reloadData];
-    [self updateCollectionView:YES];
-    
-}
-- (void)modelDidInsertData:(NSNotification *)notification
-{
-    NSArray *indexPaths = [notification.userInfo objectForKey:@"indexPaths"];
-    BOOL atEnd = [[notification.userInfo objectForKey:@"atEnd"] boolValue];
-    
-    CGFloat offsetX = self.collectionView.contentOffset.x;
-    
-    [UIView setAnimationsEnabled:NO];
-    [self.collectionView insertItemsAtIndexPaths:indexPaths];
-    [UIView setAnimationsEnabled:YES];
-    
-    if(!atEnd)
-    {
-        CGFloat diff = atEnd ? 0 : indexPaths.count * self.collectionView.bounds.size.width;
-        self.collectionView.contentOffset = CGPointMake(offsetX + diff, 0);
-    }
-}
-
 #pragma mark - actions
 
 - (IBAction)close:(id)sender
 {
     [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (IBAction)prev:(id)sender
-{
-    NSInteger selectedIndex = [self selectedIndexInCollectionView];
-    if(selectedIndex > 0)
-    {
-        [self scrollToIndexInCollectionView:selectedIndex-1 animated:YES];
-    }
-}
-
-- (IBAction)next:(id)sender
-{
-    NSInteger selectedIndex = [self selectedIndexInCollectionView];
-    if(selectedIndex >= 0)
-    {
-        [self scrollToIndexInCollectionView:selectedIndex+1 animated:YES];
-    }
 }
 
 - (IBAction)togglePlay:(id)sender
@@ -609,6 +503,8 @@ static int kCurrentEpisodeContext;
     }
 }
 
+#pragma mark - layout helpers
+
 - (void)layoutOpenState
 {
     CGRect b = self.view.bounds;
@@ -618,7 +514,7 @@ static int kCurrentEpisodeContext;
     CGFloat topHeight = 170;
     if(screenBounds.size.height <= 480)
     {
-        topHeight = 135;
+        topHeight = 125;
     }
     CGFloat middleHeight = b.size.height - topHeight;
     CGFloat collectionHeight = 220;
@@ -629,7 +525,7 @@ static int kCurrentEpisodeContext;
     self.middleView.frame = CGRectMake(0, topHeight, b.size.width, middleHeight);
     self.fadeView.alpha = 1.0f;
     self.logoButton.frame = CGRectMake(b.size.width/2-30, topHeight/2-30 -5, 60, 60);
-    self.playButton.frame = CGRectMake(b.size.width/2-30, collectionHeight + (middleHeight-collectionHeight-60)/2.0f, 60, 60);
+    self.playButton.frame = CGRectMake(b.size.width/2-30, collectionHeight + 10 + (middleHeight-collectionHeight-10-60)/2.0f, 60, 60);
     self.backgroundView.frame = CGRectMake(0, 0, b.size.width, self.view.bounds.size.height);
     self.topBarButtonView.frame = CGRectMake(20, 68, b.size.width-40, 24);
 }
@@ -646,91 +542,6 @@ static int kCurrentEpisodeContext;
     self.fadeView.alpha = 0.0f;
     self.backgroundView.frame = CGRectMake(0, 0, b.size.width, 64);
     self.topBarButtonView.frame = CGRectMake(20, 23, b.size.width-40, 24);
-}
-
-#pragma mark - helpers
-
-- (NSInteger)selectedIndexInCollectionView
-{
-    return (NSInteger)floorf(self.collectionView.contentOffset.x / self.collectionView.bounds.size.width);
-}
-
-- (void)scrollToIndexInCollectionView:(NSInteger)index animated:(BOOL)animated
-{
-    [self.collectionView setContentOffset:CGPointMake(index * 320, 0) animated:animated];
-}
-
-#pragma mark -
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
-{
-    self.collectionState = TPScrollStateNormal;
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    NSInteger index = [self selectedIndexInCollectionView];
-    self.collectionDragStartIndex = index;
-    self.collectionState = TPScrollStateDragging;
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if(decelerate)
-    {
-        self.collectionState = TPScrollStateAnimating;
-    }
-    else
-    {
-        [self finishCollectionScrolling];
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    [self finishCollectionScrolling];
-}
-
-- (void)finishCollectionScrolling
-{
-    self.collectionState = TPScrollStateNormal;
-    
-    NSInteger index = [self selectedIndexInCollectionView];
-    NSInteger count = [self.collectionView numberOfItemsInSection:0];
-    if(index < 0 || index >= count) return;
-    if(index == _collectionDragStartIndex) return;
-    
-    [[TPPlayerManager sharedManager] cueEpisode:[self.model dataForIndexPath:[NSIndexPath indexPathForRow:index inSection:0]]];
-
-    if(index < 3)
-    {
-        [self.model loadHead];
-    }
-    if(index > count-3)
-    {
-        [self.model loadTail];
-    }
-}
-
-#pragma mark - collection view
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return [self.model numberOfSections];
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return [self.model numberOfItemsInSection:section];
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *cellIdentifier = @"EpisodeCollectionCell";
-    TPEpisodeCollectionCell *cell = (TPEpisodeCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    
-    cell.episode = (TPEpisodeData *)[self.model dataForIndexPath:indexPath];
-    return cell;
 }
 
 @end
