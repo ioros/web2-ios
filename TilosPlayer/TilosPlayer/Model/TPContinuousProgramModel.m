@@ -9,6 +9,7 @@
 #import "TPContinuousProgramModel.h"
 
 #import "TPEpisodeData.h"
+#import "TPShowData.h"
 
 
 NSString *const TPContinuousProgramModelDidFinishNotification = @"TPContinuousProgramModelDidFinishNotification";
@@ -171,12 +172,38 @@ NSString *const TPContinuousProgramModelDidInsertDataNotification = @"TPContinuo
     else if(operation == self.tailOperation)
     {
         NSArray *episodes = [TPEpisodeData parseWithObjects:JSON];
+        
+
+        NSArray *oldEpisodes = self.episodes;
+        if(oldEpisodes.count > 0 && episodes.count > 0)
+        {
+            // check for connection
+            TPEpisodeData *firstEpisode = [episodes firstObject];
+            TPEpisodeData *lastEpisode = [oldEpisodes lastObject];
+            
+            if([firstEpisode.show.identifier isEqual:lastEpisode.show.identifier])
+            {
+                // same episode
+                
+                // TODO: update this when server is fixed with real plannedFrom, plannedTo timestamps
+                
+                lastEpisode.plannedTo = firstEpisode.plannedTo;
+                NSMutableArray *newEpisodes = [episodes mutableCopy];
+                [newEpisodes removeObjectAtIndex:0];
+                episodes = newEpisodes;
+            }
+        }
+
+        // save the real startindex
         NSInteger startIndex = self.episodes.count;
-        NSInteger count = episodes.count;
+        
         self.episodes = [[self.episodes arrayByAddingObjectsFromArray:episodes] mutableCopy];
         self.tailOperation = nil;
+        
+        // generate indexPaths
 
         NSMutableArray *indexPaths = [NSMutableArray array];
+        NSInteger count = episodes.count;
         for(int i =0; i<count; i++)
         {
             [indexPaths addObject:[NSIndexPath indexPathForRow:startIndex + i inSection:0]];
@@ -186,11 +213,34 @@ NSString *const TPContinuousProgramModelDidInsertDataNotification = @"TPContinuo
     else if(operation == self.headOperation)
     {
         NSArray *episodes = [TPEpisodeData parseWithObjects:JSON];
-        NSInteger count = episodes.count;
+        
+        NSArray *oldEpisodes = self.episodes;
+        if(oldEpisodes.count > 0 && episodes.count > 0)
+        {
+            // check for connection
+            TPEpisodeData *firstEpisode = [oldEpisodes firstObject];
+            TPEpisodeData *lastEpisode = [episodes lastObject];
+            
+            if([firstEpisode.show.identifier isEqual:lastEpisode.show.identifier])
+            {
+                // same episode
+                
+                // TODO: update this when server is fixed with real plannedFrom, plannedTo timestamps
+
+                firstEpisode.plannedFrom = lastEpisode.plannedFrom;
+                NSMutableArray *newEpisodes = [episodes mutableCopy];
+                [newEpisodes removeLastObject];
+                episodes = newEpisodes;
+            }
+        }
+        
         self.episodes = [[episodes arrayByAddingObjectsFromArray:self.episodes] mutableCopy];
         self.headOperation = nil;
+
+        // generate indexpaths
         
         NSMutableArray *indexPaths = [NSMutableArray array];
+        NSInteger count = episodes.count;
         for(int i =0; i<count; i++)
         {
             [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
