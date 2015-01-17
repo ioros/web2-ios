@@ -195,6 +195,7 @@
     __block UIImage *bannerImage = image;
     __block CGSize viewSize = self.view.bounds.size;
     
+    
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
         // generate images
@@ -215,6 +216,12 @@
         [blurredImage drawInRect:CGRectMake( (size.width - scaledSize.width)/2, (size.height - scaledSize.height)/2, scaledSize.width, scaledSize.height)];
         UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
         
+        //This is neccesesary for each UIGraphicsBeginImageContext
+        //From stackoverflow: "It's also super important to call UIGraphicsEndImageContext() or things start to get wacky with the CPU"
+        //I digged deeper: in our situation after a short period of time (10 secs or so) the system tries to clean the Graphics Context on another thread, but the context is locked and it causes an infinite loop of cleaning which makes 100% CPU usage. Each time this method is called another 100% CPU user thread is spawned, although one can drain the battery really well, but if you have 3-4 or even more that's the best.
+        
+        UIGraphicsEndImageContext();
+        
         size = CGSizeMake(320, 50);
 
         
@@ -225,6 +232,8 @@
         }
         [scaledImage drawInRect:CGRectMake(0, -568.0f + size.height, size.width, 568.0f)];
         
+        UIGraphicsEndImageContext();
+
         UIImage *tabbarImage = UIGraphicsGetImageFromCurrentImageContext();
         
         dispatch_async( dispatch_get_main_queue(), ^{
