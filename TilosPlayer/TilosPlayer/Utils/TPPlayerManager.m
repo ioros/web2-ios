@@ -9,13 +9,47 @@
 #import "TPPlayerManager.h"
 
 #import "SynthesizeSingleton.h"
-#import "TPAudioPlayer.h"
 #import "TPEpisodeData.h"
 #import "TPShowData.h"
 
-@interface TPPlayerManager()
+#import "STKAudioPlayer.h"
+#import "STKDataSource.h"
+
+
+
+#pragma mark -
+
+@interface TPQueueItemId : NSObject
+
+@property (nonatomic, retain) NSURL *url;
+@property (nonatomic, assign) NSTimeInterval startSeconds;
+
+@end
+
+@implementation TPQueueItemId
+
+- (instancetype)initWithURL:(NSURL *)url startSeconds:(NSTimeInterval)startSeconds
+{
+    self = [super init];
+    if(self)
+    {
+        self.url = url;
+        self.startSeconds = startSeconds;
+    }
+    return self;
+}
+
+@end
+
+
+
+#pragma mark -
+
+@interface TPPlayerManager() <STKAudioPlayerDelegate>
 
 @property (nonatomic, retain) TPEpisodeData *jumpToEpisode;
+@property (nonatomic, retain) STKAudioPlayer* audioPlayer;
+@property (nonatomic, retain) NSTimer *playbackTimer;
 
 @end
 
@@ -31,13 +65,20 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     self = [super init];
     if (self)
     {
+        
+        self.audioPlayer = [[STKAudioPlayer alloc] initWithOptions:(STKAudioPlayerOptions){ .flushQueueOnSeek = NO, .enableVolumeMixer = NO, .equalizerBandFrequencies = {50, 100, 200, 400, 800, 1600, 2600, 16000} }];
+        //audioPlayer.meteringEnabled = YES;
+        self.audioPlayer.volume = 1;
+        self.audioPlayer.delegate = self;
+
+        
         self.model = [TPContinuousProgramModel new];
         self.model.delegate = self;
         
         self.playerLoading = NO;
         
-        [[TPAudioPlayer sharedPlayer] addObserver:self forKeyPath:@"loading" options:NSKeyValueObservingOptionInitial context:nil];
-        [[TPAudioPlayer sharedPlayer] addObserver:self forKeyPath:@"currentTime" options:NSKeyValueObservingOptionNew context:nil];
+        //[[TPAudioPlayer sharedPlayer] addObserver:self forKeyPath:@"loading" options:NSKeyValueObservingOptionInitial context:nil];
+        //[[TPAudioPlayer sharedPlayer] addObserver:self forKeyPath:@"currentTime" options:NSKeyValueObservingOptionNew context:nil];
         
         [self.model jumpToDate:[NSDate date]];
     }
@@ -76,6 +117,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    /*
     if([keyPath isEqualToString:@"currentTime"])
     {
         NSTimeInterval playerTime = [TPAudioPlayer sharedPlayer].currentTime;
@@ -87,7 +129,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     else if([keyPath isEqualToString:@"loading"])
     {
         self.playerLoading = [[TPAudioPlayer sharedPlayer] loading];
-    }
+    }*/
 }
 
 - (void)cueEpisode:(TPEpisodeData *)episode
@@ -168,7 +210,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     
     
     NSTimeInterval segmentSeconds = [date timeIntervalSinceDate:segmentStartDate];
-    [[TPAudioPlayer sharedPlayer] cueUrl:url atPosition:segmentSeconds];
+//    [[TPAudioPlayer sharedPlayer] cueUrl:url atPosition:segmentSeconds];
+
+    
+    NSLog(@"segment seconds %f", segmentSeconds);
+    
+    NSURL *URL = [NSURL URLWithString:url];
+    STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:URL];
+    TPQueueItemId *queueItem = [[TPQueueItemId alloc] initWithURL:URL startSeconds:segmentSeconds];
+    
+    [self.audioPlayer playDataSource:dataSource withQueueItemID:queueItem];
+
     
     /// setup control center //////////////////////////////////////////
     
@@ -281,6 +333,86 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 
 #pragma mark -
 
+-(void)setupTimer
+{
+    [self stopTimer];
+    self.playbackTimer = [NSTimer timerWithTimeInterval:0.3 target:self selector:@selector(tick) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.playbackTimer forMode:NSRunLoopCommonModes];
+}
+
+- (void)stopTimer
+{
+    [self.playbackTimer invalidate];
+    self.playbackTimer = nil;
+}
+
+- (void)tick
+{
+    [self updateCurrentTime];
+}
+
+- (void)updateCurrentTime
+{
+    if(self.audioPlayer.currentlyPlayingQueueItemId == nil) return;
+    
+    if (self.audioPlayer.duration != 0)
+    {
+        //double duration = self.audioPlayer.duration;
+        double progress = self.audioPlayer.progress;
+        
+        //NSString *info = [NSString stringWithFormat:@"%@ - %@", [self formatTimeFromSeconds:progress], [self formatTimeFromSeconds:duration]];
+        //NSLog(@"info %@", info);
+        
+        NSDate *date = [self.segmentStartDate dateByAddingTimeInterval:progress];
+        self.globalTime = [date timeIntervalSince1970];
+    }
+}
+
+
+#pragma mark -
+
+- (void)audioPlayer:(STKAudioPlayer *)audioPlayer didStartPlayingQueueItemId:(NSObject *)queueItemId
+{
+    NSLog(@"didFinishBufferingSourceWithQueueItemId");
+    TPQueueItemId *item = (TPQueueItemId *)queueItemId;
+    if(item.startSeconds > 0)
+    {
+        [self.audioPlayer seekToTime:item.startSeconds];
+    }
+}
+
+- (void)audioPlayer:(STKAudioPlayer *)audioPlayer stateChanged:(STKAudioPlayerState)state previousState:(STKAudioPlayerState)previousState
+{
+    
+    // update loading indicator
+    self.playerLoading = (state == STKAudioPlayerStateBuffering);
+    
+    // update timer
+    if(state == STKAudioPlayerStatePlaying) {
+        [self setupTimer];
+    }
+    else
+    {
+        [self stopTimer];
+    }
+}
+
+-(void)audioPlayer:(STKAudioPlayer*)audioPlayer didFinishBufferingSourceWithQueueItemId:(NSObject*)queueItemId
+{
+}
+
+-(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishPlayingQueueItemId:(NSObject*)queueItemId withReason:(STKAudioPlayerStopReason)stopReason andProgress:(double)progress andDuration:(double)duration
+{
+    NSLog(@"didFinishPlayingQueueItemId");
+}
+-(void) audioPlayer:(STKAudioPlayer*)audioPlayer unexpectedError:(STKAudioPlayerErrorCode)errorCode
+{
+    NSLog(@"playeer error");
+}
+
+
+#pragma mark -
+
 - (void)togglePlay
 {
     if(_playing)
@@ -313,7 +445,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
 
     self.playerLoading = NO;
     self.playing = NO;
-    [[TPAudioPlayer sharedPlayer] pause];
+    [self.audioPlayer stop];
 }
 
 #pragma mark -
@@ -332,6 +464,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     NSString *url = [NSString stringWithFormat:@"http://archive.tilos.hu/online/%04d/%02d/%02d/tilosradio-%04d%02d%02d-%02d%02d.mp3", (int)year, (int)month, (int)day, (int)year, (int)month, (int)day, (int)hour, (int)minutes];
     
     return url;
+}
+
+#pragma mark - helper
+
+-(NSString*) formatTimeFromSeconds:(int)totalSeconds
+{
+    
+    int seconds = totalSeconds % 60;
+    int minutes = (totalSeconds / 60) % 60;
+    int hours = totalSeconds / 3600;
+    
+    return [NSString stringWithFormat:@"%02d:%02d:%02d", hours, minutes, seconds];
 }
 
 @end
