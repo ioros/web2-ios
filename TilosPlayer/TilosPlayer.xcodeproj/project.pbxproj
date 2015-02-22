@@ -56,6 +56,7 @@
 		A5E2479418590C1A006391AF /* TPEpisodeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E2479318590C1A006391AF /* TPEpisodeCollectionCell.m */; };
 		A5F44AB819F8133E00A731CB /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F44AB719F8133E00A731CB /* MediaPlayer.framework */; };
 		A5F44ABB19F82F9900A731CB /* TPAuthorInfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F44ABA19F82F9900A731CB /* TPAuthorInfoHeaderView.m */; };
+		A5F8C6FB1A9A10F20027051E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A5F8C6FA1A9A10F20027051E /* Settings.bundle */; };
 		A5FA37BB19F9921500249D51 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37B419F9921500249D51 /* InfoPlist.strings */; };
 		A5FA37BC19F9921500249D51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37B619F9921500249D51 /* Localizable.strings */; };
 		A5FA37BD19F9921500249D51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5FA37B919F9921500249D51 /* Localizable.strings */; };
@@ -193,6 +194,7 @@
 		A5F44AB719F8133E00A731CB /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		A5F44AB919F82F9900A731CB /* TPAuthorInfoHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAuthorInfoHeaderView.h; sourceTree = "<group>"; };
 		A5F44ABA19F82F9900A731CB /* TPAuthorInfoHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAuthorInfoHeaderView.m; sourceTree = "<group>"; };
+		A5F8C6FA1A9A10F20027051E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		A5FA37B519F9921500249D51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		A5FA37B719F9921500249D51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		A5FA37BA19F9921500249D51 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = Localizable.strings; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 			children = (
 				A5FA37C319F9BE9000249D51 /* showinfo.html */,
 				A5FA37D019FA63AD00249D51 /* authorinfo.html */,
+				A5F8C6FA1A9A10F20027051E /* Settings.bundle */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -718,6 +721,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5F8C6FB1A9A10F20027051E /* Settings.bundle in Resources */,
 				A5FA37D219FA63AD00249D51 /* authorinfo.html in Resources */,
 				A5FA37C519F9BE9000249D51 /* showinfo.html in Resources */,
 				A5FA37BC19F9921500249D51 /* Localizable.strings in Resources */,

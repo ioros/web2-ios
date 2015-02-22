@@ -4,3 +4,8 @@ platform :ios, '7.0'
 pod 'Reachability',  '~> 3.0.0'
 pod 'AFNetworking', '~> 2.4.0'
 pod 'StreamingKit', '~> 0.1.25'
+
+post_install do |installer|
+	require 'fileutils'
+	FileUtils.cp_r('Pods/Target Support Files/Pods/Pods-Acknowledgements.plist', 'TilosPlayer/Resources/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
+end
