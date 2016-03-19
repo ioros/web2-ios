@@ -10,7 +10,7 @@
 
 @interface TPAuthorListModel : TPListModel
 
-@property (nonatomic, retain) NSArray *indexTitles;
+@property (nonatomic, retain) NSArray* indexTitles;
 @property (nonatomic, retain) AFHTTPRequestOperation *operation;
 
 

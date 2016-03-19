@@ -89,7 +89,9 @@
     {
         [[UIColor whiteColor] set];
         CGSize s = [_activeText sizeWithFont:kSubFont];
-        [_activeText drawAtPoint:CGPointMake(30 - s.width/2, self.bounds.size.height-24) withFont:kSubFont];
+        [_activeText drawAtPoint:CGPointMake(30 - s.width/2, self.bounds.size.height-24) withFont:kSubSubFont];
+//        CGSize s = [_activeText sizeWithAttributes:@{NSFontAttributeName: kSubSubFont}];
+//        [_activeText drawAtPoint:CGPointMake(30 - s.width/2, self.bounds.size.height-24) withAttributes: @{NSFontAttributeName:kSubSubFont}];
     }
 
     // draw first dot

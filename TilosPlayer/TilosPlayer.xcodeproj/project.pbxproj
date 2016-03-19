@@ -93,6 +93,7 @@
 		A5FEC02A1858C9F20084B4C5 /* TPEpisodeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC0291858C9F20084B4C5 /* TPEpisodeListCell.m */; };
 		A5FEC02D1858DDC60084B4C5 /* TPPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC02C1858DDC60084B4C5 /* TPPlayerViewController.m */; };
 		A5FEC030185901CA0084B4C5 /* NSArray+TPIndexedSorting.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FEC02F185901CA0084B4C5 /* NSArray+TPIndexedSorting.m */; };
+		ABEE3AB61C95FDBA00A7113E /* TPTextData.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEE3AB51C95FDBA00A7113E /* TPTextData.m */; };
 		EA4716A8185CF2BA00466D87 /* TPAuthorInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4716A7185CF2BA00466D87 /* TPAuthorInfoModel.m */; };
 /* End PBXBuildFile section */
 
@@ -262,6 +263,8 @@
 		A5FEC02C1858DDC60084B4C5 /* TPPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPPlayerViewController.m; sourceTree = "<group>"; };
 		A5FEC02E185901CA0084B4C5 /* NSArray+TPIndexedSorting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+TPIndexedSorting.h"; sourceTree = "<group>"; };
 		A5FEC02F185901CA0084B4C5 /* NSArray+TPIndexedSorting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+TPIndexedSorting.m"; sourceTree = "<group>"; };
+		ABEE3AB41C95FCF900A7113E /* TPTextData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTextData.h; sourceTree = "<group>"; };
+		ABEE3AB51C95FDBA00A7113E /* TPTextData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTextData.m; sourceTree = "<group>"; };
 		EA4716A6185CF2BA00466D87 /* TPAuthorInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPAuthorInfoModel.h; sourceTree = "<group>"; };
 		EA4716A7185CF2BA00466D87 /* TPAuthorInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPAuthorInfoModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -394,6 +397,8 @@
 				A518618F18CA4FD7009D807A /* TPContributorData.m */,
 				A518619118CA57A7009D807A /* TPContributionData.h */,
 				A518619218CA57A7009D807A /* TPContributionData.m */,
+				ABEE3AB41C95FCF900A7113E /* TPTextData.h */,
+				ABEE3AB51C95FDBA00A7113E /* TPTextData.m */,
 			);
 			name = VOs;
 			sourceTree = "<group>";
@@ -696,8 +701,13 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = TP;
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = rumori;
+				TargetAttributes = {
+					A5FEBFB51858AF390084B4C5 = {
+						DevelopmentTeam = C5M8GB8D96;
+					};
+				};
 			};
 			buildConfigurationList = A5FEBFB11858AF390084B4C5 /* Build configuration list for PBXProject "TilosPlayer" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -796,6 +806,7 @@
 				A54B4CE319F94027001B7004 /* UIImageView+HighlightedWebCache.m in Sources */,
 				A5FEC02D1858DDC60084B4C5 /* TPPlayerViewController.m in Sources */,
 				A5FEBFFC1858B2940084B4C5 /* TPShowListViewController.m in Sources */,
+				ABEE3AB61C95FDBA00A7113E /* TPTextData.m in Sources */,
 				A5FA37CF19FA597700249D51 /* TPSmallEpisodeCell.m in Sources */,
 				A51B1FDB185BA678009FA46D /* TPPlayerManager.m in Sources */,
 				A5FEC0031858B2C40084B4C5 /* TPListModel.m in Sources */,
@@ -904,6 +915,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -918,7 +930,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -951,7 +963,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -964,11 +976,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TilosPlayer/TilosPlayer-Prefix.pch";
 				INFOPLIST_FILE = "TilosPlayer/TilosPlayer-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tilos.TilosPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f10cfd7d-1d28-4a4f-b649-aa36a7f1d99c";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -980,11 +996,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tilos Kulturalis Alapitvany (C5M8GB8D96)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tilos Kulturalis Alapitvany (C5M8GB8D96)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TilosPlayer/TilosPlayer-Prefix.pch";
 				INFOPLIST_FILE = "TilosPlayer/TilosPlayer-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tilos.TilosPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f10cfd7d-1d28-4a4f-b649-aa36a7f1d99c";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

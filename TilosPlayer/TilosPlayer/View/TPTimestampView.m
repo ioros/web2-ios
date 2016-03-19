@@ -48,8 +48,8 @@
     
     NSInteger minutes = (NSInteger)floorf((float)seconds / 60.0f);
     
-    self.hourText = [NSString stringWithFormat:@"%d", minutes / 60];
-    self.minuteText = [NSString stringWithFormat:@"%02d", minutes % 60];
+    self.hourText = [NSString stringWithFormat:@"%d", (int)(minutes / 60)];
+    self.minuteText = [NSString stringWithFormat:@"%02d", (int)(minutes % 60)];
     
     [self setNeedsDisplay];
 }
@@ -66,12 +66,12 @@
     CGContextStrokeEllipseInRect(ctx, CGRectInset(rect, 1, 1));
     
     UIFont *font = kTitleFont;
-    CGSize s = [self.hourText sizeWithFont:kTitleFont];
+    CGSize s = [self.hourText sizeWithAttributes:@{NSFontAttributeName: kTitleFont}];
     CGRect hourRect = CGRectMake(rect.size.width/2+7-s.width, (rect.size.height - s.height)/2.0f + 1, s.width, s.height);
-    [self.hourText drawAtPoint:hourRect.origin withFont:font];
+    [self.hourText drawAtPoint:hourRect.origin withAttributes:@{NSFontAttributeName: font}];
     
     font = [UIFont fontWithName:@"Avenir-Medium" size:10];
-    [self.minuteText drawAtPoint:CGPointMake(CGRectGetMaxX(hourRect), 14) withFont:font];
+    [self.minuteText drawAtPoint:CGPointMake(CGRectGetMaxX(hourRect), 14) withAttributes:@{NSFontAttributeName: font}];
 }
 
 @end

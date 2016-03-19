@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"TPAuthorListViewController");
     [super viewDidLoad];
     
     self.navigationController.navigationBarHidden = YES;
@@ -66,7 +67,5 @@
     TPAuthorInfoViewController *destination = segue.destinationViewController;
     destination.data = [data objectForKey:@"author"];
 }
-
-
 
 @end

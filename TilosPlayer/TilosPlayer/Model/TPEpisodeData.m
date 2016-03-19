@@ -9,6 +9,7 @@
 #import "TPEpisodeData.h"
 
 #import "TPShowData.h"
+#import "TPTextData.h"
 #import "TPContributorData.h"
 
 @implementation TPEpisodeData
@@ -16,9 +17,10 @@
 + (instancetype)parseWithObject:(NSDictionary *)object
 {
     TPEpisodeData *data = [TPEpisodeData new];
-    data.plannedFrom = [NSDate dateWithTimeIntervalSince1970:[[object objectForKey:@"plannedFrom"] integerValue]];
-    data.plannedTo = [NSDate dateWithTimeIntervalSince1970:[[object objectForKey:@"plannedTo"] integerValue]];
+    data.plannedFrom = [NSDate dateWithTimeIntervalSince1970:[[object objectForKey:@"plannedFrom"] longLongValue]/1000];
+    data.plannedTo = [NSDate dateWithTimeIntervalSince1970:[[object objectForKey:@"plannedTo"] longLongValue]/1000];
     data.show = [TPShowData parseWithObject:[object objectForKey:@"show"]];
+    data.leiras = [TPTextData parseWithObject:[object objectForKey:@"text"]];
     data.m3uURL = [object objectForKey:@"m3uUrl"];
     data.URL = [object objectForKey:@"url"];
     
@@ -49,7 +51,16 @@
     NSTimeInterval diff = [endDate timeIntervalSinceDate:startDate];
     return diff / (30 * 60 * 60);
 }
-
+- (NSString *)type
+{
+    if ([self.show.type isEqual:@"SPEECH"]) {
+        return NSLocalizedString(@"Talk", nil);
+    }
+    if ([self.show.type isEqual:@"MUSIC"]) {
+        return NSLocalizedString(@"Music", nil);
+    }
+    return @"";
+}
 - (NSString *)name
 {
     return self.show.name;
@@ -66,6 +77,11 @@
 - (NSDate *)dayDate
 {
     return [self.plannedFrom dayDate];
+}
+
+- (NSString *)title
+{
+    return self.leiras.title;
 }
 
 - (BOOL)isEqual:(id)other

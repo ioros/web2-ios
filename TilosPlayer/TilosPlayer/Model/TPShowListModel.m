@@ -85,11 +85,13 @@
     
     if(filter == TPShowListModelFilterMusic)
     {
-        data = [data filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == %d", 0]];
+//        data = [data filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == %d", 0]];
+        data = [data filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == 'MUSIC'"]];
     }
     else if(filter == TPShowListModelFilterTalk)
     {
-        data = [data filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == %d", 1]];
+//        data = [data filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == %d", 1]];
+        data = [data filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == 'SPEECH'"]];
     }
     
     NSDictionary *indexes = [data indexesWithSortingKey:@"name" ascending:YES];

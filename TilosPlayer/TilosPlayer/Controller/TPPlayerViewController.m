@@ -22,6 +22,7 @@
 
 #import "TPEpisodeData.h"
 
+#import "TPContinuousProgramModel.h"
 
 #pragma mark - Private
 
@@ -63,6 +64,7 @@ static int kCurrentEpisodeContext;
 
 - (void)viewDidLoad
 {
+    NSLog(@"TPPlayerViewController");
     [super viewDidLoad];
     
     self.opened = YES;
@@ -146,9 +148,10 @@ static int kCurrentEpisodeContext;
     b = [UIButton buttonWithType:UIButtonTypeCustom];
     [b setBackgroundImage:[[UIImage imageNamed:@"RounderButton.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15] forState:UIControlStateNormal];
     [b setTitle:[NSLocalizedString(@"Call", nil) uppercaseString] forState:UIControlStateNormal];
-    [b.titleLabel setFont:kSubFont];
+    [b.titleLabel setFont:kSubSubSubFont];
     b.frame = CGRectMake(0, 0, 80, 24);
     self.callButton = b;
+    [self.callButton addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
     
     [self.gotoArchiveButton addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
 
@@ -212,7 +215,7 @@ static int kCurrentEpisodeContext;
     TPPlayerTopNavigationBar *topBarButtonView = [[TPPlayerTopNavigationBar alloc] initWithFrame:CGRectMake(10, 0, 300, 30)];
     self.topBarButtonView = topBarButtonView;
     
-    //[self.topView addSubview:self.topBarButtonView];
+    [self.topView addSubview:self.topBarButtonView];
 
     
     // MIDDLE STUFF /////////////////////////////////////
@@ -244,7 +247,8 @@ static int kCurrentEpisodeContext;
     self.episodeTimelineViewController.view.hidden = YES;
     self.playButton.hidden = YES;
     
-    self.topBarButtonView.leftButton = self.gotoArchiveButton;
+//    self.topBarButtonView.leftButton = self.gotoArchiveButton;
+    self.topBarButtonView.leftButton = nil;
     self.topBarButtonView.rightButton = self.callButton;
     
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"playing" options:NSKeyValueObservingOptionNew context:&kPlayingContext];
@@ -272,7 +276,8 @@ static int kCurrentEpisodeContext;
 
 - (void)call
 {
-    NSString *url = @"tel:+3612153773";
+    NSLog(@"Telefon hívás");
+    NSString *url = @"telprompt://+3612153773";
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
 }
 - (void)gotoArchive
@@ -280,6 +285,9 @@ static int kCurrentEpisodeContext;
 }
 - (void)gotoLive
 {
+    [[TPPlayerManager sharedManager].model jumpToDate:[NSDate date]];
+//    NSIndexPath *indexLivePath = [[TPPlayerManager sharedManager].model indexPathForLiveData];
+//    [[TPPlayerManager sharedManager] cueEpisode:[[TPPlayerManager sharedManager].model dataForIndexPath:indexLivePath]];
     ////
     NSLog(@"LIVE");
 }
@@ -317,13 +325,14 @@ static int kCurrentEpisodeContext;
             case TPEpisodeDataStatePast:
                 [self setTapeVisible:_opened animated:YES];
                 self.liveView.hidden = YES;
-                self.topBarButtonView.leftButton = nil;
-                self.topBarButtonView.rightButton = self.gotoLiveButton;
+                self.topBarButtonView.leftButton = self.gotoLiveButton;
+                self.topBarButtonView.rightButton = nil;
                 break;
             case TPEpisodeDataStateLive:
                 self.liveView.hidden = !_opened;
                 [self setTapeVisible:NO animated:YES];
-                self.topBarButtonView.leftButton = self.gotoArchiveButton;
+//                self.topBarButtonView.leftButton = self.gotoArchiveButton;
+                self.topBarButtonView.leftButton = nil;
                 self.topBarButtonView.rightButton = self.callButton;
                 break;
             case TPEpisodeDataStateUpcoming:

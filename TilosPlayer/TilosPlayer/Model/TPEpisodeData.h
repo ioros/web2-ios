@@ -17,12 +17,14 @@ typedef enum {
 } TPEpisodeDataState;
 
 @class TPShowData;
+@class TPTextData;
 
 @interface TPEpisodeData : TPData;
 
 @property (nonatomic, retain) NSDate *plannedFrom;
 @property (nonatomic, retain) NSDate *plannedTo;
 @property (nonatomic, retain) TPShowData *show;
+@property (nonatomic, retain) TPTextData *leiras;
 @property (nonatomic, retain) NSString *m3uURL;
 @property (nonatomic, retain) NSString *URL;
 
@@ -31,8 +33,10 @@ typedef enum {
 @property (nonatomic, readonly) NSString *definition;
 @property (nonatomic, readonly) NSArray *contributorNicknames;
 @property (nonatomic, readonly) NSInteger startSeconds;
+@property (nonatomic, readonly) NSString *type;
 
 @property (nonatomic, readonly) NSDate *dayDate;
+@property (nonatomic, readonly) NSString *title;
 
 @property (nonatomic, readonly) NSUInteger duration;
 

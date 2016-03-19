@@ -17,9 +17,10 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"TPShowListViewController");
     [super viewDidLoad];
     
-    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
     self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     
     self.title = @"";
@@ -30,6 +31,17 @@
     
     [segmentedControl addTarget:self action:@selector(segmentSelected:) forControlEvents:UIControlEventValueChanged];
     self.navigationItem.titleView = segmentedControl;
+
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    searchBar.delegate = self;
+    self.tableView.tableHeaderView = searchBar;
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[self navigationController] setNavigationBarHidden:NO animated:animated];
 }
 
 #pragma mark -
@@ -59,6 +71,7 @@
     TPShowData *data = [self.model dataForIndexPath:indexPath];
     cell.textLabel.text = data.name;
     cell.detailTextLabel.text = data.definition;
+//    cell.detailTextLabel.text = data.type;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

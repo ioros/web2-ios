@@ -15,7 +15,7 @@
 @property (nonatomic, retain) NSNumber *identifier;
 @property (nonatomic, retain) NSString *alias;
 @property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *photoURL;
+//@property (nonatomic, retain) NSString *photoURL;
 @property (nonatomic, retain) NSString *avatarURL;
 @property (nonatomic, retain) NSString *introduction;
 @property (nonatomic, retain) NSArray *contributions;

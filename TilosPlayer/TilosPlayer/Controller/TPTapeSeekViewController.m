@@ -77,6 +77,7 @@ static int kCurrentEpisodeContext;
 
 - (void)viewDidLoad
 {
+    NSLog(@"TPTapeSeekViewController");
     [super viewDidLoad];
     
     [[TPPlayerManager sharedManager] addObserver:self forKeyPath:@"globalTime" options:NSKeyValueObservingOptionNew context:&kGlobalTimeContext];
@@ -104,10 +105,10 @@ static int kCurrentEpisodeContext;
 
             CGFloat offset = timeDiff / kTapeCellTime * kTapeCellWidth;
             
-            //NSLog(@"UPDATING BY PLAYER POSITION %f %f", timeDiff, globalTime);
+//            NSLog(@"UPDATING BY PLAYER POSITION %f %f", timeDiff, globalTime);
             [self.tapeCollectionView setContentOffset:CGPointMake(offset - _tapeScrollAdjustment, 0)];
         }
-        //        NSLog(@"offset %f %f %f", offset, globalTime, self.startTime);
+//            NSLog(@"offset %f %f %f", offset, globalTime, self.startTime);
     }
     else if(context == &kCurrentEpisodeContext)
     {
@@ -256,8 +257,18 @@ static int kCurrentEpisodeContext;
             cell.type = TPTapeCollectionCellTypeActive;
         }
 
-        NSTimeInterval diff = globalTime - self.startTime;
-        NSString *label = [NSString stringWithFormat:@"%d:%02d", (int)(diff / 60.0f), ((int)diff % 60)];
+//        NSTimeInterval diff = globalTime - self.startTime;
+        
+//        NSString *label = [NSString stringWithFormat:@"%d:%02d", (int)(diff / 60.0f), ((int)diff % 60)];
+        NSDate* gt = [NSDate dateWithTimeIntervalSince1970:globalTime];
+        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *components =
+        [gregorian components:(NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:gt];
+        
+        NSInteger hour = [components hour];
+        NSInteger minute = [components minute];
+
+        NSString *label = [NSString stringWithFormat:@"%02d:%02d", (int)hour, (int)minute];
         cell.activeText = label;
     }
     else

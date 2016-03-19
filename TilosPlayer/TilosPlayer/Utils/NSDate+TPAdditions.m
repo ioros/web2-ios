@@ -13,7 +13,7 @@
 - (NSString *)dayName
 {
     NSDateFormatter *formatter = [NSDateFormatter new];
-    formatter.dateFormat =@"EEEE";
+    formatter.dateFormat =@"yyyy-MM-dd EEEE";
     NSString *dayName = [formatter stringFromDate:self];
     return dayName;
 }

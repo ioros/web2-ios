@@ -12,6 +12,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"TPTableViewController");
     [super viewDidLoad];
 }
 

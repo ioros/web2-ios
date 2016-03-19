@@ -51,16 +51,22 @@ static const int DAY_SECONDS = 60 * 60 * 24;
     
     self.pagerView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
     self.pagerView.opaque = YES;
-    
+        
     self.scrollToEndWhenLoaded = NO;
 }
 
 - (void)viewDidLoad
 {
+    NSLog(@"TPEpisodeListViewController");
     [super viewDidLoad];
     
-    self.navigationItem.titleView = [[TPFlipLabelView alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
+//    UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, 200, 22)];
+//    textField.text = @"dátum";
+//    textField.font = [UIFont boldSystemFontOfSize:19];
+//    textField.textAlignment = NSTextAlignmentCenter;
+//    self.navigationItem.titleView = textField;
     
+    self.navigationItem.titleView = [[TPFlipLabelView alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0);
     self.tableView.rowHeight = 100;
 }
@@ -135,7 +141,8 @@ static const int DAY_SECONDS = 60 * 60 * 24;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TPEpisodeData *episode = [self.model dataForIndexPath:indexPath];
-    CGFloat height = [TPEpisodeListCell estimatedHeightWithTitle:episode.name description:episode.definition authors:[episode.contributorNicknames componentsJoinedByString:@", "] forWidth:320];
+//    CGFloat height = [TPEpisodeListCell estimatedHeightWithTitle:episode.name description:episode.definition authors:[episode.contributorNicknames componentsJoinedByString:@", "] forWidth:320];
+    CGFloat height = [TPEpisodeListCell estimatedHeightWithTitle:episode.name description:episode.title authors:[episode.contributorNicknames componentsJoinedByString:@", "] forWidth:320];
     
     return height;
 }
@@ -153,15 +160,18 @@ static const int DAY_SECONDS = 60 * 60 * 24;
     TPEpisodeData *episode = [self.model dataForIndexPath:indexPath];
     episodeCell.textLabel.text = episode.name;
     episodeCell.authorLabel.text = [episode.contributorNicknames componentsJoinedByString:@", "];
-    episodeCell.detailTextLabel.text = episode.definition;
+//    episodeCell.detailTextLabel.text = episode.definition;
+    episodeCell.detailTextLabel.text = episode.title;
     episodeCell.timestampView.seconds = episode.startSeconds;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"playepisode");
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     TPEpisodeData *episode = [self.model dataForIndexPath:indexPath];
+    NSLog(@"%@",episode);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"playEpisode" object:self userInfo:@{@"episode":episode}];
 }
 
@@ -219,7 +229,7 @@ static const int DAY_SECONDS = 60 * 60 * 24;
 {
     CGRect b = self.tableView.bounds;
     
-	if(UIGraphicsBeginImageContextWithOptions != NULL)
+	if(&UIGraphicsBeginImageContextWithOptions != NULL)
 	{
 		UIGraphicsBeginImageContextWithOptions(b.size, YES, 0.0);
 	}

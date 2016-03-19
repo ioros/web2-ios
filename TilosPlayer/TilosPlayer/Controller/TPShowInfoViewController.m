@@ -12,7 +12,6 @@
 #import "TPShowInfoHeaderView.h"
 #import "TPEpisodeData.h"
 #import "TPShowData.h"
-#import "TPShowInfoHeaderView.h"
 #import "TPTitleView.h"
 #import "TPSmallEpisodeCell.h"
 #import "TPBackButtonHandler.h"
@@ -41,6 +40,7 @@
 
 - (void)loadView
 {
+    self.navigationController.navigationBarHidden = YES;
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 180, 320.0, 480.0)];
     self.webView.delegate = self;
     self.webView.backgroundColor = [UIColor whiteColor];
@@ -57,6 +57,7 @@
     self.headerView = [[TPShowInfoHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
     self.headerView.detailTextView.text = self.data.definition;
     self.headerView.textLabel.text = self.data.name;
+//    self.headerView.contributorsTextLabel.text = @"---";
     [self.headerView sizeToFit];
     
     [self.headerContainer addSubview:self.headerView];
@@ -180,7 +181,9 @@
     else{
         self.headerView.imageView.image = [UIImage imageNamed:@"DefaultBanner.png"];
     }
-    [self.webView loadHTMLString:model.introHTML baseURL:[NSURL URLWithString:@"http://tilos.hu/"]];
+    [self.webView loadHTMLString:model.introHTML baseURL:[NSURL URLWithString:@"https://tilos.hu/"]];
+    
+    self.headerView.contributorsTextLabel.text = [model.show.contributorNicknames componentsJoinedByString:@", "];
 
     self.episodesLabel.hidden = NO;
     self.introLabel.hidden = !model.introAvailable;

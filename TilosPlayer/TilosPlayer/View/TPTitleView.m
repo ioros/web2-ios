@@ -31,7 +31,7 @@
     NSString *text = self.text;
     
     UIFont *font = kTitleFont;
-    CGSize s = [text sizeWithFont:font];
+    CGSize s = [text sizeWithAttributes:@{NSFontAttributeName: font}];
     if(s.width > kTitleViewMaxWidth)
     {
         font = kHalfTitleFont;

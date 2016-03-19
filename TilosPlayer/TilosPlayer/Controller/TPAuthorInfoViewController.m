@@ -49,7 +49,7 @@
 
 - (void)loadView
 {
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 480.f)];
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 480.0f)];
     webView.delegate = self;
     webView.backgroundColor = [UIColor whiteColor];
     self.webView = webView;
@@ -110,7 +110,7 @@
     
 
     UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-    layout.itemSize = CGSizeMake(280, 70);
+    layout.itemSize = CGSizeMake(280, 20);
     layout.sectionInset = UIEdgeInsetsMake(10, 30, 10, 30);
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
@@ -143,6 +143,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"TPAuthorInfoViewController");
     [super viewDidLoad];
 }
 
@@ -195,7 +196,7 @@
     
     if(self.authorInfoModel.introHTML)
     {
-        [self.webView loadHTMLString:self.authorInfoModel.introHTML baseURL:[NSURL URLWithString:@"http://tilos.hu"]];
+        [self.webView loadHTMLString:self.authorInfoModel.introHTML baseURL:[NSURL URLWithString:@"https://tilos.hu"]];
     }
     
     NSInteger itemCount = [self.model numberOfRowsInSection:0];
@@ -204,7 +205,7 @@
     CGFloat showLabelHeight = 40;
     CGFloat introLabelHeight = authorInfoModel.introAvailable ? 40 : 0;
     
-    CGFloat collectionHeight =  itemCount * 70 + (itemCount -1) * 10 + 20;
+    CGFloat collectionHeight =  itemCount * 20 + (itemCount -1) * 10 + 20;
     self.collectionViewController.view.frame = CGRectMake(0, headerHeight + showLabelHeight, 320, collectionHeight);
     self.collectionViewController.model = [[TPListModel alloc] initWithSections:self.model.sections];
 

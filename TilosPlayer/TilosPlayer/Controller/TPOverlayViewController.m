@@ -64,6 +64,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"TPOverlayViewController");
     [super viewDidLoad];
     
     if(self.rootViewController)
@@ -208,7 +209,7 @@
         CGSize scaledSize = CGSizeMake(blurredImage.size.width * scale, blurredImage.size.height * scale);
         
         
-        if(UIGraphicsBeginImageContextWithOptions != NULL) {
+        if(&UIGraphicsBeginImageContextWithOptions != NULL) {
             UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
         } else {
             UIGraphicsBeginImageContext(size);
@@ -225,12 +226,12 @@
         size = CGSizeMake(320, 50);
 
         
-        if(UIGraphicsBeginImageContextWithOptions != NULL) {
+        if(&UIGraphicsBeginImageContextWithOptions != NULL) {
             UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
         } else {
             UIGraphicsBeginImageContext(size);
         }
-        [scaledImage drawInRect:CGRectMake(0, -568.0f + size.height, size.width, 568.0f)];
+        [scaledImage drawInRect:CGRectMake(0, -480.0f + size.height, size.width, 480.0f)];
         
         UIGraphicsEndImageContext();
 

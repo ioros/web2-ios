@@ -41,7 +41,7 @@
     self.textLabel.numberOfLines = -1;
     self.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.textLabel.textAlignment = NSTextAlignmentCenter;
-    self.textLabel.font = kTitleFont;
+    self.textLabel.font = kBigTitleFont;
     self.textLabel.textColor = [UIColor whiteColor];
     [self.contentView addSubview:self.textLabel];
 
@@ -61,20 +61,21 @@
     self.dateLabel.textColor = [UIColor whiteColor];
     [self.contentView addSubview:self.dateLabel];
 
-    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
-    self.imageView.backgroundColor = [UIColor lightGrayColor];
-    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.imageView.opaque = YES;
-    self.imageView.clipsToBounds = YES;
-    [self.contentView addSubview:self.imageView];
+//    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+//    self.imageView.backgroundColor = [UIColor lightGrayColor];
+//    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+//    self.imageView.opaque = YES;
+//    self.imageView.clipsToBounds = YES;
+//    [self.contentView addSubview:self.imageView];
     
     self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
     self.detailLabel.textAlignment = NSTextAlignmentCenter;
     self.detailLabel.backgroundColor = [UIColor clearColor];
-    self.detailLabel.font = kDescFont;
+    self.detailLabel.font = kSubFont;
     self.detailLabel.numberOfLines = -1;
     self.detailLabel.textColor = [UIColor whiteColor];
     [self.contentView addSubview:self.detailLabel];
+    
     
     /*
     self.detailTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
@@ -89,9 +90,9 @@
     self.detailTextView.contentInset = UIEdgeInsetsMake(-3, 0, 0, 0);
     [self.contentView addSubview:self.detailTextView];
     */
-    self.contentView.layer.cornerRadius = 10.0;
+    self.contentView.layer.cornerRadius = 30.0;
     self.contentView.clipsToBounds = YES;
-    self.contentView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.05];
+    self.contentView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.15];
 }
 
 #pragma mark -
@@ -111,10 +112,13 @@
     
     self.textLabel.text = episode.name;
     
-    NSArray *nicknames = [episode.show contributorNicknames];
-    self.authorLabel.text = [nicknames componentsJoinedByString:@", "];
+//    NSArray *nicknames = [episode.show contributorNicknames];
+
+//    self.authorLabel.text = [nicknames componentsJoinedByString:@", "];
+    self.authorLabel.text = episode.type;
     
-    self.detailLabel.text = episode.definition;
+//    self.detailLabel.text = episode.definition;
+    self.detailLabel.text = episode.title;
     
     NSDate *startDate = episode.plannedFrom;
     NSDate *endDate = episode.plannedTo;
@@ -139,14 +143,15 @@
     }
     self.dateLabel.text = label;
     
-    NSString *url = episode.bannerURL;
-    if(url != nil)
-    {
-        [self.imageView sd_setImageWithURL:[NSURL URLWithString:url]];
-    }
-    else {
-        [self.imageView setImage:[UIImage imageNamed:@"DefaultBanner.png"]];
-    }
+//    NSString *url = episode.bannerURL;
+//    if(url != nil)
+//    {
+//        [self.imageView sd_setImageWithURL:[NSURL URLWithString:url]];
+//    }
+//    else {
+//        [self.imageView setImage:[UIImage imageNamed:@"DefaultBanner.png"]];
+//    }
+    
     
     [self setNeedsLayout];
 }
@@ -167,14 +172,15 @@
 
     CGRect b = self.contentView.bounds;
     CGFloat w = b.size.width;
-    CGFloat imageWidth = w;
-    CGFloat imageHeight = floorf(imageWidth/ 210.0f * 60.f);
+//    CGFloat imageWidth = w;
+//    CGFloat imageHeight = floorf(imageWidth/ 210.0f * 60.f);
+    CGFloat imageHeight = 10.0f;
 
-    self.imageView.frame = CGRectMake(0, 0, imageWidth, imageHeight);
+//    self.imageView.frame = CGRectMake(0, 0, imageWidth, imageHeight);
     
     CGFloat offset = imageHeight + titleMarginTop;
 
-    self.textLabel.font = kTitleFont;
+    self.textLabel.font = kBigTitleFont;
     
     /////////////////////////
     

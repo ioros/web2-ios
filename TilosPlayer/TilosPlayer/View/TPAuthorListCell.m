@@ -46,9 +46,9 @@
     
     self.imageView.frame = CGRectMake(5, 5, imageWidth, imageWidth);
     
-    self.textLabel.frame = CGRectMake(imageWidth + 15, (b.size.height-20)/2.0f, textWidth, 20);
+//    self.textLabel.frame = CGRectMake(imageWidth + 15, (b.size.height-20)/2.0f, textWidth, 20);
     
-    //self.textLabel.frame = CGRectMake(imageWidth + 10, 7, textWidth, 20);
-    //self.detailTextLabel.frame = CGRectMake(imageWidth + 10, 26, textWidth, 20);
+    self.textLabel.frame = CGRectMake(imageWidth + 10, 7, textWidth, 20);
+    self.detailTextLabel.frame = CGRectMake(imageWidth + 10, 27, textWidth, 20);
 }
 @end

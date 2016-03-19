@@ -59,8 +59,9 @@
     NSDate *startOfDay = [self.date dayDate];
     NSDate *endOfDay = [startOfDay dateByAddingTimeInterval:24 * 60 * 60];
     
-    NSString *queryString = [NSString stringWithFormat:@"start=%d&end=%d", (int)[startOfDay timeIntervalSince1970], (int)[endOfDay timeIntervalSince1970]];
+    NSString *queryString = [NSString stringWithFormat:@"start=%lld&end=%lld", 1000*(long long)[startOfDay timeIntervalSince1970], 1000*(long long)[endOfDay timeIntervalSince1970]];
     NSString *url  =[NSString stringWithFormat:@"%@/episode?%@", kAPIBase, queryString];
+    NSLog(@"%@",url);
 
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     

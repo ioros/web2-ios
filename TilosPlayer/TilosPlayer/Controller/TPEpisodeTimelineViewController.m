@@ -33,6 +33,7 @@ static int kCurrentEpisodeContext;
 
 - (void)viewDidLoad
 {
+    NSLog(@"TPEpisodeTimelineViewController");
     [super viewDidLoad];
     
     self.collectionState = TPScrollStateNormal;

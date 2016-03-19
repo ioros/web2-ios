@@ -37,13 +37,16 @@ NSString *const TPContinuousProgramModelDidInsertDataNotification = @"TPContinuo
 
 - (void)jumpToDate:(NSDate *)date
 {
+    NSLog(@"%@",date);
     __block TPContinuousProgramModel *weakSelf = self;
     
     if(self.episodes.count > 0)
     {
         TPEpisodeData *firstEpisode = [self.episodes firstObject];
+        NSLog(@"%@",firstEpisode.name);
         TPEpisodeData *lastEpisode = [self.episodes lastObject];
-        if(date.timeIntervalSince1970 >= firstEpisode.plannedFrom.timeIntervalSince1970 && date.timeIntervalSince1970 < lastEpisode.plannedTo.timeIntervalSince1970)
+        NSLog(@"%@",lastEpisode.name);
+        if(1000*(long long)date.timeIntervalSince1970 >= 1000*(long long)firstEpisode.plannedFrom.timeIntervalSince1970 && 1000*(long long)date.timeIntervalSince1970 < 1000*(long long)lastEpisode.plannedTo.timeIntervalSince1970)
         {
             // we already have the data
             NSLog(@"no need to load episodes.");
@@ -51,11 +54,15 @@ NSString *const TPContinuousProgramModelDidInsertDataNotification = @"TPContinuo
         }
     }
     
+    NSDate *startOfDay = date;
+//    NSDate *startOfDay = [date dayDate];
+//    NSDate *startOfDay = [now dateByAddingTimeInterval:-0.5 * 60 * 60];
+    NSLog(@"%@",startOfDay);
+//    NSDate *endOfDay = [startOfDay dateByAddingTimeInterval:24 * 60 * 60];
+    NSDate *endOfDay = [startOfDay dateByAddingTimeInterval:0.1 * 60 * 60];
+    NSLog(@"%@",endOfDay);
     
-    NSDate *startOfDay = [date dayDate];
-    NSDate *endOfDay = [startOfDay dateByAddingTimeInterval:24 * 60 * 60];
-    
-    NSString *queryString = [NSString stringWithFormat:@"start=%d&end=%d", (int)[startOfDay timeIntervalSince1970], (int)[endOfDay timeIntervalSince1970]];
+    NSString *queryString = [NSString stringWithFormat:@"start=%lld&end=%lld", 1000*(long long)[startOfDay timeIntervalSince1970], 1000*(long long)[endOfDay timeIntervalSince1970]];
     NSString *url  =[NSString stringWithFormat:@"%@/episode?%@", kAPIBase, queryString];
     
     NSLog(@"initial url %@", url);
@@ -92,7 +99,7 @@ NSString *const TPContinuousProgramModelDidInsertDataNotification = @"TPContinuo
     NSDate *startOfDay = [date dayDate];
     NSDate *endOfDay = [startOfDay dateByAddingTimeInterval:24 * 60 * 60];
     
-    NSString *queryString = [NSString stringWithFormat:@"start=%d&end=%d", (int)[startOfDay timeIntervalSince1970], (int)[endOfDay timeIntervalSince1970]];
+    NSString *queryString = [NSString stringWithFormat:@"start=%lld&end=%lld", 1000*(long long)[startOfDay timeIntervalSince1970], 1000*(long long)[endOfDay timeIntervalSince1970]];
     NSString *url  =[NSString stringWithFormat:@"%@/episode?%@", kAPIBase, queryString];
 
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
@@ -130,7 +137,7 @@ NSString *const TPContinuousProgramModelDidInsertDataNotification = @"TPContinuo
     NSDate *startOfDay = [date dayDate];
     NSDate *endOfDay = [startOfDay dateByAddingTimeInterval:24 * 60 * 60];
     
-    NSString *queryString = [NSString stringWithFormat:@"start=%d&end=%d", (int)[startOfDay timeIntervalSince1970], (int)[endOfDay timeIntervalSince1970]];
+    NSString *queryString = [NSString stringWithFormat:@"start=%lld&end=%lld", 1000*(long long)[startOfDay timeIntervalSince1970], 1000*(long long)[endOfDay timeIntervalSince1970]];
     NSString *url  =[NSString stringWithFormat:@"%@/episode?%@", kAPIBase, queryString];
     
     NSLog(@"head url %@", url);

@@ -33,6 +33,8 @@
     
     NSString *url = [NSString stringWithFormat:@"%@/show/%@", kAPIBase, showId];
     
+    NSLog(@"%@",url);
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
     
@@ -79,6 +81,7 @@
     {
         self.introHTML = @"";
     }
+    
     
     NSArray *episodes = self.show.episodes;
     self.sections = @[[TPListSection sectionWithTitle:nil items:episodes]];

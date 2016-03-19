@@ -17,8 +17,9 @@
 @property (nonatomic, retain) UILabel *textLabel;
 @property (nonatomic, retain) UILabel *authorLabel;
 @property (nonatomic, retain) UILabel *dateLabel;
-@property (nonatomic, retain) UIImageView *imageView;
+//@property (nonatomic, retain) UIImageView *imageView;
 @property (nonatomic, retain) UILabel *detailLabel;
+@property (nonatomic, retain) UILabel *titleLabel;
 
 @property (nonatomic, retain) AFHTTPRequestOperation *operation;
 

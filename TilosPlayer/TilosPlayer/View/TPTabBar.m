@@ -98,8 +98,11 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setImage:[images objectAtIndex:counter] forState:UIControlStateNormal];
         [button setImage:[imagesSelected objectAtIndex:counter] forState:UIControlStateSelected];
-        //[button setTitle:item.title forState:UIControlStateNormal];
-        //button.backgroundColor = [UIColor whiteColor];
+        
+        [button setTitle:item.title forState:UIControlStateNormal];
+//        button.backgroundColor = [UIColor whiteColor];
+        button.backgroundColor = [UIColor blackColor];
+
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         button.frame = CGRectMake(part * counter, 0, part, self.bounds.size.height);
         button.tag = counter;

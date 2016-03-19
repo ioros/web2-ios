@@ -12,6 +12,7 @@
 #import "TPAudioPlayer.h"
 #import "TPEpisodeData.h"
 #import "TPShowData.h"
+#import "Reachability.h"
 
 @interface TPPlayerManager()
 
@@ -151,9 +152,31 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     NSDate *segmentStartDate = [date archiveSegmentStartDate];
     
     self.segmentStartDate = segmentStartDate;
-    
-    NSString *url = [self urlForArchiveSegmentAtDate:date];
-    
+    NSDate *now = [NSDate date];
+    NSString *url;
+    if ([episode.plannedTo timeIntervalSinceDate:now] > 0) {
+        Reachability *reachability = [Reachability reachabilityForInternetConnection];
+        [reachability startNotifier];
+        
+        NetworkStatus status = [reachability currentReachabilityStatus];
+        
+        if(status == NotReachable)
+        {
+            url = @"";
+        }
+        else if (status == ReachableViaWiFi)
+        {
+            url = @"http://tilos.hu/api/v1/m3u/lastweek?stream=/tilos";
+        }
+        else if (status == ReachableViaWWAN) 
+        {
+            url = @"http://tilos.hu/api/v1/m3u/lastweek?stream=/tilos_128.mp3";
+        }
+        
+    } else {
+        url = [self urlForArchiveSegmentAtDate:date];
+    }
+    NSLog(@"%@",url);
     self.playing = YES;
     
     
@@ -161,7 +184,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     
     
     NSError *sessionError = nil;
-    [[AVAudioSession sharedInstance] setDelegate:self];
+//    [[AVAudioSession sharedInstance] setDelegate:self];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&sessionError];
     NSError *error = nil;
     [[AVAudioSession sharedInstance] setActive:YES error:&error];
@@ -330,7 +354,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Manager, TPPlayerManager);
     NSInteger hour = components.hour;
     NSInteger minutes = components.minute;
     NSString *url = [NSString stringWithFormat:@"http://archive.tilos.hu/online/%04d/%02d/%02d/tilosradio-%04d%02d%02d-%02d%02d.mp3", (int)year, (int)month, (int)day, (int)year, (int)month, (int)day, (int)hour, (int)minutes];
-    
     return url;
 }
 

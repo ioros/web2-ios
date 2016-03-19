@@ -10,6 +10,6 @@
 
 #import "TPTableViewController.h"
 
-@interface TPShowListViewController : TPTableViewController
+@interface TPShowListViewController : TPTableViewController <UISearchBarDelegate>
 
 @end

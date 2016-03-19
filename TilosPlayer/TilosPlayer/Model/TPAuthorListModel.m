@@ -15,6 +15,8 @@
 
 @implementation TPAuthorListModel
 
+@dynamic indexTitles;
+
 - (void)dealloc
 {
     [self.operation cancel];
@@ -32,7 +34,7 @@
     [self.operation cancel];
     self.operation = nil;
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", kAPIBase, @"author"]]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/author", kAPIBase]]];
     
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc]
@@ -56,9 +58,9 @@
 {
     NSArray *authors = [TPAuthorData parseWithObjects:JSON];
     
-    //self.sections = @[ [TPListSection sectionWithTitle:nil items:authors] ];
-    //[self sendFinished];
-    //return;
+//    self.sections = @[ [TPListSection sectionWithTitle:nil items:authors] ];
+//    [self sendFinished];
+//    return;
     
     // get all nick objects and add the name to each
 //    NSMutableArray *nicks = [NSMutableArray array];
@@ -72,11 +74,11 @@
         {
             NSString *nick = contribution.nick;
             NSString *name = author.name;
-            
+                        
             NSMutableDictionary *item = [NSMutableDictionary dictionary];
             [item setValue:name forKey:@"name"];
             [item setValue:author.avatarURL forKey:@"avatarURL"];
-            [item setValue:author.photoURL forKey:@"photoURL"];
+//            [item setValue:author.photoURL forKey:@"photoURL"];
             [item setValue:author.identifier forKey:@"id"];
             [item setValue:nick forKey:@"nick"];
             [item setValue:author forKey:@"author"];

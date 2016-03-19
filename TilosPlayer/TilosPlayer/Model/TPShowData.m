@@ -54,6 +54,7 @@
     {
         if(contributor.nick) [nicknames addObject:contributor.nick];
     }
+    NSLog(@"nicknames: %@",[nicknames componentsJoinedByString:@", "]);
     return nicknames;
 }
 
