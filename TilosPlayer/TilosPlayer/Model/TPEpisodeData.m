@@ -23,7 +23,6 @@
     data.leiras = [TPTextData parseWithObject:[object objectForKey:@"text"]];
     data.m3uURL = [object objectForKey:@"m3uUrl"];
     data.URL = [object objectForKey:@"url"];
-    
     return data;
 }
 
@@ -33,7 +32,8 @@
 {
     NSArray *contributors = self.show.contributors;
     NSMutableArray *nicks = [NSMutableArray array];
-    for(TPContributorData *contributor in contributors) [nicks addObject:contributor.nick];
+//    for(TPContributorData *contributor in contributors) [nicks addObject:contributor.nick];
+    for(TPContributorData *contributor in contributors) [nicks addObject:contributor.alias];
     return nicks;
 }
 

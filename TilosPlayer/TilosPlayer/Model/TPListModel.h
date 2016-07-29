@@ -37,6 +37,7 @@
 @interface TPListModel : NSObject
 
 @property (nonatomic, retain) NSArray *sections;
+@property (nonatomic, retain) NSArray *sections2;
 @property (nonatomic, retain) NSArray *indexTitles;
 @property (nonatomic, retain) id<TPListModelDelegate> delegate;
 @property (nonatomic, retain) id parameters;

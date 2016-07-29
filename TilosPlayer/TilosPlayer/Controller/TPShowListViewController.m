@@ -32,9 +32,9 @@
     [segmentedControl addTarget:self action:@selector(segmentSelected:) forControlEvents:UIControlEventValueChanged];
     self.navigationItem.titleView = segmentedControl;
 
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
-    searchBar.delegate = self;
-    self.tableView.tableHeaderView = searchBar;
+//    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+//    searchBar.delegate = self;
+//    self.tableView.tableHeaderView = searchBar;
     
 }
 

@@ -16,11 +16,16 @@
 #import "TPSmallEpisodeCell.h"
 #import "TPBackButtonHandler.h"
 #import "TPLabel.h"
+#import "TPAuthorCollectionCell.h"
+#import "TPContributorData.h"
+
+#import "TPAuthorInfoViewController.h"
 
 @interface TPShowInfoViewController ()
 
 @property (nonatomic, retain) UIView *headerContainer;
 @property (nonatomic, retain) TPShowInfoHeaderView *headerView;
+@property (nonatomic, retain) TPLabel *emberekLabel;
 @property (nonatomic, retain) TPLabel *episodesLabel;
 @property (nonatomic, retain) TPLabel *introLabel;
 
@@ -28,6 +33,7 @@
 @property (nonatomic, retain) UIWebView *webView;
 @property (nonatomic, retain) TPTitleView *titleView;
 @property (nonatomic, retain) TPCollectionViewController *collectionViewController;
+@property (nonatomic, retain) TPCollectionViewController *authorCollectionViewController;
 
 @property (nonatomic, retain) UIButton *backButton;
 @property (nonatomic, retain) TPBackButtonHandler *backHandler;
@@ -63,21 +69,49 @@
     [self.headerContainer addSubview:self.headerView];
 
     CGFloat headerHeight = self.headerView.bounds.size.height;
-    CGFloat collectionHeight = 70;
+    CGFloat collectionHeight = 120;
+    CGFloat emberekLabelHeight = 60;
     CGFloat episodeLabelHeight = 60;
     CGFloat introLabelHeight = 60;
-    CGFloat fullHeaderHeight = headerHeight + episodeLabelHeight + collectionHeight + introLabelHeight;
-
+    CGFloat gapHeight = 30;
+    CGFloat fullHeaderHeight = headerHeight + emberekLabelHeight + collectionHeight + episodeLabelHeight + collectionHeight + introLabelHeight;
+    
     TPLabel *b = [[TPLabel alloc] initWithFrame:CGRectMake(40, 100, 100, 30)];
     b.font = kDescFont;
     b.backgroundImage = [[UIImage imageNamed:@"RoundButtonBlack.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
     b.textAlignment = NSTextAlignmentCenter;
-    b.text = NSLocalizedString(@"ShowEpisodes", nil);
+    b.text = NSLocalizedString(@"Authors", nil);
     CGSize s = [b sizeThatFits:CGSizeMake(200, 30)];
     b.frame = CGRectMake(0, 0, s.width + 20, s.height + 4);
-    b.center = CGPointMake(160, headerHeight + 40);
+    b.center = CGPointMake(160, headerHeight + gapHeight);
+    [headerContainer addSubview:b];
+    self.emberekLabel = b;
+
+    b = [[TPLabel alloc] initWithFrame:CGRectMake(40, 100, 100, 30)];
+    b.font = kDescFont;
+    b.backgroundImage = [[UIImage imageNamed:@"RoundButtonBlack.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+    b.textAlignment = NSTextAlignmentCenter;
+    b.text = NSLocalizedString(@"ShowEpisodes", nil);
+    s = [b sizeThatFits:CGSizeMake(200, 30)];
+    b.frame = CGRectMake(0, 0, s.width + 20, s.height + 4);
+    b.center = CGPointMake(160, headerHeight + emberekLabelHeight + collectionHeight + gapHeight);
     [headerContainer addSubview:b];
     self.episodesLabel = b;
+    
+    UICollectionViewFlowLayout *authorLayout = [UICollectionViewFlowLayout new];
+    authorLayout.itemSize = CGSizeMake(280, 20);
+    authorLayout.sectionInset = UIEdgeInsetsMake(10, 30, 10, 30);
+    authorLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    CGFloat authorCollectionHeight = 120;
+    
+    TPCollectionViewController *authorCollectionViewController = [[TPCollectionViewController alloc] initWithCellFactory:[TPAuthorCollectionCell new] layout:authorLayout];
+    authorCollectionViewController.view.backgroundColor = [UIColor clearColor];
+    authorCollectionViewController.delegate = self;
+    self.authorCollectionViewController = authorCollectionViewController;
+    self.authorCollectionViewController.view.frame = CGRectMake(0, headerHeight + emberekLabelHeight, 320, authorCollectionHeight);
+    self.authorCollectionViewController.view.backgroundColor = [UIColor clearColor];
+    self.authorCollectionViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+    [self addChildViewController:authorCollectionViewController];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(80, 30);
@@ -87,7 +121,7 @@
     TPCollectionViewController *collectionViewController = [[TPCollectionViewController alloc] initWithCellFactory:[TPSmallEpisodeCell new] layout:layout];
     collectionViewController.delegate = self;
     collectionViewController.view.backgroundColor = [UIColor clearColor];
-    collectionViewController.view.frame = CGRectMake(0, headerHeight + episodeLabelHeight, 320, collectionHeight);
+    collectionViewController.view.frame = CGRectMake(0, headerHeight + emberekLabelHeight + collectionHeight + episodeLabelHeight, 320, collectionHeight);
     self.collectionViewController = collectionViewController;
     
     ////////////////
@@ -101,7 +135,7 @@
     b.text = NSLocalizedString(@"ShowInfo", nil);
     s = [b sizeThatFits:CGSizeMake(200, 30)];
     b.frame = CGRectMake(0, 0, s.width + 20, s.height + 4);
-    b.center = CGPointMake(160, headerHeight + episodeLabelHeight + collectionHeight + 45);
+    b.center = CGPointMake(160, headerHeight + emberekLabelHeight + collectionHeight + episodeLabelHeight + collectionHeight + gapHeight);
     [headerContainer addSubview:b];
     self.introLabel = b;
     
@@ -109,6 +143,7 @@
     self.introLabel.hidden = YES;
 
     headerContainer.frame = CGRectMake(0, -fullHeaderHeight, 320, fullHeaderHeight);
+    [headerContainer addSubview:authorCollectionViewController.view];
     [headerContainer addSubview:collectionViewController.view];
 
     
@@ -183,41 +218,54 @@
     }
     [self.webView loadHTMLString:model.introHTML baseURL:[NSURL URLWithString:@"https://tilos.hu/"]];
     
-    self.headerView.contributorsTextLabel.text = [model.show.contributorNicknames componentsJoinedByString:@", "];
+//    self.headerView.contributorsTextLabel.text = [model.show.contributorNicknames componentsJoinedByString:@", "];
 
     self.episodesLabel.hidden = NO;
     self.introLabel.hidden = !model.introAvailable;
     
+    
+    self.authorCollectionViewController.model = [[TPListModel alloc] initWithSections:model.sections2];
     self.collectionViewController.model = [[TPListModel alloc] initWithSections:model.sections];
 }
 
 #pragma mark -
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *showCellId = @"ShowEpisodeCell";
-
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:showCellId forIndexPath:indexPath];
-    TPEpisodeData *episode = [self.model dataForIndexPath:indexPath];
-    
-    NSDateFormatter *formatter = [NSDateFormatter new];
-    formatter.dateStyle = NSDateFormatterMediumStyle;
-    cell.textLabel.text = [formatter stringFromDate:episode.plannedFrom];
-    return cell;
-}
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    static NSString *showCellId = @"ShowEpisodeCell";
+//
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:showCellId forIndexPath:indexPath];
+//    TPEpisodeData *episode = [self.model dataForIndexPath:indexPath];
+//    
+//    NSDateFormatter *formatter = [NSDateFormatter new];
+//    formatter.dateStyle = NSDateFormatterMediumStyle;
+//    cell.textLabel.text = [formatter stringFromDate:episode.plannedFrom];
+//    return cell;
+//}
 
 - (void)collectionViewController:(TPCollectionViewController *)collectionViewController didSelectData:(id)data
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"playEpisode" object:self userInfo:@{@"episode":data}];
 }
 
-/*
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)authorCollectionViewController:(TPCollectionViewController *)authorCollectionViewController didSelectData:(id)data
 {
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSLog(@"select %@", data);
+    TPAuthorInfoViewController *vc = [[TPAuthorInfoViewController alloc] init];
+    TPContributorData *contributor = data;
+    TPAuthorData *author = [contributor author];
+    vc.data = author;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
-    NSDictionary *episode = [self.model dataForIndexPath:indexPath];
-}*/
+
+
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+//
+//    NSDictionary *episode = [self.model dataForIndexPath:indexPath];
+//}
 
 
 #pragma mark - WebViewDelegate

@@ -29,7 +29,7 @@ static NSString *cellID = @"TPSmallEpisodeCell";
     TPSmallEpisodeCell *cell = (TPSmallEpisodeCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
 
     NSDateFormatter *formatter = [NSDateFormatter new];
-    formatter.dateFormat = @"MMM dd.";
+    formatter.dateFormat = @"yyyy-MM-dd";
     cell.label.text = [formatter stringFromDate:episode.plannedFrom];
     return cell;
 }
@@ -43,7 +43,7 @@ static NSString *cellID = @"TPSmallEpisodeCell";
     {
         UILabel *label = [[UILabel alloc] initWithFrame:self.bounds];
         label.text = @"test";
-        label.font = kDescFont;
+        label.font = kSubSubSubFont;
         label.textAlignment = NSTextAlignmentCenter;
         label.frame = self.contentView.bounds;
         label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

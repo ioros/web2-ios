@@ -21,6 +21,9 @@
     NSString *nick = [object objectForKeyOrNil:@"nick"];
     nick = [nick stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     data.nick = nick;
+    NSString *alias = [object objectForKeyOrNil:@"alias"];
+    alias = [alias stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    data.alias = alias;
     
     return data;
 }

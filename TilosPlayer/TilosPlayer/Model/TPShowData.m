@@ -52,7 +52,8 @@
     NSMutableArray *nicknames = [NSMutableArray array];
     for(TPContributorData *contributor in self.contributors)
     {
-        if(contributor.nick) [nicknames addObject:contributor.nick];
+        //        if(contributor.nick) [nicknames addObject:contributor.nick];
+        if(contributor.alias) [nicknames addObject:contributor.alias];
     }
     NSLog(@"nicknames: %@",[nicknames componentsJoinedByString:@", "]);
     return nicknames;

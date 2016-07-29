@@ -33,6 +33,8 @@
     
     NSString *url = [NSString stringWithFormat:@"%@/author/%@", kAPIBase, authorId];
     
+    NSLog(@"%@",url);
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc]

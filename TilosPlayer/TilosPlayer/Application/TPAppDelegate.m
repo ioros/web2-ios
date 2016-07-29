@@ -46,7 +46,7 @@
     [[UINavigationBar appearance] setShadowImage:nil];
     
     self.window.tintColor = [UIColor blackColor];
-    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:kDescFont} forState:UIControlStateNormal];
+    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:kSubSubFont} forState:UIControlStateNormal];
     [[UISegmentedControl appearance] setTintColor:[UIColor darkGrayColor]];
 }
 

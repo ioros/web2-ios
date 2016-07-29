@@ -16,5 +16,6 @@
 
 @property (nonatomic, retain) TPAuthorData *author;
 @property (nonatomic, retain) NSString *nick;
+@property (nonatomic, retain) NSString *alias;
 
 @end

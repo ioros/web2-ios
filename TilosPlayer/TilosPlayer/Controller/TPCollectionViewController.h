@@ -17,6 +17,7 @@
 
 @optional
 - (void)collectionViewController:(TPCollectionViewController *)collectionViewController didSelectData:(id)data;
+- (void)authorCollectionViewController:(TPCollectionViewController *)authorCollectionViewController didSelectData:(id)data;
 
 @end
 

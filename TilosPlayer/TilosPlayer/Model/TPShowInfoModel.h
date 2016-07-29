@@ -14,6 +14,7 @@
 
 
 @property (nonatomic, retain) AFHTTPRequestOperation *operation;
+@property (nonatomic, retain) AFHTTPRequestOperation *operation2;
 
 @property (nonatomic, retain) TPShowData *show;
 @property (nonatomic, retain) NSString *introHTML;

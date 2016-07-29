@@ -11,6 +11,7 @@
 #import "TPCollectionCellFactory.h"
 #import "TPSmallEpisodeCell.h"
 
+
 @interface TPCollectionViewController ()
 
 @property (nonatomic, retain) id<TPCollectionCellFactory> cellFactory;
@@ -100,6 +101,10 @@
     if([_delegate respondsToSelector:@selector(collectionViewController:didSelectData:)])
     {
         [_delegate collectionViewController:self didSelectData:[self.model dataForIndexPath:indexPath]];
+    }
+    if([_delegate respondsToSelector:@selector(authorCollectionViewController:didSelectData:)])
+    {
+        [_delegate authorCollectionViewController:self didSelectData:[self.model dataForIndexPath:indexPath]];
     }
 }
 

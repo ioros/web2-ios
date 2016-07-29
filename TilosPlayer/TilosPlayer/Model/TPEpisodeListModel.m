@@ -61,7 +61,7 @@
     
     NSString *queryString = [NSString stringWithFormat:@"start=%lld&end=%lld", 1000*(long long)[startOfDay timeIntervalSince1970], 1000*(long long)[endOfDay timeIntervalSince1970]];
     NSString *url  =[NSString stringWithFormat:@"%@/episode?%@", kAPIBase, queryString];
-    NSLog(@"%@",url);
+    NSLog(@"tplistepisodemodel %@",url);
 
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
